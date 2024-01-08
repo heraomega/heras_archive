@@ -385,7 +385,124 @@ Error generating stack: `+a.message+`
 `)},Rz=function(e){var t=e.noRelative,n=e.noImportant,r=e.gapMode,o=r===void 0?"margin":r,a=b.useMemo(function(){return kz(o)},[o]);return b.createElement(Iz,{styles:xz(a,!t,o,n?"":"!important")})},Kc=!1;if(typeof window<"u")try{var $s=Object.defineProperty({},"passive",{get:function(){return Kc=!0,!0}});window.addEventListener("test",$s,$s),window.removeEventListener("test",$s,$s)}catch{Kc=!1}var so=Kc?{passive:!1}:!1,Cz=function(e){return e.tagName==="TEXTAREA"},zE=function(e,t){var n=window.getComputedStyle(e);return n[t]!=="hidden"&&!(n.overflowY===n.overflowX&&!Cz(e)&&n[t]==="visible")},Az=function(e){return zE(e,"overflowY")},Lz=function(e){return zE(e,"overflowX")},Qv=function(e,t){var n=t.ownerDocument,r=t;do{typeof ShadowRoot<"u"&&r instanceof ShadowRoot&&(r=r.host);var o=DE(e,r);if(o){var a=jE(e,r),i=a[1],s=a[2];if(i>s)return!0}r=r.parentNode}while(r&&r!==n.body);return!1},Oz=function(e){var t=e.scrollTop,n=e.scrollHeight,r=e.clientHeight;return[t,n,r]},Mz=function(e){var t=e.scrollLeft,n=e.scrollWidth,r=e.clientWidth;return[t,n,r]},DE=function(e,t){return e==="v"?Az(t):Lz(t)},jE=function(e,t){return e==="v"?Oz(t):Mz(t)},Pz=function(e,t){return e==="h"&&t==="rtl"?-1:1},_z=function(e,t,n,r,o){var a=Pz(e,window.getComputedStyle(t).direction),i=a*r,s=n.target,l=t.contains(s),h=!1,u=i>0,d=0,c=0;do{var f=jE(e,s),g=f[0],y=f[1],T=f[2],p=y-T-a*g;(g||p)&&DE(e,s)&&(d+=p,c+=g),s instanceof ShadowRoot?s=s.host:s=s.parentNode}while(!l&&s!==document.body||l&&(t.contains(s)||t===s));return(u&&(o&&Math.abs(d)<1||!o&&i>d)||!u&&(o&&Math.abs(c)<1||!o&&-i>c))&&(h=!0),h},Ws=function(e){return"changedTouches"in e?[e.changedTouches[0].clientX,e.changedTouches[0].clientY]:[0,0]},qv=function(e){return[e.deltaX,e.deltaY]},Jv=function(e){return e&&"current"in e?e.current:e},Hz=function(e,t){return e[0]===t[0]&&e[1]===t[1]},Nz=function(e){return`
   .block-interactivity-`.concat(e,` {pointer-events: none;}
   .allow-interactivity-`).concat(e,` {pointer-events: all;}
-`)},Bz=0,lo=[];function Gz(e){var t=b.useRef([]),n=b.useRef([0,0]),r=b.useRef(),o=b.useState(Bz++)[0],a=b.useState(FE)[0],i=b.useRef(e);b.useEffect(function(){i.current=e},[e]),b.useEffect(function(){if(e.inert){document.body.classList.add("block-interactivity-".concat(o));var y=C3([e.lockRef.current],(e.shards||[]).map(Jv),!0).filter(Boolean);return y.forEach(function(T){return T.classList.add("allow-interactivity-".concat(o))}),function(){document.body.classList.remove("block-interactivity-".concat(o)),y.forEach(function(T){return T.classList.remove("allow-interactivity-".concat(o))})}}},[e.inert,e.lockRef.current,e.shards]);var s=b.useCallback(function(y,T){if("touches"in y&&y.touches.length===2)return!i.current.allowPinchZoom;var p=Ws(y),m=n.current,v="deltaX"in y?y.deltaX:m[0]-p[0],I="deltaY"in y?y.deltaY:m[1]-p[1],x,L=y.target,C=Math.abs(v)>Math.abs(I)?"h":"v";if("touches"in y&&C==="h"&&L.type==="range")return!1;var A=Qv(C,L);if(!A)return!0;if(A?x=C:(x=C==="v"?"h":"v",A=Qv(C,L)),!A)return!1;if(!r.current&&"changedTouches"in y&&(v||I)&&(r.current=x),!x)return!0;var M=r.current||x;return _z(M,T,y,M==="h"?v:I,!0)},[]),l=b.useCallback(function(y){var T=y;if(!(!lo.length||lo[lo.length-1]!==a)){var p="deltaY"in T?qv(T):Ws(T),m=t.current.filter(function(x){return x.name===T.type&&(x.target===T.target||T.target===x.shadowParent)&&Hz(x.delta,p)})[0];if(m&&m.should){T.cancelable&&T.preventDefault();return}if(!m){var v=(i.current.shards||[]).map(Jv).filter(Boolean).filter(function(x){return x.contains(T.target)}),I=v.length>0?s(T,v[0]):!i.current.noIsolation;I&&T.cancelable&&T.preventDefault()}}},[]),h=b.useCallback(function(y,T,p,m){var v={name:y,delta:T,target:p,should:m,shadowParent:Fz(p)};t.current.push(v),setTimeout(function(){t.current=t.current.filter(function(I){return I!==v})},1)},[]),u=b.useCallback(function(y){n.current=Ws(y),r.current=void 0},[]),d=b.useCallback(function(y){h(y.type,qv(y),y.target,s(y,e.lockRef.current))},[]),c=b.useCallback(function(y){h(y.type,Ws(y),y.target,s(y,e.lockRef.current))},[]);b.useEffect(function(){return lo.push(a),e.setCallbacks({onScrollCapture:d,onWheelCapture:d,onTouchMoveCapture:c}),document.addEventListener("wheel",l,so),document.addEventListener("touchmove",l,so),document.addEventListener("touchstart",u,so),function(){lo=lo.filter(function(y){return y!==a}),document.removeEventListener("wheel",l,so),document.removeEventListener("touchmove",l,so),document.removeEventListener("touchstart",u,so)}},[]);var f=e.removeScrollBar,g=e.inert;return b.createElement(b.Fragment,null,g?b.createElement(a,{styles:Nz(o)}):null,f?b.createElement(Rz,{gapMode:e.gapMode}):null)}function Fz(e){for(var t=null;e!==null;)e instanceof ShadowRoot&&(t=e.host,e=e.host),e=e.parentNode;return t}const zz=A3(GE,Gz);var $E=b.forwardRef(function(e,t){return b.createElement(Qh,un({},e,{ref:t,sideCar:zz}))});$E.classNames=Qh.classNames;const Dz=$E;function jz(e){const{autoFocus:t,trapFocus:n,dialogRef:r,initialFocusRef:o,blockScrollOnMount:a,allowPinchZoom:i,finalFocusRef:s,returnFocusOnClose:l,preserveScrollBarGap:h,lockFocusAcrossFrames:u,isOpen:d}=Kr(),[c,f]=ES();b.useEffect(()=>{!c&&f&&setTimeout(f)},[c,f]);const g=HE(r,d);return k.jsx(kE,{autoFocus:t,isDisabled:!n,initialFocusRef:o,finalFocusRef:s,restoreFocus:l,contentRef:r,lockFocusAcrossFrames:u,children:k.jsx(Dz,{removeScrollBar:!h,allowPinchZoom:i,enabled:g===1&&a,forwardProps:!0,children:e.children})})}var WE=W((e,t)=>{const{className:n,children:r,containerProps:o,motionProps:a,...i}=e,{getDialogProps:s,getDialogContainerProps:l}=Kr(),h=s(i,t),u=l(o),d=Q("chakra-modal__content",n),c=ca(),f={display:"flex",flexDirection:"column",position:"relative",width:"100%",outline:0,...c.dialog},g={display:"flex",width:"100vw",height:"$100vh",position:"fixed",left:0,top:0,...c.dialogContainer},{motionPreset:y}=Kr();return k.jsx(jz,{children:k.jsx($.div,{...u,className:"chakra-modal__content-container",tabIndex:-1,__css:g,children:k.jsx(_E,{preset:y,motionProps:a,className:d,...h,__css:f,children:r})})})});WE.displayName="ModalContent";var YE=W((e,t)=>{const{className:n,...r}=e,o=Q("chakra-modal__footer",n),i={display:"flex",alignItems:"center",justifyContent:"flex-end",...ca().footer};return k.jsx($.footer,{ref:t,...r,__css:i,className:o})});YE.displayName="ModalFooter";var XE=W((e,t)=>{const{className:n,...r}=e,{headerId:o,setHeaderMounted:a}=Kr();b.useEffect(()=>(a(!0),()=>a(!1)),[a]);const i=Q("chakra-modal__header",n),l={flex:0,...ca().header};return k.jsx($.header,{ref:t,className:i,id:o,...r,__css:l})});XE.displayName="ModalHeader";var $z=$(ua.div),UE=W((e,t)=>{const{className:n,transition:r,motionProps:o,...a}=e,i=Q("chakra-modal__overlay",n),l={pos:"fixed",left:"0",top:"0",w:"100vw",h:"100vh",...ca().overlay},{motionPreset:h}=Kr(),d=o||(h==="none"?{}:$S);return k.jsx($z,{...d,__css:l,ref:t,className:i,...a})});UE.displayName="ModalOverlay";var VE=W((e,t)=>{const{className:n,...r}=e,{bodyId:o,setBodyMounted:a}=Kr();b.useEffect(()=>(a(!0),()=>a(!1)),[a]);const i=Q("chakra-modal__body",n),s=ca();return k.jsx($.div,{ref:t,className:i,id:o,...r,__css:s.body})});VE.displayName="ModalBody";var KE=W((e,t)=>{const{onClick:n,className:r,...o}=e,{onClose:a}=Kr(),i=Q("chakra-modal__close-btn",r),s=ca();return k.jsx(Bm,{ref:t,__css:s.closeButton,className:i,onClick:Pr(n,l=>{l.stopPropagation(),a()}),...o})});KE.displayName="ModalCloseButton";var ZE=W(function(t,n){const{children:r,placeholder:o,className:a,...i}=t;return k.jsxs($.select,{...i,ref:n,className:Q("chakra-select",a),children:[o&&k.jsx("option",{value:"",children:o}),r]})});ZE.displayName="SelectField";function Wz(e,t){const n={},r={};for(const[o,a]of Object.entries(e))t.includes(o)?n[o]=a:r[o]=a;return[n,r]}var Zc=W((e,t)=>{var n;const r=Jr("Select",e),{rootProps:o,placeholder:a,icon:i,color:s,height:l,h,minH:u,minHeight:d,iconColor:c,iconSize:f,...g}=Gt(e),[y,T]=Wz(g,tA),p=US(T),m={width:"100%",height:"fit-content",position:"relative",color:s},v={paddingEnd:"2rem",...r.field,_focus:{zIndex:"unset",...(n=r.field)==null?void 0:n._focus}};return k.jsxs($.div,{className:"chakra-select__wrapper",__css:m,...y,...o,children:[k.jsx(ZE,{ref:t,height:h??l,minH:u??d,placeholder:a,...p,__css:v,children:e.children}),k.jsx(QE,{"data-disabled":$t(p.disabled),...(c||s)&&{color:c||s},__css:r.icon,...f&&{fontSize:f},children:i})]})});Zc.displayName="Select";var Yz=e=>k.jsx("svg",{viewBox:"0 0 24 24",...e,children:k.jsx("path",{fill:"currentColor",d:"M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"})}),Xz=$("div",{baseStyle:{position:"absolute",display:"inline-flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",top:"50%",transform:"translateY(-50%)"}}),QE=e=>{const{children:t=k.jsx(Yz,{}),...n}=e,r=b.cloneElement(t,{role:"presentation",className:"chakra-select__icon",focusable:!1,"aria-hidden":!0,style:{width:"1em",height:"1em",color:"currentColor"}});return k.jsx(Xz,{...n,className:"chakra-select__icon-wrapper",children:b.isValidElement(t)?r:null})};QE.displayName="SelectIcon";var qE,ew=em;qE=ew.createRoot,ew.hydrateRoot;var Uz=NG({d:"M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z",displayName:"Search2Icon"});const Ke=[{BOOK_TITLE:"Accidental Mark",AUTHOR:"Die Zhiling 蝶之灵",CHAPTERS:95,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://t.co/39HzQdNyFL",Eng_TL:"locked",Synopsis:`Pei Shaoze unintentionally heard about a novel called Accidental Mark. Once he woke up, he found he had transmigrated into the alpha scumbag in the book, Pei Shaoze. The omega protagonist of the novel, Cheng Xia happened to have his pheromones out of control. The original scumbag not only took the opportunity to mark the protagonist but also killed the protagonist’s parents and ruined his reputation. The protagonist was completely blackened and returned five years later to stab the scumbag to death. \r
+`)},Bz=0,lo=[];function Gz(e){var t=b.useRef([]),n=b.useRef([0,0]),r=b.useRef(),o=b.useState(Bz++)[0],a=b.useState(FE)[0],i=b.useRef(e);b.useEffect(function(){i.current=e},[e]),b.useEffect(function(){if(e.inert){document.body.classList.add("block-interactivity-".concat(o));var y=C3([e.lockRef.current],(e.shards||[]).map(Jv),!0).filter(Boolean);return y.forEach(function(T){return T.classList.add("allow-interactivity-".concat(o))}),function(){document.body.classList.remove("block-interactivity-".concat(o)),y.forEach(function(T){return T.classList.remove("allow-interactivity-".concat(o))})}}},[e.inert,e.lockRef.current,e.shards]);var s=b.useCallback(function(y,T){if("touches"in y&&y.touches.length===2)return!i.current.allowPinchZoom;var p=Ws(y),m=n.current,v="deltaX"in y?y.deltaX:m[0]-p[0],I="deltaY"in y?y.deltaY:m[1]-p[1],x,L=y.target,C=Math.abs(v)>Math.abs(I)?"h":"v";if("touches"in y&&C==="h"&&L.type==="range")return!1;var A=Qv(C,L);if(!A)return!0;if(A?x=C:(x=C==="v"?"h":"v",A=Qv(C,L)),!A)return!1;if(!r.current&&"changedTouches"in y&&(v||I)&&(r.current=x),!x)return!0;var M=r.current||x;return _z(M,T,y,M==="h"?v:I,!0)},[]),l=b.useCallback(function(y){var T=y;if(!(!lo.length||lo[lo.length-1]!==a)){var p="deltaY"in T?qv(T):Ws(T),m=t.current.filter(function(x){return x.name===T.type&&(x.target===T.target||T.target===x.shadowParent)&&Hz(x.delta,p)})[0];if(m&&m.should){T.cancelable&&T.preventDefault();return}if(!m){var v=(i.current.shards||[]).map(Jv).filter(Boolean).filter(function(x){return x.contains(T.target)}),I=v.length>0?s(T,v[0]):!i.current.noIsolation;I&&T.cancelable&&T.preventDefault()}}},[]),h=b.useCallback(function(y,T,p,m){var v={name:y,delta:T,target:p,should:m,shadowParent:Fz(p)};t.current.push(v),setTimeout(function(){t.current=t.current.filter(function(I){return I!==v})},1)},[]),u=b.useCallback(function(y){n.current=Ws(y),r.current=void 0},[]),d=b.useCallback(function(y){h(y.type,qv(y),y.target,s(y,e.lockRef.current))},[]),c=b.useCallback(function(y){h(y.type,Ws(y),y.target,s(y,e.lockRef.current))},[]);b.useEffect(function(){return lo.push(a),e.setCallbacks({onScrollCapture:d,onWheelCapture:d,onTouchMoveCapture:c}),document.addEventListener("wheel",l,so),document.addEventListener("touchmove",l,so),document.addEventListener("touchstart",u,so),function(){lo=lo.filter(function(y){return y!==a}),document.removeEventListener("wheel",l,so),document.removeEventListener("touchmove",l,so),document.removeEventListener("touchstart",u,so)}},[]);var f=e.removeScrollBar,g=e.inert;return b.createElement(b.Fragment,null,g?b.createElement(a,{styles:Nz(o)}):null,f?b.createElement(Rz,{gapMode:e.gapMode}):null)}function Fz(e){for(var t=null;e!==null;)e instanceof ShadowRoot&&(t=e.host,e=e.host),e=e.parentNode;return t}const zz=A3(GE,Gz);var $E=b.forwardRef(function(e,t){return b.createElement(Qh,un({},e,{ref:t,sideCar:zz}))});$E.classNames=Qh.classNames;const Dz=$E;function jz(e){const{autoFocus:t,trapFocus:n,dialogRef:r,initialFocusRef:o,blockScrollOnMount:a,allowPinchZoom:i,finalFocusRef:s,returnFocusOnClose:l,preserveScrollBarGap:h,lockFocusAcrossFrames:u,isOpen:d}=Kr(),[c,f]=ES();b.useEffect(()=>{!c&&f&&setTimeout(f)},[c,f]);const g=HE(r,d);return k.jsx(kE,{autoFocus:t,isDisabled:!n,initialFocusRef:o,finalFocusRef:s,restoreFocus:l,contentRef:r,lockFocusAcrossFrames:u,children:k.jsx(Dz,{removeScrollBar:!h,allowPinchZoom:i,enabled:g===1&&a,forwardProps:!0,children:e.children})})}var WE=W((e,t)=>{const{className:n,children:r,containerProps:o,motionProps:a,...i}=e,{getDialogProps:s,getDialogContainerProps:l}=Kr(),h=s(i,t),u=l(o),d=Q("chakra-modal__content",n),c=ca(),f={display:"flex",flexDirection:"column",position:"relative",width:"100%",outline:0,...c.dialog},g={display:"flex",width:"100vw",height:"$100vh",position:"fixed",left:0,top:0,...c.dialogContainer},{motionPreset:y}=Kr();return k.jsx(jz,{children:k.jsx($.div,{...u,className:"chakra-modal__content-container",tabIndex:-1,__css:g,children:k.jsx(_E,{preset:y,motionProps:a,className:d,...h,__css:f,children:r})})})});WE.displayName="ModalContent";var YE=W((e,t)=>{const{className:n,...r}=e,o=Q("chakra-modal__footer",n),i={display:"flex",alignItems:"center",justifyContent:"flex-end",...ca().footer};return k.jsx($.footer,{ref:t,...r,__css:i,className:o})});YE.displayName="ModalFooter";var XE=W((e,t)=>{const{className:n,...r}=e,{headerId:o,setHeaderMounted:a}=Kr();b.useEffect(()=>(a(!0),()=>a(!1)),[a]);const i=Q("chakra-modal__header",n),l={flex:0,...ca().header};return k.jsx($.header,{ref:t,className:i,id:o,...r,__css:l})});XE.displayName="ModalHeader";var $z=$(ua.div),UE=W((e,t)=>{const{className:n,transition:r,motionProps:o,...a}=e,i=Q("chakra-modal__overlay",n),l={pos:"fixed",left:"0",top:"0",w:"100vw",h:"100vh",...ca().overlay},{motionPreset:h}=Kr(),d=o||(h==="none"?{}:$S);return k.jsx($z,{...d,__css:l,ref:t,className:i,...a})});UE.displayName="ModalOverlay";var VE=W((e,t)=>{const{className:n,...r}=e,{bodyId:o,setBodyMounted:a}=Kr();b.useEffect(()=>(a(!0),()=>a(!1)),[a]);const i=Q("chakra-modal__body",n),s=ca();return k.jsx($.div,{ref:t,className:i,id:o,...r,__css:s.body})});VE.displayName="ModalBody";var KE=W((e,t)=>{const{onClick:n,className:r,...o}=e,{onClose:a}=Kr(),i=Q("chakra-modal__close-btn",r),s=ca();return k.jsx(Bm,{ref:t,__css:s.closeButton,className:i,onClick:Pr(n,l=>{l.stopPropagation(),a()}),...o})});KE.displayName="ModalCloseButton";var ZE=W(function(t,n){const{children:r,placeholder:o,className:a,...i}=t;return k.jsxs($.select,{...i,ref:n,className:Q("chakra-select",a),children:[o&&k.jsx("option",{value:"",children:o}),r]})});ZE.displayName="SelectField";function Wz(e,t){const n={},r={};for(const[o,a]of Object.entries(e))t.includes(o)?n[o]=a:r[o]=a;return[n,r]}var Zc=W((e,t)=>{var n;const r=Jr("Select",e),{rootProps:o,placeholder:a,icon:i,color:s,height:l,h,minH:u,minHeight:d,iconColor:c,iconSize:f,...g}=Gt(e),[y,T]=Wz(g,tA),p=US(T),m={width:"100%",height:"fit-content",position:"relative",color:s},v={paddingEnd:"2rem",...r.field,_focus:{zIndex:"unset",...(n=r.field)==null?void 0:n._focus}};return k.jsxs($.div,{className:"chakra-select__wrapper",__css:m,...y,...o,children:[k.jsx(ZE,{ref:t,height:h??l,minH:u??d,placeholder:a,...p,__css:v,children:e.children}),k.jsx(QE,{"data-disabled":$t(p.disabled),...(c||s)&&{color:c||s},__css:r.icon,...f&&{fontSize:f},children:i})]})});Zc.displayName="Select";var Yz=e=>k.jsx("svg",{viewBox:"0 0 24 24",...e,children:k.jsx("path",{fill:"currentColor",d:"M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"})}),Xz=$("div",{baseStyle:{position:"absolute",display:"inline-flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",top:"50%",transform:"translateY(-50%)"}}),QE=e=>{const{children:t=k.jsx(Yz,{}),...n}=e,r=b.cloneElement(t,{role:"presentation",className:"chakra-select__icon",focusable:!1,"aria-hidden":!0,style:{width:"1em",height:"1em",color:"currentColor"}});return k.jsx(Xz,{...n,className:"chakra-select__icon-wrapper",children:b.isValidElement(t)?r:null})};QE.displayName="SelectIcon";var qE,ew=em;qE=ew.createRoot,ew.hydrateRoot;var Uz=NG({d:"M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z",displayName:"Search2Icon"});const Ke=[{BOOK_TITLE:"A Broken Mirror Reunited In An Esports",AUTHOR:"雪怀金封",CHAPTERS:82,EXTRAS:9,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://wanderertl130.id/bl-projects/a-broken-mirror-reunited-in-an-e-sports-bl/",Synopsis:`[Cool and beautiful team captain becomes the bottom in a relationship with an ultra-strong and decisive professional gamer] Rong Yi is the captain and chief tactician of the top team RS, cool and calm but suffering from camera phobia, and no one has ever seen his true face. After leading his team for five years and winning the championship for three years, he is betrayed by his team and left with nowhere to go. At this point, he receives a call from his ex.\r
+His ex is a cold-hearted and popular professional gamer who recently returned from overseas, having won numerous championships. He proposes a simple condition: “Join our team and we can restore our romantic relationship to make work easier.”\r
+\r
+Rong Yi: “Okay.”\r
+\r
+But wise men do not fall in love, and competitions are more important than anything.\r
+\r
+On the first day Rong Yi leaves his old team, his former teammates celebrate his departure, while the entire internet is filled with criticism. On the second day, netizens are silenced as they witness Rong Yi as the new team captain, completely dominating the game. On the third day, the media chases after him, but a low-key senior protects him, covering his face and revealing only a small, exquisitely white chin. The internet explodes with excitement.\r
+\r
+On and on the days go.\r
+\r
+Rong Yi’s former teammates are driven to the brink of collapse, asking with red eyes: “Captain, can you still come back?”\r
+\r
+“I’m sorry,” Rong Yi replies gently. “I’m their captain now.”\r
+\r
+Everyone knows that Rong Yi is the treasure of the entire VIT team, especially for the cold and reserved senior who shields him from everything and favors him to an infuriating degree.\r
+\r
+No one knows that this team was built for Rong Yi.\r
+\r
+From the moment Xiao Yin first saw this dusty gem, he wanted to wipe away the dust and protect Rong Yi’s brilliance. For five years, he has done just that.`,IMG:1,PRIO:2},{BOOK_TITLE:"A Certain Someone",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:112,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://certainsomeone.carrd.co/",Eng_TL:"https://drive.google.com/drive/folders/19z0koGClJS-XWEnDVYTOCg01dfke_YQd",Synopsis:`Sheng Wang moved into his ancestral home at White Horse Lane, along with the woman that his father was presently seeing.\r
+\r
+His dad pointed at that woman’s son and said to him: Call him ge (older brother).\r
+\r
+Unyielding, amenable to coaxing but not coercion cold generator Gong x Regards himself as something precious lazy young master Shou\r
+\r
+Sheng Wang: I’m super straight\r
+\r
+Jiang Tian: I’m homophobic`,IMG:2,PRIO:1},{BOOK_TITLE:"A Filthy Rich Hamster in the Apocalypse",AUTHOR:"Huà Xī 画兮",CHAPTERS:92,EXTRAS:2,GENRE:"Dystopian",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/a-filthy-rich-hamster-in-the-apocalypse/",Synopsis:`Little Hamster, “Daddy daddy, I have food! All of it is yours! Even me!!!”\r
+\r
+WuYi (May 1) is a little hamster nicknamed ChòuChòu (Stinky). He has a very handsome and charismatic daddy owner and he lived every day happily without worries.\r
+\r
+But then suddenly, one day a zombie crisis emerged on earth and the world descended into the dangerous apocalyptic era. However, along with the appearance of zombies, humans, animals, and plants alike also awakened abilities for the first time.\r
+\r
+The little hamster fell asleep and woke up to find that he had become the same type of two-legged creature like his daddy and his original small two cheeks for food storage had become extremely huge!\r
+\r
+The little hamster rolled about with joy. The first thing he wanted to do was tell his daddy.\r
+\r
+After braving endless trials, climbing mountains and conquering seas, the little hamster finally found his daddy under mortal danger. Nie Xiao was then saved from the jaws of a third-grade zombie.\r
+\r
+“Daddy, baby found you at last!”\r
+\r
+Nie Xiao was completely flabbergasted; “…” What’s going on, xidangpa??? (xidangpa:happy to be a father = mainly used to ridicule the situation in which a man finally catches up with the goddess, but the goddess is pregnant with someone else’s child. In desperation, the man has to take over.)\r
+\r
+Everyone from the base started to calculate with their fingers: Holy shit! Sure enough, our Boss’ talent was already abnormal from when he was seven, he already has a child this big!`,IMG:3,PRIO:2},{BOOK_TITLE:"A Guide to Raising Your Natural Enemy",AUTHOR:"Jué Jué 决绝",CHAPTERS:101,EXTRAS:29,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://ladasblmtl.blogspot.com/p/a-guide-to-1.html",Synopsis:`As long as hamster spirit Shu Shu can survive the lightning tribulation, then his cultivation will be able to turn him into a human. In the end, the lightning tribulation strikes him and he arrives in the… future? \r
+\r
+In order to avoid people and being mistaken for a monster, Shu Shu decides to dig a hole in the forest to hide and live, and as a result… a very big snake aaaahhhh! Please, don’t eat me! \r
+\r
+The crown prince of the beast empire is seriously injured and becomes a beast that could no longer change into human form. He lives alone in the forest. One day, he sees a cute sub beastman deep in the forest. The sub beastman also sees him. At once, the sub beastman’s eyes roll backwards and he faints…. Scared to death? \r
+\r
+Shu Shu: I have a unique technique of faking death.`,IMG:4,PRIO:2},{BOOK_TITLE:"A President's Out of Body Experience",AUTHOR:"Mu San Guan 木三观",CHAPTERS:92,EXTRAS:4,GENRE:"Time Travel",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/pobe/",Synopsis:"Our straight (?) bottom woke up ten years into the future and found himself on the bed of his childhood friend… At the start, the bottom was shocked to his very bones, but he soon quickly accepted this premise and found the whole situation to be rather amusing. Precisely then, the bottom once again went back to his timeline — back to when he and the top were just platonic childhood friends.",IMG:5,PRIO:3},{BOOK_TITLE:"A Real Man Isn't Afraid Of A Little Demon",AUTHOR:"Little Baldy",CHAPTERS:53,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/a-real-man-isnt-afraid-of-a-little-demon/",Synopsis:`Yu Chu was a powerful character in a novel who constantly stirred up trouble, but after transmigrating, he turned from a little demon that kept the masses under his spell into a pitiful little thing that everyone bullied. \r
+\r
+Drugging, power struggles, fratricidal rivalries… Yu Chu resolved everything one by one. He snickered and prepared to recuperate in this peaceful world. As for those noisy “flies” that disturbed him, they were slapped to death by his hand. \r
+\r
+Looking at those foolish “flies”, Yu Chu did not have the slightest ups and downs inside and slowly extended his hand of fate to the “flies” necks… \r
+\r
+Slap! \r
+\r
+The hand of fate was heavily slapped away. \r
+\r
+“What are you staring at people for? It’s just that you didn’t get the last two custard buns. Do you still want to kill and rob them for the buns?” Xie XingMu, with his serious handsome face, lectured him coldly. \r
+\r
+Yu Chu was very dissatisfied with this mysterious pseudo-‘former personal bodyguard’. \r
+\r
+Even though Xie XingMu was tall, handsome, and rich, and had saved him many times from life and death; even though this man, as a former bodyguard, gave him food, shelter, and money when he, a young man, was living on the street, he was not pleased. \r
+\r
+Xie XingMu controlled him to death in all aspects, not only checked his whereabouts at any time, but also installed a tracker on his cell phone, and was always buzzing around like an old mother. \r
+\r
+Yu Chu was living with this oppressive wife and touched the back of his hand, which was slapped red. He was fierce in his heart: Sooner or later, I will kill this biggest “fly” by holding it down. \r
+\r
+Later, he was held down, indeed, held down. \r
+\r
+He cried and was pressed beneath Xie XingMu and almost killed.`,IMG:6,PRIO:2},{BOOK_TITLE:"A Scumbag Always Gets What He Deserves",AUTHOR:"風流書呆 & 风流书呆",CHAPTERS:42,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://asagwhd.carrd.co/",Eng_TL:"https://www.foxaholic.com/novel/a-scumbag-always-gets-what-he-deserves/",Synopsis:`Rege, before they met: Damn, who the hell is Jian Qiao? If he dares to steal my girl, I’ll mess him up! \r
+\r
+Rege, after they met: Damn, Jian Qiao is really good-looking, we should be friends! \r
+\r
+Rege, after they were friends: No way! Jian Qiao is great! He should belong only to me! The first time I’ve bent for anyone! \r
+\r
+Jian Qiao: One hundred actions will have a reaction, and your retribution is me!`,IMG:7,PRIO:3},{BOOK_TITLE:"A Simple Way To Give Money",AUTHOR:"xīguā chǎoròu",CHAPTERS:27,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://ontimestory.eu/index.php/category/a-simple-way-to-give-money/",Synopsis:`He Jing is the second-tier little fresh meat in the entertainment industry, who is famous coquettish sl*t in the circle but in fact he is just a virg*n who is looking for men with a handsome appearance and good body. \r
+\r
+He Jing wants to meet a handsome guy who loves his money, it doesn’t matter if he did not have money he works in the entertainment industry so he can make money to take care of him. \r
+\r
+Then he met the handsome, angry and resentful Zhou Cheng, whose clothes were cheap and he was obviously penniless so he finally could become a golden backer. \r
+\r
+Then he began to go to great lengths to give Zhou Cheng pocket money. \r
+\r
+Then he was blinded by Zhou Cheng’s black card.`,IMG:8,PRIO:3},{BOOK_TITLE:"A Train Named EVil",AUTHOR:"江亭",CHAPTERS:32,EXTRAS:1,GENRE:"Mystery",TIMELINE:"Modern",Eng_TL:"https://18.foxaholic.com/novel/a-train-named-evil/",Synopsis:`Zhou Yanling, a suspect in the Tongzhou 9/27 major mu*der case, appeared on the K4133 train. When the train conductor, Wu Fengrong first received this news, he began making the rounds, investigating. \r
+\r
+On this train, various forces secretly wrestled; the truth was confusing, and the suspect was ambiguously entangled with the conductor. \r
+\r
+Zhou Yanling had never encountered such a splendid person as Wu Fengrong, with a lovable physique and graceful charm. Zhou Yanling was so affected that he solicited that refreshing presence (1). Wu Fengrong was secretly wary that Zhou Yanling was concealing something profound. Who is he going to trick? It could be that he just wants to indulge. And when he was finished doing so, Wu Fengrong would not be able to keep himself from making a scene. In this moment, the two waited silently, each harboring their own designs and intents. \r
+\r
+Thirty hours from Tongzhou to Baihe, the road is long…`,IMG:9,PRIO:1},{BOOK_TITLE:"A Wave of Exes Came Looking for Me. What to Do?!",AUTHOR:"Long Qi 龍柒",CHAPTERS:64,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://whiteskytranslations.wordpress.com/2018/10/17/the-journey-begins/",Synopsis:`Bai Yue Sheng is a Transmigration System clerk, each of his tasks he completes to the 100%, for each one he has gotten the best scores, after he finally passed seven, eight, nine… okay, an unknown number of worlds, Lord God gave him an opportunity to be promoted; the requirement was only to live on an ordinary way for 20 years at his original world. \r
+\r
+The requirement was easy, Bai Yue Sheng accepted the task, but he could have never imagined that, just after he settled on planet Earth, his “exes” would actually break through time and space to chase him down! \r
+\r
+Bai Yue Sheng: As a 10/10 slag, how do I break away from the siege of this bunch of mental people… while also living 20 years of an ordinary life?`,IMG:10,PRIO:3},{BOOK_TITLE:"A White Lotus Host Who Does Not Want To Be a White Moonlight Is Not a Good Host",AUTHOR:"mù sháo qī",CHAPTERS:89,GENRE:"World Hopping",Eng_TL:"https://storyseedling.com/series/19303/",Synopsis:`Bai Lianhua looks just like his namesake, a white lotus. \r
+\r
+So it’s probably inevitable that a system came for him. \r
+\r
+System: come, my dear host Bai Lianhua, please live up to your name, and with your white lotus aura that is dazzlingly divine, save those antagonists who have led tragic lives and who are to stand against the world in the future. \r
+\r
+Bai Lianhua: …Wait, it isn’t my fault my name is like that. \r
+\r
+Before, Bai Lianhua thought this would have been the most excruciating thing to happen to his life, until all his missions were completed, and he’s happy and excited to go home. His system which had always been acting cute wipes his face handsomely, and then gives him a mystifying smile, “in fact, my real name is Return System of White Moonlight.” \r
+\r
+＃Apparently, white lotus and white moonlight are great as a combo＃ \r
+\r
+So, this was actually an all-in-one service featuring white lotus + white moonlight? The missions he thought he had completed were just the preludes to his missions to follow? \r
+\r
+And so, after having acted as a white lotus waving brilliantly in the wind, Bai Lianhua will have to return to his previous worlds, as that white moonlight that never went away in each of the antagonists’ minds, and resave the world from their clutches. \r
+\r
+Bai Lianhua: Wait! System, come back! Explain to me why all my missions failed after I left, and why all those guys who I had painstakingly dragged back into the righteous path still went awry! \r
+\r
+Mr. Antagonist: Hm? What’s the problem? I’m really happy with this——Now I finally have the power to take this white lotus from the pond, and nurture it well within a vase [takes a fresh white●lotus in his hand, playing with it gently] \r
+\r
+Bai Lianhua: …! [Like the small white lotus, shaking pitifully in the wind]_(:з」∠)_ \r
+\r
+If the system lied to you, don’t despair, don’t cry, please stay as quiet as a flower, and be a stretch of pure white moonlight.`,IMG:11,PRIO:2},{BOOK_TITLE:"Accidental Mark",AUTHOR:"Die Zhiling 蝶之灵",CHAPTERS:95,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://t.co/39HzQdNyFL",Eng_TL:"locked",Synopsis:`Pei Shaoze unintentionally heard about a novel called Accidental Mark. Once he woke up, he found he had transmigrated into the alpha scumbag in the book, Pei Shaoze. The omega protagonist of the novel, Cheng Xia happened to have his pheromones out of control. The original scumbag not only took the opportunity to mark the protagonist but also killed the protagonist’s parents and ruined his reputation. The protagonist was completely blackened and returned five years later to stab the scumbag to death. \r
 \r
 Pei Shaoze, “……” What type of melodramatic plot was this? Why not invest well in movies and TV shows when he was the boss? His brain was used to bully the protagonist. No wonder why he would be stabbed to death. \r
 \r
@@ -411,579 +528,135 @@ The fans said, “This alpha is pretty good. Xia Xia, hurry and chase him!” \r
 \r
 Cheng Xia answered, “I’ve caught him :)” \r
 \r
-—Give you the most tolerant love and help you spread your wings to fly high.`,IMG:12,PRIO:1},{BOOK_TITLE:"I Got Marked By My Shadow Guard After Pretending To Be An Alpha",AUTHOR:"Chi Ling 池翎",CHAPTERS:24,EXTRAS:1,GENRE:"A/B/O",TIMELINE:"Historical",Eng_TL:"https://dummynovels.com/novel/i-got-marked-by-my-shadow-guard-after-pretending-to-be-an-alpha/",Synopsis:`The second prince from the Yan State, Yu Yan, has pretended to be an alpha for many years, but after having an unexpected heat, he slept with his personal shadow guard.\r
+—Give you the most tolerant love and help you spread your wings to fly high.`,IMG:12,PRIO:1},{BOOK_TITLE:"Accidentally Married A Man Full of VIinegar",AUTHOR:"Yi Mei Niukou",CHAPTERS:83,EXTRAS:8,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://shanghaifantasy.com/novel/accidentally-married-a-man-full-of-vinegar/",Synopsis:`On a certain day, Chu Yi, feeling quite peculiar, goes to a bar for a drink and ends up drastically changing his life.\r
 \r
-And what is more unfortunate is, due to Yu Yan using suppressant medicines long-term, damaging his constitution, his heat is no longer controllable.\r
+Unspeakable deeds were done and he accidentally picks up a husband.\r
 \r
-He can only ask his shadow guard to assist him regularly to deal with his heats, but good thing is that his shadow guard is very obedient and loyal, willing to do whatever he says, and doesn’t mind helping him.\r
+It was quite a coincidence that this husband of his turned out to be a senior from his school, the one who people call a ‘mountaintop flower’.\r
 \r
-But the situation slowly becomes strange –\r
+However, he didn’t expect that this aloof and hard-to-approach husband of his to not only flirt without batting an eye but also love eating vinegar (getting jealous).\r
 \r
-Yu Yan, with a hoarse voice, cursing: Get out!\r
+When he talks to others, his husband eats vinegar.\r
 \r
-The shadow guard restrains him in his embrace, with an innocent look in his eyes: Where does master want me to pull out from?\r
+When he laugh with others, his husband eats vinegar.\r
 \r
-Yu Yan: …QAQ\r
+When he compliment others, his husband eats vinegar.\r
 \r
-And even later, the new Yan State emperor ascends the throne, the young monarch sits upright on his dragon throne, under the gaze of of many: vomits –\r
+Even when he post about anything related to others on his Moments on WeChat, his husband eats vinegar.\r
 \r
-The state officials suddenly realized that their emperor was pregnant.`,IMG:118,PRIO:2},{BOOK_TITLE:"Life-Saving Days by the Husky’s Side",AUTHOR:"月半丁",CHAPTERS:32,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://lsdhs.carrd.co/",Eng_TL:"https://cwastranslations.wordpress.com/life-saving-days-by-the-huskys-side/",Synopsis:`Zhou Li had transmigrated into a tooth-rottingly sweet novel.\r
-The sweet novel tells the story of a tragic male protagonist who was turned into a dog, abused by a gangster, rescued by the heroine, before finally marrying the heroine.\r
-Zhou Li’s fate was pitiful, and he transmigrated into the animal-abusing gangster.\r
-When he transmigrated, he found his foot stepping down on a dog’s head.\r
-Looking at the dying dog, then thinking about the male lead’s character, he realised that his life was held in this little puppy’s paws.`,IMG:154,PRIO:1},{BOOK_TITLE:"Live Broadcasting Raising Dragons in the Interstellar",AUTHOR:"Yú Zhī Shuǐ 鱼之水",CHAPTERS:111,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://shallotnoodle.wordpress.com/blog/chinese-novels/lbrdi/",Synopsis:`Shen Mian, who had powerful wood and spatial abilities, was kicked out by his family for being an omega, became homeless and had zero deposits. The original owner was still a childcare teacher and was assigned to the most marginal planet and served as the dean of the childcare centre.\r
-\r
-The childcare centre was small and broken. As the dean, Shen Mian has to live broadcast to generate income in addition to raising cubs.\r
-\r
-So one day, on the largest interstellar live broadcasting platform, appeared a large scale meng selling scene, also known as Awei Crematorium, the audiences passed on word of mouth- in live room 1551, the dragons have gathered!\r
-\r
-The cubs are a hundred pounds, they will breathe fire, can fight and will also sell meng, the centre’s dean Shen Mian is better than an alpha. The popularity of the live broadcast room was so great that the small centre became the best childcare centre in the interstellar.\r
-\r
-Shen Mian diligently raised the cubs, but he did not want the imperial prince that was among the cubs he raised.\r
-\r
-Shen Mian: I, the dean, raise dragons.\r
-\r
-Crown Prince: Raise, raise nine, raising an adult, is it enough?\r
-\r
-Shen Mian: See if a slap is enough.\r
-\r
-Crown Prince: Enough, it’s enough, thank you, wife.`,IMG:157,PRIO:2},{BOOK_TITLE:"Mr. Rong's Lovelorn Diary",AUTHOR:"桃白百",CHAPTERS:73,EXTRAS:12,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://mrrong.carrd.co/",Eng_TL:"https://m.flying-lines.com/novel/mr-rong-s-lovelorn-diary",Synopsis:`When he was categorised as an Omega at the age of 13, Rong Yi made a tiny little wish. In the future, he wanted to fall in love with a tall, handsome and elegant Alpha whom he could share a romantic love with, then build a blissful family with him and give birth to many cute babies together.\r
-A few years later, he grew into a tall, handsome and elegant Omega and was passionately pursued by countless admirers of the same gender, while all Alphas backed away from him in face of his superiority.`,IMG:179,PRIO:1},{BOOK_TITLE:"My Roommate Probably Is Not an Omega",AUTHOR:"Ablfish",CHAPTERS:25,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://thisisbananatl.com/bl-%E6%88%91%E7%9A%84%E5%AE%A4%E5%8F%8B%E5%8F%AF%E8%83%BD%E4%B8%8D%E6%98%AFomega-my-roommate-probably-is-not-an-omega/",Synopsis:`ABO / AxB / little sweet cookie\r
-This article is a short story ~ little sweet cookie ~ will end very soon~~\r
-\r
-I closed my eyes and slept until the next morning. Climbing up from my bed in a daze, I saw that my roommate’s bed is still neat and tidy, like no one has slept on it before. I first checked that no one is in the bedroom, then carefully locked the door before I pounced on his bed and took a big breath.\r
-\r
-… really the same smell from last time! A very light aroma, pheromones will not lie! My roommate is an Omega, that’s right! Just that he is a little bit bigger and taller. I vaguely estimated his height by comparing the gap between his head and the door last night.\r
-\r
-Me : “……………………………”\r
-\r
-…what did this Omega ate to grow so tall?! He’s like half a head taller than me!! Not talking about those Alphas who have crazy growth spurts, my height itself is already very tall amongst the Betas! This Omega is even ten centimeters taller than me…\r
-\r
-My self-esteem has suffered a hard blow…`,IMG:186,PRIO:3},{BOOK_TITLE:"Runaway Guide",AUTHOR:"Die Zhiling 蝶之灵",CHAPTERS:85,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`After he was reborn in a sci-fi ABO world, Xi Wei became the newly born son of the king of the empire. He thought that as the king’s son he could live a grand, carefree life, but unexpectedly the he, the eldest prince, was actually an omega? What the hell was an omega?\r
-\r
-There was an alpha who was born on the same day as the eldest prince Xi Wei, and the two children grew up together. When Xi Wei looked at the blond child next door, he always felt that the boy wasn’t pleasing to the eye, so Xi Wei bullied him as a child.\r
-\r
-Until many years later…\r
-\r
-Looking at the man standing in front of him who was a head taller than him, Xi Wei was dumbfounded.\r
-\r
-—He tried to escape, but he eventually still fell into the clutches of his childhood sweetheart.`,IMG:212,PRIO:3},{BOOK_TITLE:"The General Loves to Collect Little Red Flowers",AUTHOR:"Kun Cheng Xiong Mao 困成熊猫",CHAPTERS:105,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/glclf/",Synopsis:`The most domineering, arrogant and beautiful Omega in the Tarot Empire, Le Yao was arranged to marry General Xu Yao, who was known as the ruthless King of Hell.\r
-However, the “Le Yao” now was a crossed-over soul from the earth!\r
-\r
-After X days of marriage he gave Xu Yao a note…\r
-\r
-It was written:\r
-– Little Red Flower Agreement!-\r
-Don’t swear a day, get 1 little red flower.\r
-Keep reading every night, get 2 little red flowers.\r
-Do good deeds, get 3 little red flowers.\r
-Get 300 little red flowers, you can pa pa pa!\r
-\r
-Xu Yao: Hmph! Was Lao Zi like a dog in heat and want to do it with you?\r
-\r
-But after a month…\r
-\r
-Xu Yao: Hurry! I still need three more flowers, whose family is bankrupt this time? I’ll send a charity money, hurry!!!\r
-\r
-Cheerful, kind and virtuous wife vs Black belly and pampering husband, 1 vs 1, HE`,IMG:241,PRIO:2},{BOOK_TITLE:"The General’s Vampire Omega",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:88,EXTRAS:1,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-generals-vampire-omega/",Synopsis:`As a newborn vampire, Luo ZhouZhou’s instincts are ingrained in his genes making him embark on a constant lifelong quest for a matching mate. His mate’s blood must be warm and sweet, with the scent of red caltrop fruit. However, after almost twenty years of searching without any luck, Luo ZhouZhou felt himself withering away until he traveled to an unknown time and space.\r
-\r
-Getting accustomed to his new human life (not human, vam-pi-re!) is far from easy, but when he ends up at the office of the Bayard district’s police station, he finally finds the smell he has been searching for all this time.\r
-\r
-Only a whiff and I know he’s the mate I’ve been looking for!\r
-\r
-In a strange place with pheromones and secondary genders, the naive Luo ZhouZhou, who knows nothing about the workings of this ABO world, has to find the owner of that scent. And there’s also an omega killer on the loose!\r
-\r
-What are omegas and alphas? Some kind of personal s*aves? If only this General Chu Feng would leave this vampire in peace so he can fulfill his lifelong quest, dammit!`,IMG:242,PRIO:3},{BOOK_TITLE:"The Short Story of Shaowang",AUTHOR:"Little Ice Cube 冰块儿",CHAPTERS:58,EXTRAS:12,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://readshaowang.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/the-short-story-of-shaowang/",Synopsis:"The omega school tyrant, legendarily known as “Yan Ge”, Jiang ShaoYan’s heat is approaching. He thought he had no other choice but to seek out an alpha stronger than himself to get him through it, but suddenly an underclassman appeared saying he liked him? Wait, wait, wait, having such weak pheromones yet daring to hit on this Ge? This Wang isn’t that foolish, right?",IMG:251,PRIO:1},{BOOK_TITLE:"This Omega Is Immune To All Abilities",AUTHOR:"Qīngméi jiàng 青梅酱",CHAPTERS:100,EXTRAS:3,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://oiaa.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/this-omega-is-immune-to-all-abilities/",Synopsis:"V",IMG:262,PRIO:1},{BOOK_TITLE:"This Omega is Sweet and Wild",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:107,EXTRAS:15,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/tosw/",Synopsis:`Li Cheng is an omega, but he is thoroughly like an alpha.\r
-\r
-He regards teachers like friends, is unrivalled in the swimming pool and also has 80 betas as his lil’ brothers.\r
-\r
-One day, Li Cheng loudly declares ⸺ He’s determined to win the campus male god alpha Xiao Yiheng over. He must become his!\r
-\r
-“Xiao Yiheng is smart, handsome, and tall! Moreover, he has long legs and a perky butt. His strong x capability can be seen with just a glance! Only this kind of alpha is worthy of me!”\r
-\r
-\r
-\r
-Long-legged, perky-butt, and has strong x capability Xiao Yiheng: “……”\r
-\r
-\r
-\r
-To show his determination, Li Cheng proclaims that he would give him a love bento every morning.\r
-\r
-The next day, Li Cheng stayed up all night playing games and can’t get up.\r
-\r
-The third day, Li Cheng danced the night away with others and can’t get up.\r
-\r
-The fourth day, Li Cheng fought with the gang from the neighbouring school and can’t get up.\r
-\r
-Then came the fifth day… The sixth day… The seventh day…\r
-\r
-\r
-\r
-Just when Li Cheng is just about to forget his plan of courting the male god, Xiao Yiheng obstructs him inside one of the locker room’s cubicles before his swimming training.\r
-\r
-“Xiao Yiheng, w-what do y-you want with Laozi?”\r
-\r
-“Because I was waiting for your bento, I haven’t eaten breakfast for a whole week.” Xiao Yiheng had a cold expression. With a smile-that-wasn’t-a-smile, he continued, “But… Your pheromone smells quite delicious.”`,IMG:263,PRIO:1},{BOOK_TITLE:"Two Alpha's 101'st Blind Date",AUTHOR:"Tao Zhi Yao 桃之幺",CHAPTERS:31,EXTRAS:2,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://ta101bd.carrd.co/",Eng_TL:"https://intangial.wordpress.com/projects/two-alphas-101st-blind-date/",Synopsis:"The story of two alphas failing at blind dates together. that is, except for their last one.",IMG:277,PRIO:1},{BOOK_TITLE:"When an Alpha is Marked by One of His Own Kind",AUTHOR:"Zǎo gēng niǎo 早更鸟",CHAPTERS:100,EXTRAS:3,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Within the industry, everyone knew Team DG’s captain Lu Zhe and Team BLX’s top laner Shen Qiao didn’t get along. They said it was due to hormones. They said it was a basic AA incompatibility.\r
-\r
-Lu Zhe once said of Shen Qiao: “Obsessed with kills. Lone wolf.”\r
-\r
-With a cold smile, Shen Qiao said of Lu Zhe: “Command’s mediocre. Shitty jungler.”\r
-\r
-But then…\r
-\r
-When Team DG, champions of the last tournament season, stumbled during the Spring Tournament and fell during the semifinals, someone cut through the furious cursing and swearing that had consumed the internet and leaked the news—\r
-\r
-Shen Qiao was going to be traded. He was joining Team DG.\r
-\r
-When that news came out, the internet roared.\r
-\r
-Did Shen Qiao and Lu Zhe fight today?\r
-\r
-On esports forums, trolls and haters placed their bets. It was endless, until Team DG won its second world championship crown.\r
-\r
-Half a month after the tournament.\r
-\r
-The players of Team DG hosted a livestream: “The lodgings were awful. Captain and Qiaoqiao had to share a room. Aren’t we pitiful?”\r
-\r
-Shen Qiao, sitting next to the monitor, glanced over through hooded eyes. He caught a glimpse of a bullet comment and echoed it out loud: “Did we fight?”\r
-\r
-He lifted a hand to his neck. “We fought.”\r
-\r
-Lu Zhe approached with a cup of black tea. Just in time to see Shen Qiao touch the bite mark on his throat. He added:\r
-\r
-“We even broke the bed.”`,IMG:285,PRIO:2},{BOOK_TITLE:"Evil Love Appears",AUTHOR:"Crazy Melon Skin",CHAPTERS:129,EXTRAS:7,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/evil-love-appears-chapter-1/",Synopsis:`Xu Jiale, a divorced and pessimistic Alpha, has the following life vision:\r
-\r
-“I hope my dad hasn’t spent all the money my grandfather left behind, so I won’t have to work hard.”\r
-\r
-Fu Xiaoyu, 25 years old, an urban beauty in the ABO world. A returned elite with A-level pheromones, working nearly 12 hours a day.\r
-\r
-Xu Jiale, can list Fu Xiaoyu’s shortcomings like reading off a menu: proud, unapproachable, workaholic, ambitious, lacking in charm, and pheromones so sweet it’s nauseating.\r
-\r
-He absolutely, completely, utterly does not like him.\r
-\r
-But their initially incompatible business partnership takes a bizarre turn after an unexpected incident.\r
-\r
-Fu Xiaoyu: “Xu Jiale, I want to pursue you.” 0.0\r
-\r
-Xu Jiale: Do you know how ridiculous it is for an Omega like you to actively pursue a divorced Alpha like me? -.-\r
-\r
-…\r
-\r
-Love arrives at an unpredictable moment, making it all the more wonderful.\r
-\r
-Fu Xiaoyu remembers Xu Jiale at the KTV booth, one hand holding a cat named Xia’an, the other holding a microphone.\r
-\r
-This Alpha sings Cantonese songs well, and he sang the song “No Man’s Land”:\r
-\r
-In this world, the worst crime is being too easily moved,\r
-\r
-But I like this crime,\r
-\r
-It’s earth-shattering, but it’s a pity that heaven and earth are indifferent,\r
-\r
-Without sound, without wind, this love has no witnesses.\r
-\r
-It was at that moment that he thought— he truly wanted to possess this Alpha.`,IMG:71,PRIO:1},{BOOK_TITLE:"Fouls Prohibited",AUTHOR:"Lu Tianyi",CHAPTERS:45,EXTRAS:9,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://foulsprohibited.carrd.co/",Eng_TL:"https://neondragonfly.org/2022/10/17/fouls-prohibited-%E7%A6%81%E6%AD%A2%E7%8A%AF%E8%A7%84/",Synopsis:`As a rising Formula One race car driver, Ye Ci had always been criticized.\r
-“Aloof and indifferent, unable to be reasoned with.”\r
-“Suspected to have a mental illness, is this person really suitable for the track?”\r
-“He doesn’t really love the sport, racing is just his way of venting his violent emotions.”\r
-Huo Tinglan’s demeanor was always elegant and protective in front of the media, and he said that his husband was just quiet and introverted. After five years of marriage, they respected each other and were quite harmonious.\r
-It was not until Ye Ci died unexpectedly during a race that Huo Tinglan gradually realized . . . . . .\r
-He wasn’t quiet and introverted, but instead lifeless. Before finding his refuge, Ye Ci had gone through too many dark and painful moments.\r
-After enduring years of suffering and longing, Huo Tinglan was unexpectedly reborn. Ye Ci was only eighteen years old this year, and everything was within reach.\r
-Huo Tinglan was cheeky and went directly to his door to ask for a kiss.`,IMG:85,PRIO:1},{BOOK_TITLE:"He's So Sweet After Class",AUTHOR:"沽飞双",CHAPTERS:57,EXTRAS:5,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/hes-so-sweet-after-class/chapter-1/",Synopsis:`Mo Lingqiu was employed as University A’s Professor of Chinese Language two years ago. Due to his good-looking appearance, he became popular in school and there were countless omegas who wanted to flirt with him.\r
-\r
-As the PE department’s prince, Jiang Chenming was one of the most outstanding alphas and was chased by many omegas.\r
-\r
-Both people who originally did not have any encounter met during a night jog. Mo Lingqiu who had sprayed the blocker, gave his legs away and sat directly onto the floor.\r
-\r
-Jiang Chenming: Teacher Mo, you’re an omega?\r
-\r
-Mo Lingqiu stared at him, both of his eyes under the spectacles slightly turned red.\r
-\r
-Jiang Chenming: Your pheromones smell so good.`,IMG:100,PRIO:2},{BOOK_TITLE:"I like your pheromones",AUTHOR:"Yǐnlù Xīng",CHAPTERS:72,EXTRAS:4,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://ilyp.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ilyp/",Synopsis:`As a good-looking Beta with a good family background, Duan Jiayan has lived a smooth sailing life for more than ten years, until he met Lu Xingci in high school.\r
-Lu Xingci’s family situation is better than his, he is taller than him and plays basketball better than him. Needless to say, his grades are a whole tier above Duan Jiayan’s. Even his friends can’t help but occasionally praise Lu Xingci.\r
-Most importantly, every girl that Duan Jiayan has set his sights on, all admitted that they have liked Lu Xingci for a few years already.\r
-Since then, Duan Jiayan has never thought well of Lu Xingci, till the day he received his new medical report. He is a late-blooming Omega, and because he became an Omega this late, it came with dire consequences. Now Alphas will feel the need to beat up other people whenever they come near Duan Jiayan. He himself is now allergic to every Alpha’s pheromone, except Lu Xingci’s.\r
-*\r
-One night during a self-study session, Duan Jiayan became extremely uncomfortable and ended up asking Lu Xingci to bite him and leave a temporary mark.\r
-After finishing the bite, Lu Xingci asked: “We Alphas have very bad tempers, now that I’ve bitten you, are there any rewards?”\r
-“Why don’t you…” Duan Jiayan tentatively asked: “Be a little more generous?”\r
-“Sure,” the other party kneeled slightly and tilted down his head, exposing his white neck: “Then you’ve to also bite back. Once you do, I won’t make a fuss anymore.”\r
-Duan Jiayan: “…”`,IMG:123,PRIO:3},{BOOK_TITLE:"Mutated pheromones",AUTHOR:"A Lifetime of Beautiful Clothes",CHAPTERS:68,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://mutatedpheromones.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/mp/",Synopsis:`ABO + Online Gaming\r
-\r
-A sweet dessert~\r
-\r
-As an omega, Yue Ran has mutated pheromones.`,IMG:180,PRIO:1},{BOOK_TITLE:"Top Tier Seduction Formula",AUTHOR:": 松子茶",CHAPTERS:55,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ttsf/",Synopsis:`Lin You had been a beta for seventeen years, but one day he suddenly presented as an omega, one with a rare seductive-type pheromone, which was fatally attractive to alphas.\r
-\r
-While the alphas claimed that they don’t like this type of violent maniac, their faces couldn’t help but blush and their hearts couldn’t help but race as they looked at him, thinking to themselves how fair his skin was and how pretty his face looked.\r
-\r
-Facing the group of alphas closely observing him, Lin You looked around and felt that his beta best friend, Lu Qingyan, was the most reliable. He wasn’t affected by the pheromones at all. Lin You leaned comfortably against Lu Qingyan, sticking even closer than before.\r
-\r
-And when Lu Qingyan faced the trusting gaze of Lin You, he silently swallowed the words hidden in his heart — deep down, he also found Lin You’s pheromones to smell very pleasant, like an overwhelming net that captured him within.\r
-\r
-Two months later, Lu Qingyan also presented.\r
-\r
-An alpha, with top-tier pheromones.\r
-\r
-Several months later, he marked Lin You.\r
-\r
-Lin You (scratching his claws): “…You liar!”`,IMG:270,PRIO:1},{BOOK_TITLE:"Restricted Area",AUTHOR:"空菊",CHAPTERS:62,EXTRAS:4,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://jinqu.carrd.co/",Eng_TL:"https://ninetysevenkoi.wordpress.com/ra/",Synopsis:"https://jinqu.carrd.co/",IMG:211,PRIO:1},{BOOK_TITLE:"Sha Po Lang",AUTHOR:"Priest",CHAPTERS:128,EXTRAS:15,GENRE:"Action",TIMELINE:"Historical",Carrd:"https://shapolangpriest.carrd.co/",Eng_TL:"locked",Synopsis:`"The first person to dig ziliujin fuel out of the ground could never have predicted that what they dug out was the beginning of a dog-eat-dog age.\r
-Our entire life was but an ugly confidence game of greed; this is something everyone knows, but that they could not bring to light.\r
-From where did this con begin? Maybe from atop the first clean white canvas sails of a foreign ship that sailed across the ocean, or from beneath the great wing of a Giant Kite as it rose unsteadily into the skies — or from a time even before that: as the spreading ziliujin, like an ink stain upon the earth, turned the great plains of the wild north into a sea of flames.\r
-Or maybe it was when We… when I met Gu Yun in a world all covered in ice and snow."`,IMG:217,PRIO:1},{BOOK_TITLE:"Supernatural Movie Actor",AUTHOR:"Xìzi jì jiǔ 戏子祭酒",CHAPTERS:179,EXTRAS:5,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://smaa.carrd.co/",Eng_TL:"https://rainbow-reads.com/app-toc/",Synopsis:`Xie Chi is a patient with multiple personality disorder. On the surface, he is educated and gentle but the secondary personality is cold, ruthless, and powerful, with explosive strength.\r
-Xie Chi can never fall in love with others because the secondary personality is his boyfriend.\r
-Xie Chi’s only dream is to one day embrace his lover.\r
-In order to realize his dream, Xie Chi willingly binded with the Horror Movie Actor App. The app regularly releases horror movie notices such as Spirit in Red Clothes, Zombie Lovers, 1552 Haunted House, etc…\r
-Selected actors will be placed in a real horror environment to survive.\r
-On the first day of filming, the first male lead with a dirty personality blocked Xie Chi in the corner. “Follow me and I’ll help you be the second male lead.”\r
-Xie Chi smiled softly and shook his head. “That isn’t enough.”\r
-The first male lead was dumbfounded.\r
-Xie Chi smiled slightly. “Brother, help me beat him up.”\r
-The secondary personality gave a cold smile to the first male lead.\r
-End of the shoot, the first male lead: Xie Chi.\r
-Others: Struggling to survive.\r
-Xie Chi: Defy the natural order to change fate.\r
-A combination of absolute wisdom and absolute force.\r
-Starting from the 18th tier, Xie Chi will eventually become… the horror movie emperor.`,IMG:227,PRIO:1},{BOOK_TITLE:"The Earth Is Online",AUTHOR:"Mo Chen Huan 莫晨欢",CHAPTERS:240,EXTRAS:5,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://earthisonline.carrd.co/",Eng_TL:"locked",Synopsis:`Six months ago, tens of thousands of black phantom towers appeared all over the world, floating above the cities. Chemists, physicists, religious people… all of them could do nothing.\r
-Six months later, people became used to the towers and no longer paid them attention.\r
-One day, Tang Mo saw a flying insect crash into it instead of going through it. The next day, a sharp and clear child-like voice issued an announcement to all humans.\r
-“Ding dong! November 15th, 2017. The earth is online.”\r
-The black tower’s three iron-clad rules:\r
-1. Everything is explained by the black tower.\r
-2. 6 o’clock to 18 o’clock is the game time.\r
-3. All players, please strive to attack the tower.`,IMG:238,PRIO:1},{BOOK_TITLE:"The Ultimate Blue Seal",AUTHOR:"Priest",CHAPTERS:103,EXTRAS:3,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://zhongjilanyin.carrd.co/",Eng_TL:"http://edanglarstranslations.com/zjly",Synopsis:`With the ever changing and fast-pace development of science and technology, technological terrorism seems to have risen along with the current. In this world, a mysterious and non-governmental organization called Utopia hides among civilization like a monster silently hunting on its prey. Taking 'energy' as the core purpose, they conduct experiments on human bodies without their consent, with the goal of extracting human emotions and converting them into 'technology fuel'.\r
-The story started with Su Qing, who ran away to a gay bar in an attempted to get wasted after being dump by his boyfriend. As a consequence of his one-night stand encounter with Hu Bugui - the team caption of the "RZ Unit", whom Utopia suspected Su Qing has deep association with, they kidnapped him. Su Qing was reformed and turned into Grey Seal at an Utopia Base where there are many others who were kept prisoners like him. There, Su Qing had to learn how to stay sane and survive in a world where his humanity is constantly being tested and deviated from the norms.\r
-Zhongji Lanyin is the story of a little weakling of a loser who can't do anything but eat, drink, and have fun, who's been dumped on top of it, grows up into a crafty and conniving genuine man.`,IMG:256,PRIO:1},{BOOK_TITLE:"I'm Not Shouldering This Blame",AUTHOR:"Tian Tang Fang Zhu Zhe 天堂放逐者",CHAPTERS:175,GENRE:"Adventure",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`One day, the stuntman found that acquaintances and unfamiliar people were looking for him through various channels. Even someone from a certain department of the country came—\r
-\r
-Team Leader of an abilities group: Comrade Jian Hua, on behalf of the nation, I want to tell you about a newly discovered world secret.\r
-\r
-Protagonist: What?\r
-\r
-Team Leader of an abilities group: In fact, our world is a book.\r
-\r
-Protagonist: WTF?\r
-\r
-Team Leader of an abilities group: And you will be the last villain of the seven volume novel series.\r
-\r
-Protagonist: …\r
-\r
-See title for the protagonist’s mood.\r
-\r
-Book Character A: You and I are good childhood friends. Shouldn’t I be the white moonlight in your heart?\r
-\r
-Protagonist: …\r
-\r
-Book Character B: I treated you kindly, so shouldn’t you trust me completely?\r
-\r
-Protagonist: …\r
-\r
-Book Character C: I’m so considerate while busy. As good friends, shouldn’t we be rolling around on first base?\r
-\r
-Protagonist: …\r
-\r
-See title for the protagonist’s mood.`,IMG:136,PRIO:2},{BOOK_TITLE:"Stone Age Husband Raising Journal",AUTHOR:"Jué Jué 决绝",CHAPTERS:161,GENRE:"Adventure",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbme/",Synopsis:`What should you do when the person you like is no longer loyal? Find another one!\r
-\r
-This time, in order to avoid trouble, Xiong Ye chose the weakest man in the tribe as his new companion.\r
-\r
-In any case, he can afford him!\r
-\r
-With his strength, he’ll definitely be able to let his own man eat meat every day instead of grass.\r
-\r
-* *\r
-\r
-Zhou Ji, the ‘weakest man’ who had just transmigrated over from the apocalypse and likes to indulge in eating ‘grass’, “…”\r
-\r
-He’s not the same person anymore! He was clearly capable of killing the entire tribe by himself!`,IMG:224,PRIO:2},{BOOK_TITLE:"I Have Amnesia, Don't Be Noisy!",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:119,EXTRAS:5,GENRE:"Amnesia",TIMELINE:"Modern",Carrd:"https://ihadbn.carrd.co/",Eng_TL:"https://dewandfrost.home.blog/bl-i-have-amnesia-dont-be-noisy/",Synopsis:`When Chu Qin found his amnesiac lover, the fake fiancee his lover’s family had arranged for was with him.\r
-Fake fiancée: I’m the person you love the most.\r
-Zhong Yibin: ….Liar, the person I love is obviously Chu Qin.\r
-Fake fiancée: Didn’t you lose your memory?\r
-Zhong Yibin: F*ck! I still remember Chu Qin!\r
-Chu Qin: “……”\r
-Except for you, I forgot the entire world…..\r
-Never forget Chu Qin.`,IMG:120,PRIO:2},{BOOK_TITLE:"Back to the Apocalypse",AUTHOR:"Ye Yo 夜悠",CHAPTERS:130,EXTRAS:3,GENRE:"Apocalypse",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/btta/",Synopsis:`t’s the beginning of the Apocalypse, and zombies are running rampant over the Earth.\r
-\r
-Bai Jing brought his space dimension with him when he was reborn.\r
-\r
-A lousy man becomes a loyal lover.\r
-\r
-Hidden dimension, check. Food supplies, check. Golden finger, check.\r
-\r
-Next, I’m not good at introductions, so please forgive me.`,IMG:34,PRIO:3},{BOOK_TITLE:"Thrive in Catastrophe",AUTHOR:"Jiao Tang Dong Gua 焦糖冬瓜",CHAPTERS:98,EXTRAS:2,GENRE:"Apocalypse",TIMELINE:"Modern",Carrd:"https://thriveincatastrophe.carrd.co/",Eng_TL:"https://www.wattpad.com/story/141770773-thrive-in-catastrophe-by-%E7%84%A6%E7%B3%96%E5%86%AC%E7%93%9C",Synopsis:`This story is about a rookie researcher, who was forcefully dragged away from his restful life, compelled into facing various killers and zombies, always having to risk his life at the brink of death, and finally becoming an advanced researcher that is acclaimed by all. And throughout his adventure, he met an alluring(?) killing machine, who he started to have fantasies on after they had an accidental kiss…\r
-Xiao Yan: Did I fall for him? But he’s a man!\r
-Maya: Who knows…. maybe it’s the other way round?`,IMG:267,PRIO:2},{BOOK_TITLE:"A Simple Way To Give Money",AUTHOR:"xīguā chǎoròu",CHAPTERS:27,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://ontimestory.eu/index.php/category/a-simple-way-to-give-money/",Synopsis:`He Jing is the second-tier little fresh meat in the entertainment industry, who is famous coquettish sl*t in the circle but in fact he is just a virg*n who is looking for men with a handsome appearance and good body. \r
-\r
-He Jing wants to meet a handsome guy who loves his money, it doesn’t matter if he did not have money he works in the entertainment industry so he can make money to take care of him. \r
-\r
-Then he met the handsome, angry and resentful Zhou Cheng, whose clothes were cheap and he was obviously penniless so he finally could become a golden backer. \r
-\r
-Then he began to go to great lengths to give Zhou Cheng pocket money. \r
-\r
-Then he was blinded by Zhou Cheng’s black card.`,IMG:8,PRIO:3},{BOOK_TITLE:"Fanservice Paradox",AUTHOR:"Zhìchǔ 稚楚",CHAPTERS:109,EXTRAS:11,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://fanserviceparadox.carrd.co/",Eng_TL:"https://peachpitting.com/novel/fp",Synopsis:"Kaleido a super talented but not well known boyband shot to fame after a video of Pei Tingsong the rebellious most gong-like youngest member bullying Fang Juexia Gege surfaced and created a new CP. Join Kaleido as they navigate through the dark and light sides of the entertainment industry. This novel is well-paced light yet deep action packed with Kaleidos humorous sense of variety and plenty of mathematical and philosophical concepts being teased apart and answered. Most importantly watch main CP Fang Juexia and Pei Tingsong who initially have opposing unyielding views inevitably collide and entangle on their journey to stardom and love!!",IMG:77,PRIO:1},{BOOK_TITLE:"Heart Has Ling Xi",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:46,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://lingxi.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/lingxi/",Synopsis:`ing Xi was discovered by a talent scout in an underpass.\r
-His personality was optimistic, silly and his appearance delicate and pretty. Ling Xi who could only compose music and write lyrics, did not manage to be a superstar. His record sales were not very good and could only float in the entertainment world where newbies are always coming in. Until his agent used all his effort to obtain a job for him – to perform the ending song of a xian xia show and act a small role in it.\r
-An Ruifeng was an extremely popular idol male god with a mixed-race looks. Even though he debuted not long ago, but he had the looks, the talent and a good background. Such a gifted person would have a number of rivalry scenes with Ling Xi in the show.\r
-But what surprised Ling Xi even more was, the mighty An Ruifeng was actually very kind to a humble, insignificant singer like him, and willingly let him hug his golden thigh to increase exposure!`,IMG:101,PRIO:2},{BOOK_TITLE:"If You Don't Fall In Love, You'll Die",AUTHOR:"Long Qi 龙柒",CHAPTERS:91,EXTRAS:14,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/iydfilyd/",Synopsis:`Among people in the entertainment industry, the most insufferable person for Ye Chen was that hypocrite, Ren Jing. He looked polite and amiable, but was actually an absolute hypocrite that Ye Chen couldn’t listen to half a sentence he said.\r
-\r
-Then one night, Ye Chen got badly drunk. When he woke up, there was a naked Great Movie King Ren beside him.\r
-\r
-Ye Chen, “Son of a bitch, I’ve been nibbled by a dog!”\r
-\r
-Just when Ye Chen thought of shrugging this matter off, a voice popped out in his head. “Daily mission: Kiss Ren Jing. The reward upon completion: one survival point.”\r
-\r
-“Friendly reminder: If the survival point drops to zero, your life will be taken back.”\r
-\r
-Ye Chen: !!!`,IMG:139,PRIO:2},{BOOK_TITLE:"Male God is Chasing My Brother",AUTHOR:"百户千灯",CHAPTERS:112,EXTRAS:4,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://shanghaifantasy.com/novel/male-god-is-chasing-my-brother/",Synopsis:`From a very young age, An XuMo thought that Zhou JinChen was good looking. He went through so many hardships to sign into the company that Zhou JinChen was working for. He thought that their relationship would be the same as usual: detachment. Never would he thought that he will embark on the other’s peach blossom path.\r
-\r
-A cutie would shield the peach blossoms for his favorite person. In the end, he couldn’t believe that he had created an immortal’s story.`,IMG:168,PRIO:3},{BOOK_TITLE:"My Artist is Reborn",AUTHOR:"薄荷貓",CHAPTERS:184,EXTRAS:4,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://ontimestory.eu/index.php/completed/my-artist-is-reborn/",Synopsis:`Shen Huai was abandoned by all his artists and took over the one no one was optimistic about, the unpopular newcomer Ye Cang.\r
-\r
-Ye Cang caught fire all over the country. Everyone thought it was due to Shen Huai’s influence. Only Shen Huai knew that his artist was a reborn rockstar.\r
-\r
-Later, Shen Huai also signed the reborn “Legendary Film Queen,” the unsurpassed “Golden Supporting Role,” the “Queen of All Love Songs,” and the “Greatest Superstar in the Past Hundred Years.” Thus, he breathed a sigh of relief; he didn’t have to return to inherit billions of dollars.`,IMG:181,PRIO:2},{BOOK_TITLE:"Professional Body Double",AUTHOR:"Shui Qian Cheng 水千丞",CHAPTERS:121,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://pbd-info.carrd.co/",Eng_TL:"https://rosyspell.wordpress.com/rebirth-the-unique-substitute/",Synopsis:`Zhou Xiang didn’t know if God was giving him a second chance to live because he wanted to give him extra loving care or was it because he hasn’t messed with him enough.\r
-Otherwise, how could it be that both in and out of his entertainment career, whether it was in his past life or his current life, Yan Mingxiu would consider him as the substitute for the same person.\r
-He also didn’t know, between him and Young Master Yan, who was actually more pitiful; the one who could only be treated as a substitute or the one could only find a substitute.\r
-In his past life, Zhou Xiang was the stuntman for the big star Wang Yudong.\r
-But not just as his martial art stuntman…..\r
-Even within his deeply ill-fated relationship with Yan Mingxiu, he was also undeniably a complete substitute.\r
-Disheartened, Zhou Xiang went with a group of documentary film crew into the deep valleys of the treacherous mountains. Unexpectedly, he lost his footing and fell off a cliff.\r
-When he awakened again, it was already two years later. Nevertheless, he awakened in another person’s body.\r
-What is even more tragic is that he still couldn’t escape the fate of being a substitute…`,IMG:199,PRIO:1},{BOOK_TITLE:"Rebirth of A Movie Star",AUTHOR:"J112233",CHAPTERS:61,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://roams.carrd.co/",Eng_TL:"https://whiteskytranslations.wordpress.com/rebirth-of-a-movie-star-%e9%87%8d%e7%94%9f%e4%b9%8b%e6%9c%97%e6%9c%97%e6%98%9f%e7%a9%ba/",Synopsis:`In his previous life Bai Lang was a small star. He rejected his boss and s*upidly engaged in a relationship which he thought was true love.\r
-He didn’t expect that he would get betrayed, die of a heart attack and trouble his boss to accompany him on his last journey.\r
-After his rebirth, he decided to give up on true love. As for his boss… since he wants something then just let him have it.\r
-So this little star after his rebirth collected his boss, and then it became a true love story with his boss.\r
-In between there are good friends/love rivals/scum men in the mix. A sweet story with a happy ending.`,IMG:204,PRIO:2},{BOOK_TITLE:"The Film Emperor’s Daily Live Cooking Broadcast",AUTHOR:"Drunken Light Song 砚楚",CHAPTERS:123,EXTRAS:2,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fedlcb/",Synopsis:`On the Star Network there is a gourmet food broadcast, where all you can see are a pair of hands. However each dish that this broadcast comes out with is earthshakingly delicious. What’s more, the broadcast anchor’s voice is simply perfect!\r
-\r
-With the broadcast’s rising popularity, several food programs extended him an olive branch. When the anchor appeared on screen, as they suspected, he is handsome enough to incur the wrath of both men and gods! The fans licked their screens with increasing frenzy, but after licking a while, they discovered…\r
-\r
-Fans:…Wait a minute, isn’t this our fatally-ill idol who hasn’t long to live?\r
-\r
-Small Gong: Take these damned nutrient solutions and throw them away! And get me that broadcast anchor!`,IMG:239,PRIO:3},{BOOK_TITLE:"The Star Around The Sun",AUTHOR:"Jin Gang Quan 金刚圈",CHAPTERS:135,EXTRAS:15,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://mingrixingcheng.carrd.co/",Eng_TL:"https://gooseberrytl.wordpress.com/tsats/",Synopsis:`By chance, Xia Xingcheng, a mediocre actor of average popularity, received an offer from famous director He Zheng to act in a gay movie titled 'Gradual Distance' with numerous award-winning actor Yang Youming.\r
-In the movie, they had a sweet love; out of it, there was polite indifference. In the movie, they had a sad ending; outside of it, there were ambiguous feelings. The contrast between the two often made Xia Xingcheng unable to return to himself. Because of Yang Youming’s guidance, he stepped into the ranks of actors, but it was also because of Yang Youming that he couldn’t distinguish reality from an act.\r
-Xia Xingcheng never expected that the movie would eventually push him into the abyss of pain and happiness.`,IMG:253,PRIO:1},{BOOK_TITLE:"Very Happy",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:114,EXTRAS:2,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://veryhappy.carrd.co/",Eng_TL:"locked",Synopsis:`Li Zhao is a poor, 20-year-old actor who only thinks of where his next meal is coming from. After growing up in a child only facility, Li Zhao has taken on a very optimistic personality even while raising money for those he sees as family.\r
-On the other hand, 28-year-old rich businessman Yan Ting is super pessimistic.\r
-Yan Ting: Life is no fun. What is the difference between life and death?\r
-Li Zhao: Life is very happy.\r
-The world in Yan Ting’s heart was very grey until he met Li Zhao. He thought, this must be the liveliest person in the world. Otherwise, how could Li Zhao be so lively in his heart every day?`,IMG:280,PRIO:3},{BOOK_TITLE:"Your Memes Are Better Looking Than You",AUTHOR:"Mao Qiu Qiu 毛球球",CHAPTERS:90,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://ymablty.carrd.co/",Eng_TL:"https://knoxt.space/your-memes-are-better-looking-than-you/",Synopsis:`Gu Wei, the popular yet controversial lead dancer of boy band T.ATW.\r
-Jiang Xun, a god-tier professional esports player.\r
-One day, after a certain variety show aired, these complete strangers became a trending topic together.\r
-Gu Wei’s Anti-Fans: Do these two have anything to do with each other? Gu Wei is absolutely shameless. He’ll try to leech fame off anything that moves, even esports legends. Ignore him, ignore him!\r
-Fans of Jiang Xun’s Technique: If our God Xun wanted to, he could buy this whole country. If he’s playing around with some nameless celeb, he’ll just play until he gets bored and moves on.\r
-But before long, an unexpectedly heated controversy sparked around the two:\r
-Jiang Xun slacks off during a livestream to promote a celebrity!\r
-Jiang Xun’s little brother Jiang Ying says he’s being forced to defend his nemesis Gu Wei against anti-fans!\r
-Gu Wei, Jiang Xun… a shocking affair?!\r
-Netizens: ???\r
-The two do have talks of an engagement brewing between them, but it wasn’t Jiang Xun who Gu Wei fell for first… it was Jiang Xun’s reaction memes.\r
-When Jiang Xun first met Gu Wei, he came away with the impression that Gu Wei was his diehard fan. He never would have imagined Gu Wei was only a fan of his memes.\r
-Gu Wei: Ge… I think your reaction memes are better looking than you.\r
-Jiang Xun: Little Gu, you’re a little rebel, aren’t you?\r
-Then, affection gradually began to grow between the two. Gu Wei finally mustered up the courage to confess his feelings to Jiang Xun.\r
-Gu Wei: Jiang Xun, I think I’ve started to ship us.\r
-Jiang Xun, fiercely: You’re late. I’ve already become your stan.`,IMG:298,PRIO:1},{BOOK_TITLE:"Your Scandals Are Way Cuter Than You",AUTHOR:"Mao Qiu Qiu 毛球球",CHAPTERS:74,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://t.co/fY3sOFf0mU",Eng_TL:"https://www.scribblehub.com/series/673993/your-scandals-are-way-cuter-than-you/",Synopsis:`Jiang Ying, a controversial second-generation celebrity. Loves nothing more than collecting dirt on other stars.\r
-\r
-Qi Zhu, a controversial actor. His hobby? Counterattacking trolls, tabloids, and anti-fans.\r
-\r
-Classmates from elementary school to high school, they fit the mold of childhood sweethearts. And yet they were more like fire and ice: utterly incompatible.\r
-\r
-Back in high school, they fought while reviewing test answers. On set, they fought over their scripts. For better or worse, the two were in contact every single day. Their QQ streak has never been broken.\r
-\r
-By chance, Qi Zhu discovered his own dirt in Jiang Ying’s possession.\r
-\r
-Qi Zhu: ?\r
-\r
-Jiang Ying: Don’t you know? Your scandals are way cuter than you.\r
-\r
-Jiang Ying thought they would bicker for the rest of their lives.\r
-\r
-Until, one day, he came across a new ship on Weibo: ZhuiFengZhuYing.\r
-\r
-And a supertopic to match: ZhuYingYaoHong.\r
-\r
-Soon after Jiang Ying was born, his parents held his zhuazhou ceremony. Among the items they set out before him, Jiang Ying crawled to the keyboard.\r
-\r
-Ever since his youth, Jiang Ying had never lost an argument.\r
-\r
-In a popular squabbling app that randomly matched users with differing opinions, prompting them to fight, Jiang Ying could handily defeat any opponent.\r
-\r
-After spending three years on the app ‘Fight!’, Jiang Ying reigned as king of the leaderboard.\r
-\r
-Out of the goodness of his heart, to benefit society, Jiang Ying took an apprentice who clearly didn’t know the first thing about dissing people. He worked hard to train up his little apprentice until the kid could diss and roast as fiercely as the king.\r
-\r
-It was only later, when he was pushed down in bed and [redacted] by the typically cold and taciturn Qi Zhu, that Jiang Ying realized Qi Zhu had somehow learned every trick in his book.`,IMG:299,PRIO:1},{BOOK_TITLE:"Annoying Zhao Gongzi",AUTHOR:"Yourwei",CHAPTERS:26,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/annoy/",Synopsis:`Yu Chu was living with this oppressive wife and touched the back of his hand, which was slapped red. He was fierce in his heart: Sooner or later, I will kill this biggest “fly” by holding it down.The fact that I like men is something that the whole town knows, because my boyfriend is Zhao Gongzi. \r
-\r
-Zhao Gongzi, who is the mayor’s grandson, Gangster leader Master Zhao Si’s son and Warlord General Huo’s little brother-in-law. The Zhao Gongzi who is, in name, my adopted brother, since I was taken in by Master Zhao Si . The reason I was adopted and wasn’t simply a servant is because of Zhao Gongzi. He needed someone to accompany him at school, and I filled that role till I was 18. Then, after I had graduated and Zhao Gongzi had completed school without graduating, we slept together–that is to say, he f*cked me. \r
-\r
-Before I turned 18, I was always confused as to why he treated me so nicely, and I finally got the answer. I also lost something with that knowledge. \r
-\r
-　　f*ck his mom. \r
-\r
-I said nothing, you all heard nothing.`,IMG:30,PRIO:3},{BOOK_TITLE:"His Little Deer Wife is Very Fierce",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:56,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/his-little-deer-wife-is-very-fierce/",Synopsis:`When Lu Rong was only four years old, he was kidnapped and taken to a small rural village to be sold to a family living there. After failing to find the buyer, the kidnapper left Lu Rong for dead. The village chief finds the little boy and cares for him like he is his own. But Lu Rong has a secret: he can turn into a small deer, with beautiful white fur and gentle eyes, and four clattering hooves.\r
-\r
-At the age of eight, Lu Rong meets an eleven-year-old outsider by the name of Shen Jize.\r
-\r
-Together, whether they understand at their young age or not, they go through many trials of life and death, caught between fantasy and reality, dreams and nightmares, demons and ghosts.\r
-\r
-When they must part after a single summer together, the two make a promise.\r
-\r
-“Rong Rong, I won’t leave you, I will never leave you.”`,IMG:104,PRIO:1},{BOOK_TITLE:"Withdrawal",AUTHOR:"十一月十四",CHAPTERS:40,EXTRAS:7,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://www.scribblehub.com/series/673987/withdrawal/",Synopsis:`A spoiled brat is here to seduce his man! Childhood friends to lovers.\r
-\r
-When Fu Shizhou was seven years old, he gained a little tail named Qiao Luo. If he were to get it removed, severe withdrawal symptoms would ensue.\r
-\r
-Qiao Luo was born with the innate ability to tease and be spoiled.\r
-\r
-Zhouzhou wasn’t born awkward; that developed later in life. His maturity is a lasting aftereffect of his chuuni years. He’s actually a top-tier cinnamon roll.`,IMG:290,PRIO:1},{BOOK_TITLE:"A Filthy Rich Hamster in the Apocalypse",AUTHOR:"Huà Xī 画兮",CHAPTERS:92,EXTRAS:2,GENRE:"Dystopian",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/a-filthy-rich-hamster-in-the-apocalypse/",Synopsis:`Little Hamster, “Daddy daddy, I have food! All of it is yours! Even me!!!”\r
-\r
-WuYi (May 1) is a little hamster nicknamed ChòuChòu (Stinky). He has a very handsome and charismatic daddy owner and he lived every day happily without worries.\r
-\r
-But then suddenly, one day a zombie crisis emerged on earth and the world descended into the dangerous apocalyptic era. However, along with the appearance of zombies, humans, animals, and plants alike also awakened abilities for the first time.\r
-\r
-The little hamster fell asleep and woke up to find that he had become the same type of two-legged creature like his daddy and his original small two cheeks for food storage had become extremely huge!\r
-\r
-The little hamster rolled about with joy. The first thing he wanted to do was tell his daddy.\r
-\r
-After braving endless trials, climbing mountains and conquering seas, the little hamster finally found his daddy under mortal danger. Nie Xiao was then saved from the jaws of a third-grade zombie.\r
-\r
-“Daddy, baby found you at last!”\r
-\r
-Nie Xiao was completely flabbergasted; “…” What’s going on, xidangpa??? (xidangpa:happy to be a father = mainly used to ridicule the situation in which a man finally catches up with the goddess, but the goddess is pregnant with someone else’s child. In desperation, the man has to take over.)\r
-\r
-Everyone from the base started to calculate with their fingers: Holy shit! Sure enough, our Boss’ talent was already abnormal from when he was seven, he already has a child this big!`,IMG:3,PRIO:2},{BOOK_TITLE:"Falling Into The Abyss",AUTHOR:"莲兮莲兮",CHAPTERS:132,GENRE:"Dystopian",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/abyss/",Synopsis:`Ethan, the former secretary working for the Energy Bureau of Earth Union, was detained in a place called ‘Forbidden City’ after being deprived of his moral value points for committing treason. Everyone in the city is tr*sh among humans. They have to continually go on specified hazardous and terrifying missions for the sake of atonement and to exchange moral values points. If their moral value points reach 100 one day, they would obtain a chance to be released from the Forbidden City and return to the world of the humans to restart their lives as a human. But it was said that once someone enters the Forbidden City, no one can come out alive.\r
-\r
-Ethan just wanted to live, but from his first mission, he felt like he had descended into a whirlpool of terror. In front of these huge monsters that could devour the entire universe, he can only keep falling.\r
-\r
-This novel is inspired by Lovecraftian horror.`,IMG:76,PRIO:3},{BOOK_TITLE:"Little Mushroom",AUTHOR:"Yi Shi Si Zhou 一十四洲",CHAPTERS:84,EXTRAS:5,GENRE:"Dystopian",TIMELINE:"Modern",Carrd:"https://littlemushroom.carrd.co/",Eng_TL:"locked",Synopsis:`In the year 2020, Earth's magnetic poles disappeared and humankind was nearly wiped out by cosmic radiation. Within the span of a hundred years, living creatures began to mutate and devour each other while the remaining humans, numbering in the tens of thousands, struggled bitterly in their man-made bases.\r
-In the Abyss, home to the mutated xenogenics, there lived a sentient little mushroom. Because it had been nourished by the blood and flesh of the deceased human An Ze, not only did it take on a similar-looking human form, but a similar name as well: An Zhe.\r
-An Zhe is determined to go to the human base to search for his spore, which had been harvested by humans. Once there, however, he faces the omnipresent risk of discovery and certain death as he tries to keep his non-human nature hidden from the Judges, whose responsibility is to inspect for and eliminate xenogenics like himself. And of all the Judges, Colonel Lu Feng is the most perceptive and merciless―as soon as he determines that someone is a xenogenic, he will execute that person on the spot.\r
-But An Zhe's mutation goes undetected by Lu Feng's eyes, and so a tale of humans and xenogenics unfolds…`,IMG:155,PRIO:1},{BOOK_TITLE:"FOG",AUTHOR:"Man Man He Qi Duo 漫漫何其多",CHAPTERS:132,EXTRAS:4,GENRE:"E-Sports",TIMELINE:"Modern",Carrd:"https://withinthefog.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fog/",Synopsis:`Yu Sui and Shi Luo met each other when they were much younger. One was a pro-gamer, a widely-renowned, best of the best, in-game medic. The other was an e-sports newcomer who was just starting out. The two originally played for the same team, during which their relationship became increasingly deep.\r
-But things did not go as expected. Yu Sui went to Europe and Shi Luo changed his in-game job to become a striker. The two belonged to different teams and different divisions, with oceans between them, each doing wonderfully …\r
-They had become two tigers on separate mountains. The last thing anyone expected was for Yu Sui to return to the domestic league two years later. There was no way to avoid it and the two met once again.\r
-Male god x male god ; Medic Gong x Striker Shou`,IMG:84,PRIO:1},{BOOK_TITLE:"I Can Do It",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:134,EXTRAS:9,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://icdi.carrd.co/",Eng_TL:"https://tinysalttranslations.com/novels/icdi/",Synopsis:`For a certain LOL competition, a certain online streamer famous for pissing people off was currently explaining and broadcasting it at the same time.\r
-Streamer: This support, so tr*sh.\r
-Streamer: If that jungler was my teammate, I would already be idling at the fountain and playing piano for him by now.\r
-Streamer: I recommend that this player go back and properly practice how to last hit.\r
-Audience: What bullshit! If you’re any better, then you do it!\r
-Streamer: Daddy I really can do it.\r
-Audience: Okokok. If you can do it then I’ll chop off my head so you can kick it.\r
-A few months later, LOL’s veteran pro team TTC announced a new mid laner, Soft. A boy with flashy blue hair appeared in front of the audience and played Zed to utter perfection, killing everyone he saw, causing all the female fans to begin toeing the line of infidelity.\r
-During the MVP interview after the match, everyone held their breath and eagerly watched this newcomer.\r
-Only to see the boy accept the microphone, smile and ask, “That water friend with the StarTV user ID ‘Suburb King 101,’ my team’s address is on the official website, when will you mail your head over?”\r
-After a certain regular season match finished, the staff member went backstage to urge the team members to go onstage and conduct their interviews, only to see TTC’s new mid laner and jungler standing in the corner.\r
-TTC’s number one ace · jungler daddy Road pressed their team’s new mid laner Soft against the wall. He lowered his eyes and asked lowly, “At the interview, do you know what you did?”\r
-That quick-tempered mid laner, who had solidified his image as a troll in the audience’s eyes the very first time he went on stage, turned completely red. “I know. I won’t curse at anyone… I definitely won’t curse at anyone.”`,IMG:115,PRIO:1},{BOOK_TITLE:"PUBG Online Romance of the Century",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:104,EXTRAS:14,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pubg/",Synopsis:`As a new anchor of StarTV, Yu Yan’s ruthless trash-talk, natural rifle-shooting skills, and character of never searching houses earned him a big crowd of fans.\r
-\r
-He felt like he was a good anchor who treated all fans of his stream equally—you can suck at the game, you can get knocked down, but if you want the gun in my hand, sorry, no way man.\r
-\r
-Until he heard the voice of the streaming platform’s Big Boss.\r
-\r
-Yu · ultimate voice-con · Yan: I’m not familiar with this game, swap my Kar98k for your Mini-14.\r
-\r
-Yi · brand new noob · Chen: En.\r
-\r
-Friend: Daddy, I want to snipe too!\r
-\r
-Yu Yan: I think this frying pan suits you very well.\r
-\r
-Not-a-very good gamer but dripping with money and looks Big Boss vs Cute, super good trash-talking sharpshooter voice-con Anchor.\r
-\r
-This story is also known as <My Fan is My Direct Boss>, <You and I weren’t fated to meet, except you spent a ton of money on me>, and <All the fans of the stream in the live room think that we’re dating online>. \r
+Chu Yi understood later that his husband should be pampered, and should be the only one in his heart.\r
 \r
 —\r
 \r
-PUBG=Survival In a Hopeless Land (Jue Di Qiu Sheng), PC version`,IMG:200,PRIO:1},{BOOK_TITLE:"That One Rich Fan of Mine",AUTHOR:"Custard pineapple bun 奶黃菠蘿包",CHAPTERS:33,EXTRAS:2,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/trf/",Synopsis:`He tossed half a million yuan worth of super torpedoes by accident. \r
+Qin Yiheng has always lived his life the way he planned and he has never strayed off from his plans. Until one day, he met a certain person in a bar and certain things happened.\r
 \r
-Lin Xizhou, a ‘fresh meat’ celebrity with popularity the size of the sky, is a ‘masterful actor’ born in a performing arts family. He is the ‘Violet Star from the Heaven’ in the present entertainment circle. Not only is he talented and adaptable, he is also modest. One could even describe him as perfect. \r
+In a responsible manner, he decided to marry this person, brought them back home and included him in his plans. He was ready to live a life of mutual respect with this person.\r
 \r
-But no one knows that his dream was to become a professional esports player. \r
+However, he didn’t expect that the husband he picked up would actually make him so addicted.`,IMG:13,PRIO:1},{BOOK_TITLE:"Accompanied by a Fool To Do Farming",AUTHOR:"锦绣云燃",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Historical",Eng_TL:"https://knoxt.space/accompanied-by-a-fool-to-do-farming/",Synopsis:`When he woke up, Zhong Ziqi found that he had transmigrated over! \r
 \r
-Another thing that no one knows was that although he didn’t become a professional esports player, he unintentionally became the world’s number one ADC player’s boyfriend.`,IMG:230,PRIO:3},{BOOK_TITLE:"The E-Sports Circle’s Toxic Assembly Camp",AUTHOR:"Qīngméi jiàng 青梅酱",CHAPTERS:194,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://camp-esports.carrd.co/",Eng_TL:"locked",Synopsis:`Chief tactician Lin Yan entered an e-sports novel. At this time, there was still a whole year to go before the original plot started.\r
-The big devil who would frighten people in the future was still a thin-skinned little anchor; the disaster who once disturbed the e-sports circle was playing as an accompanying player; the best healer was sitting on the cold bench of a third-rate team; the strongest king at shooting his mouth off offended the media and his black materials were flying all over the place…\r
-They would shine as the plot progressed but unfortunately, their teams weren’t strong enough. In the end, they couldn’t escape the fate of a cannon fodder.\r
-Lin Yan couldn’t bear to see these talents being wasted. The e-sports professional reality show started and he spent money to set up the GH Club, moving from east to west to select his team.\r
-The variety fans: ??? Is this ‘Go Home’ team picking up the junk?\r
-This lasted until all the opponents were coughing up blood at GH’s tactics and could only watch GH get a ticket to the professional league.\r
-The entire e-sports circle knew that apart from their captain Jing Yuanzhou, the entire GH team was a group of barely qualified variety show players not worth paying attention to. As a result, this toxic team swept through the field and reached the top in their first year of the league.\r
-When the media interviewed GH: Captain Jing, why did you agree to Coach Lin and joined GH?\r
-Jing Yuanzhou: He pestered me every day saying ‘I want you’. It was really difficult to turn down such great kindness.\r
-Lin Yan: “???”\r
-Check the salary deduction warning.\r
-The entire Internet went crazy: Parental love is real!!!`,IMG:237,PRIO:1},{BOOK_TITLE:"The National Sweetheart Livestreamer Is A Pro",AUTHOR:"Mo Shang Wang",CHAPTERS:224,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://m.webnovel.com/book/the-national-sweetheart-livestreamer-is-a-pro!_11782909605526205/untitled_34405840110805696?from=catalog",Synopsis:`The handsome, skilled newbie livestreamer, Ji Zhiyao, has a dream.\r
+It’s okay that his family is very poor, but unexpectedly both of his parents are dead! \r
 \r
-“One day, I want to become the most famous crosstalk actor amongst the livestreamers.”\r
+Even if both of them are dead, he is actually a Ger! \r
 \r
-Later on, this dream is forgotten by him and secretly becomes another.\r
+It doesn’t really matter that he was a Ger, but who could have thought that he was sold by his elder uncle’s family! \r
 \r
-“I want to overthrow Fi-god! I want to become Mix’s new team dictator!”\r
+Even if he was sold, he was sold to a fool! \r
 \r
-The rich and aloof idol of the eSports scene, Mo Huaifeng, also has a dream.\r
+Zhong Ziqi was calm on the outside, but inside he was screaming: Could it be any worse? \r
 \r
-“Two years later, Mix will definitely make it into the International League.”\r
+But since I can’t do anything to prevent it, I might as well sit back and enjoy it. \r
 \r
-Soon after, subtle changes happens to this dream.\r
+However, having such a silly person to accompany him in this unfamiliar and strange world, it’s, actually…not bad too.`,IMG:14,PRIO:3},{BOOK_TITLE:"Advance Bravely",AUTHOR:"Chai Jidan",CHAPTERS:215,EXTRAS:10,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://www.wattpad.com/967976403-advance-bravely-shi-bu-ke-dang-%E5%8A%BF%E4%B8%8D%E5%8F%AF%E6%8C%A1-epilogue-part",Synopsis:`Sergeant Xia Yao, born into a wealthy and renown ancestry, is a playboy who has turned over a new leaf. Yuan Zong is an ex soldier from the special forces who opened a bodyguard training company after being discharged. \r
 \r
-“I want to make it into the International League with Ji Zhiyao and after winning, I will f**k him on livestream.”\r
+When Yuan Ru, Yuan Zong’s sister fell for Xia Yao’s charms, but could not break down his erected barriers, she came to Yuan Zong for assistance. Little did she know, the moment Yuan Zong saw Xia Yao, this ex-special force knew no other person would ever catch his eye. \r
 \r
-Livestreamer to eSports pro, Captain to boyfriend, will their dreams come true?`,IMG:247,PRIO:3},{BOOK_TITLE:"You Boys Play Games Very Well",AUTHOR:"Yi Xiu Luo 易修罗",CHAPTERS:83,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://t.co/BdBsIzk19L",Synopsis:`When he defeats them, he leaves hospice care: A father’s love is like a mountain! Are your shoulders heavy?\r
-When he is defeated, he leaves backhanded compliments: You boys play games very well~\r
-Ling Meng is a high-ranked casual gamer playing “The Legend of the Galaxy”. Infamous for his poison tongue, he’s known in the forums as Lemon Dad and he carefully cultivates a following of black powder fans over time. The trajectory of his fate completely changes the day he plays a match against the popular god-tier live stream anchor, Mangosteen. A meme created out of his dying words makes him a countrywide laughingstock and he begins to stalk Mangosteen to determine his rival’s weaknesses…to beat him in a match for revenge!\r
-They fight with each other, stream with each other, and even exchange a naked photo with each other.\r
-This is the love story of a lemon and mangosteen.`,IMG:294,PRIO:2},{BOOK_TITLE:"You Use a Gun, I Use A Bow",AUTHOR:"Hú Shēng Yǒu Mèng 狐生有梦",CHAPTERS:100,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/bow/",Synopsis:`VSGH is a multiplayer online tactical competitive shooting game.\r
+And so begins the battle between brother and sister for the most coveted price – Xia Yao’s heart.`,IMG:15,PRIO:2},{BOOK_TITLE:"After an Infinite Flow Player Retires",AUTHOR:"Sang Wo",CHAPTERS:98,EXTRAS:9,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://kktranslates.home.blog/2021/04/18/after-an-infinite-flow-player-retires-by/",Synopsis:`As a renowned fierce god in the infinite flow world, Ye Jia deliberately hid his strength after clearing it and found an idle job in the Logistics Department of the Paranormal Investigation and Management Bureau.\r
 \r
-When Wen Xi first came into contact with the game, like most people, he used a gun as his main weapon.\r
+He originally thought that he would be able to return to his salted fish life and live comfortably.\r
 \r
-But his shooting skills were too poor, often having teammates vent about whether he was the master of outlining the human body.\r
+But what Ye Jia didn’t expect was……\r
 \r
-Until one day, he picked up a bow.\r
+One day, he opened the fridge and was met with an evil spirit’s vicious head, “Boss, boss. Did you miss me…..”\r
 \r
-Since then, SGH has had another archer assassin named “Wency”.\r
+Ye Jia: “………”\r
 \r
-It’s said that his arrows never miss their shot, a hundred shots and a hundred hits, killing with one blow.\r
+He slammed the door shut and fell into deep thought.\r
 \r
-It’s said that only the first ranked sharpshooter “Mac” succeeded in killing him.\r
+Wasn’t there something wrong with this world?\r
 \r
-It’s said that he likes “Mac”.\r
+The TV behind him was broadcasting news:\r
 \r
-Wen Xi: …where did this rumor come from? Mac, come out and clarify!\r
+Recently there has been a surge in paranormal events and the number of missing persons has sharply increased. It is currently under investigation…..\r
 \r
-Mo Chen: En, it’s a rumor. Actually, I like you.\r
+*\r
 \r
-A shou who wholeheartedly wants to make money through livestreaming vs. A gong who wholeheartedly wants to trick the shou into joining his team.`,IMG:295,PRIO:1},{BOOK_TITLE:"Beloved Enemy",AUTHOR:"Shui Qian Cheng 水千丞",CHAPTERS:118,EXTRAS:3,GENRE:"Enemies to Lovers",TIMELINE:"Modern",Eng_TL:"https://rosyspell.wordpress.com/beloved-enemy/",Synopsis:`uQingPei, the new director who was poached with a high salary, his first challenge at his new post was to help his boss raise his son!\r
+With the infinite flow escape game unexpectedly crashing, countless demons and ghosts trapped in it were released, bringing disaster to the world.\r
 \r
-A rich, hot-tempered, and arrogant second generation princeling best at causing trouble — YuanYang who had been cultured in the army for many years is rebellious and domineering but GuQingPei has the confidence to make him bow down and submit. No one in this life has dared to make him (YuanYang) feel so grievous and troubled! Facing GuQingPei’s treacherous smiles and oppressing advances step by step, forcing him to learn to take over the family business, YuanYang decides to give GuQingPei a profound lesson. Instead, he loses control of the situation and they developed into another type of relationship!\r
+Only Ye Jia who cleared the game knew the truth.\r
 \r
-With GuQingPei and YuanYang’s equally opposing and hostile attitude… like enemies….will they look at each other with hatred or will it ignite into a different kind of spark!?`,IMG:36,PRIO:1},{BOOK_TITLE:"Cold Sands",AUTHOR:"Mu Yun Lan Qing 牧云岚卿",CHAPTERS:41,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://coldsands.carrd.co/",Eng_TL:"http://bltranslation.blogspot.com/2014/08/cold-sands-by-mu-yun-lan-qing.html?m=1",Synopsis:`He’s just a low-ranking deputy general and he’s a prince. They meet on the battlefield but it turns out to be the beginning of a complicated and beautiful story.\r
-Murong Yu is a very confident man – until he meets Han Xin.\r
-There’s nothing he cannot get; there’s nothing he cannot destroy.\r
-To let live or not, is all up to him.\r
-He is the future ruler of Great Yan and so it’s only natural that the world should bow down at his feet.\r
-But he had never thought that one day he would lose control of it.\r
-That even his own will would be uncontrollable.\r
-Murong Yu can neither get nor destroy this prisoner of war.\r
-Han Xin has never given a care about the world – until he meets Murong Yu.\r
-He has never cared about anyone, nor has anyone cared about him.\r
-It doesn’t matter if you’re alone or sad, as long as you can still laugh, life will go on.\r
-He has learned long ago how to not question, how not to believe, how not to lose and how not to care.\r
-Destiny’s uncaring teasing and humiliations have already become numb to him.\r
-That’s right, he doesn’t have a care in the world.\r
-Even if it’s this Prince Royal of Great Yan who’s started to warm up to him.`,IMG:46,PRIO:1},{BOOK_TITLE:"Golden Stage",AUTHOR:"cang Wu Bin Bai 苍梧宾白",CHAPTERS:79,EXTRAS:4,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://goldenstageinfo.carrd.co/",Eng_TL:"https://chichilations.home.blog/golden-stage/",Synopsis:`"The notorious imperial court lackey and the meritorious military general were well-known for their mutual dislike, a pair of arch-enemies set in stone. Who could have foreseen the unexpected change in the winds of heaven: the general injured on the battlefield, both legs disabled, and even forced by the emperor to marry his nemesis.\r
-With one marriage edict, two people with mutual hostility are forced to marry and live under the same roof. Yet after these long days together, they come to the realization that this fellow is not truly devoid of any saving grace/unattainable and high out of reach."`,IMG:90,PRIO:1},{BOOK_TITLE:"Love Rival Romance System",AUTHOR:"顾之君",CHAPTERS:76,EXTRAS:3,GENRE:"Enemies to Lovers",TIMELINE:"Modern",Carrd:"https://loverival.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/06/20/new-project-love-rival-romance-system-by-%e9%a1%be%e4%b9%8b%e5%90%9b/",Synopsis:`Jiang Yang and Qin Xu both dislike each other. Every time they meet they become filled with hatred. Both have feelings for the school idol but they didn’t expect that the other party was actually a cross-dressing man. In an instant, their world views were shattered.\r
-“Bound to the system. I shall assist with building the friendship between you and Qin Xu. Tasks will be released randomly and punishments will be enforced if it is not completed on time.”\r
-Jiang Yang scoffed coldly: “What a joke! I’m not doing it!”\r
-Later….\r
-The system exploded: “I wanted you to become friends but you became lovers instead?! You are the worst hosts I’ve ever had!”\r
-Eventually the system transferred departments —– To the Matchmaking Department.`,IMG:162,PRIO:3},{BOOK_TITLE:"Those Years in Quest of Honor Mine",AUTHOR:"Man Man He Qi Duo 漫漫何其多",CHAPTERS:103,EXTRAS:2,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://tyqhm.carrd.co/",Eng_TL:"https://perpetualdaydreams.com/novel/tyqhm/tyqhm-tl/",Synopsis:`Yu Ziyou* and Zhong Wan served different masters.\r
-They had once been the closest of souls, and were the bitterest of enemies.\r
-After losing the fight for the throne, Zhong Wan brought his two young masters with him far toward the borders for the sake of survival. He relied on the little friendship that existed between him and Yu Ziyou when they were young. He borrowed some of his personal belongings while also dropping various hints around which made everyone think that there was something intimate going on between them.\r
-Given the Yu Clan’s powerful authoritative presence in the imperial court, this appearance of a close tie allowed Zhong Wan to live a much better life than before. As such, the stories he cooked up began to carry more and more weight.\r
-As rumors of their lovely romance spread a thousand miles into the horizon, Yu Ziyou, who was located in the distant capital city, eventually caught wind of his deeply moving and epic love affair. In a trance, Yu Ziyou, who had been completely brainwashed for seven years, believed in them. He guessed something special really did happen between them back in those years…`,IMG:265,PRIO:1},{BOOK_TITLE:"Does Love at First Sight Exist In Esports",AUTHOR:"Luxifa",CHAPTERS:70,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://dlfsee.carrd.co/",Eng_TL:"https://gooseberrytl.wordpress.com/at-first-sight/",Synopsis:`Having nothing better to do, Asia’s champion decided to carry a girl in the game. With great difficulty, he finally convinced the girl he carried to turn on her mic, only to discover that the other party was actually a boy?!\r
-This online love affair that had ended before it even began was tossed away to the back of the champion’s mind. Unexpectedly, when his club went to train in another city, they encountered a mishap and had a small conflict with another team.\r
-When the other team’s vice captain showed up, the champion was so moved that he started doubting life, but as soon as the other opened his mouth, it turned out that this was the “girl” that he had personally carried with his own hands that day.\r
-Does love at first sight exist in e-sports? It does.`,IMG:57,PRIO:1},{BOOK_TITLE:"Good God, Stop!",AUTHOR:"Green Plum Sauce",CHAPTERS:18,EXTRAS:5,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://goodgodstop.carrd.co/",Eng_TL:"https://dummynovels.com/novel/good-god-stop/",Synopsis:`Lin Xiao, who just won China’s first World trophy, got in an accident and was reborn five years later.\r
-With the rapid development of the eSports industry, the career as professional player bloomed, the Club’s Gods circle/Professional Commentators circle/Popular MCs circle, the old friends from back then were all over the place.\r
-The return of a King, aiming for the League, going from an unknown rookie to once again rising to the top.\r
-Reporter: Regarding the rumours between you and Captain You, is there anything you want to say?\r
-Lin Xiao: With all due respect, with my ability there is no need for un-spoken-rules!\r
-Reporter: Captain You, is there anything you want to add?\r
-You Jing: The rumours are true, back then he was vying for my love.\r
-Lin Xiao: …how many times do I need to say it, that person wasn’t me!`,IMG:91,PRIO:1},{BOOK_TITLE:"After I Livestreamed Raising Cubs I became the Wealthiest in Interstellar",AUTHOR:"Mulan Bamboo",CHAPTERS:104,EXTRAS:38,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonxblacksun.ca/2021/04/27/after-i-livestreamed-raising-cubs-i-became-the-wealthiest-in-interstellar-chp-1/",Synopsis:`arrying a spirit beast rearing system, Mingyou transmigrated. In nineteen years, he never saw a single “spirit beast” with sufficient stats, until he came to a rundown animal care facility to work.\r
+All of these……..were old acquaintances………\r
+\r
+Ye Jia: My life is too difficult.\r
+\r
+#I clearly just want to be an ordinary corporate s*ave#\r
+\r
+Finally, one day, he saw an unexpected monster.\r
+\r
+After two seconds of silence, Ye Jia greeted dryly: “…….You came out too. What a coincidence.”\r
+\r
+The man before him smiled and slowly approached him, “My boyfriend ran away from home. Of course, I should come out to catch him and bring him back.”\r
+\r
+Ye Jia: “……..”\r
+\r
+Who would have thought that, along with the global sensation of ghost doors opening in the mortal world, there was also…..\r
+\r
+His peach blossom debt.\r
+\r
+It can’t be, sir. This is also okay?`,IMG:16,PRIO:1},{BOOK_TITLE:"After Being Turned Into a Dog, I Conned My Way Into Freeloading At My Rival’s Place",AUTHOR:"Zi Jin",CHAPTERS:51,EXTRAS:4,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://secondlifetranslations.com/novel/after-being-turned-into-a-dog-i-conned-my-way-into-freeloading-at-my-rivals-place/",Synopsis:`When celebrity singer Ning Yan suddenly found himself turned into a white puppy, he ran into his rival Lin Rong, who just happened to pass by while Ning Yan was at a loss for what to do. Based on the idea that if he had to suffer then Lin Rong must suffer with him, Ning Yan tried all the tricks in the book until he successfully enticed Lin Rong into taking him home. \r
+\r
+Just as he was dreaming about conning the man out of food and house, the apartment door opened…to reveal a wall filled with his posters and a body pillow in his image on the bed. \r
+\r
+The man hugged the body pillow, smiled at the puppy and said, “My beloved Yanyan is so pretty, right?” \r
+\r
+To which Ning Yan could only respond by calling Lin Rong a pe*vert. \r
+\r
+… \r
+\r
+The puppy Lin Rong picked up was a little dramatic. First, it bit down on his leg and refused to let go until Lin Rong took him home. That same night it pawed at the closed apartment door wanting to get out. A few good meals later, it flopped belly up in the dog bed and looked at him with thoughtful eyes. \r
+\r
+One night several days later, Lin Rong came home drunk. He dreamt of the white puppy turning into his beloved Yanyan, lying on top of him in flustered surprise. He also dreamt of Ning Yan touching him everywhere when he realized how drunk Lin Rong was. \r
+\r
+The next day, the white puppy was curled up peacefully in the dog bed. Lin Rong thought deeply for a second, went into his room, and found the security footage from the living room. \r
+\r
+He squinted thoughtfully when he finished reviewing the footage…`,IMG:17,PRIO:3},{BOOK_TITLE:"After I Blocked My Crush",AUTHOR:"Gǔjīn",CHAPTERS:28,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://aibmc.carrd.co/",Eng_TL:"https://secondlifetranslations.com/abc/abc-chapter-1/",Synopsis:`Lin Xia: Why did nobody tell me that, if you send a message after blocking someone on WeChat, they can still receive it\r
+\r
+Yi Shang: I told you\r
+\r
+Lin Xia: Thank you, I’m socially dead\r
+\r
+Yi Shang: You’re not dead, you gained a boyfriend`,IMG:18,PRIO:3},{BOOK_TITLE:"After I Flopped on My Crush",AUTHOR:"Pine Nut Tea",CHAPTERS:58,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/afmc/afmc-1/",Synopsis:`How can a secret admirer promote themselves? Simple, just bed him.\r
+\r
+Bai Xi woke up one day and found that he had slept with the man whom he had a crush on for six years.\r
+\r
+A mere slip of the foot caused an eternal sorrow.\r
+\r
+Red wine was indeed a source of trouble.\r
+\r
+He shivered and thought he would be kicked out by Qi Xun.\r
+\r
+Instead, he heard Qi Xun calmly asked him, “Are you being witty with me?”\r
+\r
+Bai Xi: “?”\r
+\r
+Why was this different from what he imagined?\r
+\r
+October 23rd, Frost Descends.\r
+\r
+The weather had begun to turn cold.\r
+\r
+But Qi Xun’s efforts were warm and soft.\r
+\r
+In the sixth year of loving Qi Xun secretly, Bai Xi finally becomes his first love’s love.`,IMG:19,PRIO:2},{BOOK_TITLE:"After I Livestreamed Raising Cubs I became the Wealthiest in Interstellar",AUTHOR:"Mulan Bamboo",CHAPTERS:104,EXTRAS:38,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonxblacksun.ca/2021/04/27/after-i-livestreamed-raising-cubs-i-became-the-wealthiest-in-interstellar-chp-1/",Synopsis:`arrying a spirit beast rearing system, Mingyou transmigrated. In nineteen years, he never saw a single “spirit beast” with sufficient stats, until he came to a rundown animal care facility to work.\r
 \r
 Mingyou hugged the huge black cat while crying tears: “Psychic powers drained to exhaustion, powers in disorder, malnutrition, and how many old wounds all over?! Who’s the evil scum that abused you!! I’ll raise you, and I won’t let you get harmed again!”\r
 \r
@@ -1021,1018 +694,7 @@ The evil god, who listened to every person’s hatred, curses, greed, and arroga
 \r
 “I will love you against my divinity.”\r
 \r
-Cold and gentle snow god shou x domineering when outside, controlled by his wife when inside gong`,IMG:21,PRIO:1},{BOOK_TITLE:"After The Disabled God of War Became my Concubine",AUTHOR:"Liu Gou Hua",CHAPTERS:123,EXTRAS:13,GENRE:"Fantasy",TIMELINE:"Historical",Carrd:"https://t.co/tlJlP7luwx",Eng_TL:"https://sleepytranslations.com/series/after-i-married-the-disabled-war-god-as-my-concubine/",Synopsis:`According to a popular legend, the famous God of War of Great Liang, Huo Wujiu, was once captured by an enemy country. He had his meridians severed and both his legs broken before he was thrown into the prison. In order to humiliate him, that incapable ruler of the country gifted him to his cutsleeve brother as a concubine.\r
-\r
-General Huo suffered a great deal of humiliation. He laid in wait for three years before he shed his cicada skin and returned to the Great Jing. He treated his crippled legs, and three months later, he led his army to storm the enemy’s capital. He slaughtered the emperor, razed the capital, and finally beheaded that tr*sh of a cutsleeve, displaying his head on the city’s walls for the next three years.\r
-\r
-Since then, the world has been united.\r
-\r
-——\r
-\r
-A certain university’s history lecturer received a graduation thesis depicting the legend of Huo Wujiu, and he wrote a full page of criticism for the student.\r
-\r
-Then he blinked, and he was transmigrated into the body of that cutsleeve prince.\r
-\r
-There were lanterns and decorations everywhere. A man came, sending word that the disabled general of the enemy state had already entered the manor in his wedding sedan.\r
-\r
-As he looked at the General Huo in front of him, taking in his malicious gaze, his tortured state, clad in a red wedding gown, Jiang Suizhou realised that even legends can come true.\r
-\r
-This legend could even cause him to be beheaded in public in the future, with his head hung on the city walls for three years.\r
-\r
-Jiang Suizhou’s only option was to take good care of General Huo.\r
-\r
-In spite of the hidden arrows of the court’s political agendas and the incapable ruler’s endless attempts to humiliate him, he could only bite the bullet and bear the brunt of it; his only wish was that after three years, he could protect his own head.\r
-\r
-Of course, he didn’t dare to even dream of asking this 3 meters tall “concubine” to serve him.\r
-\r
-However, before the three years was up, General Huo’s legs recovered on their own.\r
-\r
-He didn’t just slaughter the incapable ruler and unite the land under the heavens, but he also climbed into his own bed and pinned him down with a heated gaze, stubbornly wanting to establish his status as a concubine.`,IMG:26,PRIO:1},{BOOK_TITLE:"Copper Coins",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:102,EXTRAS:1,GENRE:"Fantasy",TIMELINE:"Historical",Carrd:"https://coppercoins.carrd.co/",Eng_TL:"https://tongqiankanshi.blogspot.com/",Synopsis:`It was the twenty-third year of Tianxi. Rumours traversed the streets that the all-knowing Imperial Advisor suffered a great calamity and could not help but enter seclusion to focus on cultivation. However, the commoners secretly clapped their hands and rejoiced. In the winter of the same year, a young monk appeared in the Hui Zhou Fu’s Ningyang District.\r
-The monk’s monastic title was Xuan Min, his memories all missing, yet was versed in the arts of Feng Shui Kan Yu. On the very first day arriving in Ningyang, he did not hesitate to take care of a dangerous manor, picking up Xue Xian, who was hidden there, along the way.\r
-Since then, Xue Xian – who had been all-powerful in the first half of his life – gained a new life pursuit: to get this bald donkey who had only a good outer appearance to take his last breath and “smile from his grave”.\r
-Xue Xian: If you are unhappy, then I will be happy. If you die, I’ll laugh my ass off.\r
-Xuan Min: …`,IMG:47,PRIO:1},{BOOK_TITLE:"Cub Raising Association",AUTHOR:"Jiuyi 酒矣",CHAPTERS:130,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://midnightrambles.in/2021/07/14/cub-raising-association/",Synopsis:`Xie Luan had always believed in science until one day, a meteorite smashed into his yard, forcing him to bind to a heroic world saving script. The worst thing was that the script didn’t even follow common sense.\r
-\r
-Others become superheroes while he became a super-nanny. So in his left hand was a “Cub Encyclopedia” and in the right, a small milk bottle to feed the small cub clinging onto his leg.\r
-\r
-Today, Xie Luan is trying his best to save the world.`,IMG:49,PRIO:2},{BOOK_TITLE:"Daily Disposable Persona",AUTHOR:"Wang Ya 妄鸦",CHAPTERS:124,EXTRAS:14,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/daily-disposable-persona/chapter-138/",Synopsis:`As Zong Yan sat in the classroom, he always felt like the odd man out. His body was there but his soul had sneaked out the window. He wanted to do anything, wanted to be anyone, as long as he wasn’t himself.\r
-\r
-He had a cool and unbelievable superpower:\r
-\r
-He could extract different persona cards from the void with his bare hands. With a high enough “SAN” value, Zong Yan could become an entirely different being. Superpowers, ancient gods, eldritch powers, even… an Outer God.\r
-\r
-Soaring above the dome of the magical city, he was the free-flying son of the wind.\r
-\r
-Strolling through the rain-soaked, foggy streets of London, he was the secretive and unpredictable night watchman.\r
-\r
-Walking in the extravagance and glamour of New York, he was the sun god who held the light in his hands.\r
-\r
-Diving into the geometric city of R’lyeh, he was the indescribable king.\r
-\r
-In the gorgeous and colorful world of dreams, he was the original belief in the universe.\r
-\r
-Early to bed, early to rise, going to school on time, working late to save the world. A senior at Qingyang High School by day, honors scholar at Miskatonic University by night. Investigating unusual events all over the world during summer and winter vacation, battling wits and courage with evil gods, dedicated to preserving peace and saving a faltering world.\r
-\r
-Zong Yan: Thanks, but I’m just an ordinary high school kid.`,IMG:51,PRIO:1},{BOOK_TITLE:"Don't Covet the Beautiful System",AUTHOR:"温泉笨蛋",CHAPTERS:130,EXTRAS:8,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonlightnovels.com/dbcs-chapter-1/",Synopsis:`i Tong transmigrated into a city-themed, feel-good novel where the protagonist, a cannon fodder, relies on a system to counterattack and reach the peak of life, obtaining the love of a powerful figure.\r
-\r
-Ji Tong excitedly asks, “Did I transmigrate as a pitiful cannon fodder or a cool and awesome big shot?”\r
-\r
-Intelligent Customer Service: Hello, you have transmigrated into a beautifully designed system.\r
-\r
-Ji Tong: ?\r
-\r
-Intelligent Customer Service: According to my research, you have the same name as the system. “Xi” has multiple pronunciations, so you were fortunate to have this transmigration opportunity.\r
-\r
-Ji Tong: … Ji Tong reluctantly shoulders this new and peculiar burden, diligently serving as the pitiful cannon fodder protagonist, Pei Qingyuan, in the book.\r
-\r
-However, pretending to be intellectually challenged is dull. Ji Tong’s only source of amus**ent becomes teasing the seemingly cold high school student, Pei Qingyuan, under the guise of “happy education.” Once things get out of hand, they blame it on a virus…`,IMG:58,PRIO:1},{BOOK_TITLE:"Fantasy Farm",AUTHOR:"Xī Zǐxù",CHAPTERS:117,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ff/ff-1/",Synopsis:`After being fired, Lu Qingjiu finally decided to return to his hometown to farm.\r
-\r
-At first, he started raising a pig, and then he found that the pig could solve more high-level math questions than he could.\r
-\r
-After that, he started raising a flock of chickens, and then he found that his own fighting ability was one-tenth of that of a single chicken.\r
-\r
-Finally, Lu Qingjiu finally realised that this old home wasn’t quite right… Especially a certain person by his side who constantly stared at him day in and day out.\r
-\r
-Lu Qingjiu: “Are you drooling because of the spicy stir-fry I’m holding or because of me?”\r
-\r
-Bai Yuehu pointed at the stir-fry.\r
-\r
-Lu Qingjiu: “Then can you let go??”\r
-\r
-Bai Yuehu reluctantly glanced at Lu Qingjiu’s arm, before loosening his teeth.`,IMG:78,PRIO:2},{BOOK_TITLE:"His Marriage Partner is Scheming",AUTHOR:"温泉笨蛋",CHAPTERS:57,EXTRAS:2,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonlightnovels.com/series/his-marriage-partner-is-scheming/",Synopsis:`The rebellious, rich second-generation Chi Xueyan was forced to go on a blind date for the 11th time. He cut straight to the chase: I have a hot temper, I snore when I sleep, and I haven’t deleted my countless exes. If you can accept it, we will get the marriage certificate on the spot.\r
-\r
-The handsome man named He Qiao sat opposite him and was silent for a moment with a strange expression. Then he nodded and said he was a book transmigrator. He knew that Chi Xueyan was the supporting male villain in this novel role and would become the future marriage partner of the protagonist Lu Siyi. He gradually lost himself in an increasingly paranoid unrequited love, did all sorts of bad things and eventually died.\r
-\r
-He Qiao couldn’t bear to see Chi Xueyan, who was still active and healthy, end up like that. Therefore, he proposed to marry Chi Xueyan to avoid the plot. In any case, he was a workaholic straight man who only wanted to use the information from the novel to develop his career for the benefit of the public.\r
-\r
-Chi Xueyan heard this and suddenly realized: Use advance as a retreat and use the typical schizophrenic symptoms to scare off blind dates. This person was an expert.\r
-\r
-He decisively remembered this trick and waved his hand to pay the bill as his token of appreciation.\r
-\r
-Soon, Chi Xueyan ran into a handsome man who completely matched his aesthetics. Moreover, he didn’t hesitate to take the initiative to ask for the other person’s name and contact information.\r
-\r
-As a result, the handsome man replied with an indifferent expression, “I am Lu Siyi.”\r
-\r
-Chi Xueyan: “……!!!”\r
-\r
-This name was too familiar.\r
-\r
-Two weeks later, under the gazes of his relatives and friends, Chi Xueyan affectionately exchanged rings and kisses with his 11th blind date and the mysterious book transmigrator, He Qiao.\r
-\r
-Initially, He Qiao was very wary of Chi Xueyan, the scheming and vicious villain of the novel. After the two of them cooperated to pretend to love each other and tricked their families into allowing them to get married smoothly, he planned to focus on his career and not interfere with the other person.\r
-\r
-However, Chi Xueyan finally settled down from the chaos and started seriously studying the novel’s plot. He would occasionally come to the company to find He Qiao.\r
-\r
-Unlike the arrogant and willful boss’ wife that the employees imagined, Chi Xueyan mostly curled up on the sofa with a small blanket while quietly reflecting on his 2D life.\r
-\r
-Occasionally, he would raise his head and ask, “Did Lu Siyi never like me at all?”\r
-\r
-“…Yes.”\r
-\r
-“He has no vision.” Chi Xueyan sneered and rolled over. “How did he become the male protagonist when you are obviously much better than him!”\r
-\r
-He Qiao didn’t know why, but the investment plan in his hand suddenly became unsatisfactory.\r
-\r
-What a scheming villain.\r
-\r
-On the first anniversary of their agreed-upon wedding, He Qiao arranged the most romantic dinner and the brightest roses. He met Chi Xueyan’s blank eyes and finally asked the question he had been worrying about in his heart for a long time.\r
-\r
-“You have a good temper and you sleep very quietly so…” He Qiao seemed casual. “Is it true that you haven’t deleted any of your exes?”\r
-\r
-Chi Xueyan: “……”\r
-\r
-What a scheming straight man.`,IMG:105,PRIO:1},{BOOK_TITLE:"I Got My Bad Side Awakened After Rebirth",AUTHOR:"Sighing At The Moon",CHAPTERS:187,EXTRAS:7,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`In the previous life, Ling Fan was a total loser and poor cannon folder who fell in love with a white lotus. After rebirth, he wanted to be a smart guy.\r
-\r
-As for the white lotus? Sorry, I would no longer have feelings for you! As for his rival in love, the man who could crush him like crushing an ant, he remembered him! When he was strong enough, he’d get even with him!\r
-\r
-See how a young man who got his bad side awakened after rebirth married his rival in love and climbed to the pinnacle of life!\r
-\r
-Oh, by the way, Ling Fan was the top!`,IMG:119,PRIO:2},{BOOK_TITLE:"I'm Really Just An Ordinary Person",AUTHOR:"Lifting The Curtain Lights 帷幕灯火",CHAPTERS:111,EXTRAS:4,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/im-really-just-an-ordinary-person/",Synopsis:`Shen Si was an ordinary person, living an ordinary life, until one day, the unlimited flow world collapses and all the Survivors returned to reality, setting off a ripple.\r
-\r
-His gentle neighbor, Bai JunYi, was the God of Light in the other world, with the strength of faith that could shake the world’s rules.\r
-\r
-His affectionate ex-boyfriend, Jian Nian, was the God of Killing that even ghosts and gods fear, and the rumors are more frightening than each other.\r
-\r
-His distant cousin, Xi Luo, whom he has never met, was the unlimited flow world dark boss, leading countless ghosts and monsters.\r
-\r
-Ordinary person Shen Si: ????\r
-\r
-Onlooker crowd: So many big brothers have relations with him, he must be the hidden most powerful person!`,IMG:137,PRIO:2},{BOOK_TITLE:"Lessons on Raising A Partner",AUTHOR:"Ācí Gūniáng 阿辞姑娘",CHAPTERS:126,EXTRAS:11,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/lessons-on-raising-a-partner/",Synopsis:`Residing within the dense forest in Nore are the beautiful elves of Elune Forest. After the young elves began to be hunted by the humans to become s*aves, the Queen of Elune decided that young elves could not leave the forest until after their adult ceremony at fifty years old. When Hai’an’s ceremony finally arrived, he was excited to be able to finally travel away from his home and see everything the world had to offer. However, he got more than he bargained for.\r
-\r
-What was supposed to be a simple ceremony turned into Hai’an transmigating to the body of… a plant?!\r
-\r
-Stuck as a small sapling called Shaking Grass, Hai’an was bought and given as a birthday gift to a retired Starfleet Marshal named Auguste.\r
-\r
-After retiring due to political conflict, Auguste spends his time trying to find more of his missing race, the ancient dragons. Unexpectedly receiving Hai’an, Auguste believes him to be nothing more than a rare, exotic plant. To his surprise, he finds that this little plant is intelligent and learns more and more every day.\r
-\r
-How will this stoic, unfeeling dragon fall in love with the little transmigrated elf who lost his body?`,IMG:151,PRIO:3},{BOOK_TITLE:"Mr. Melancholy Wants To Live A Peaceful Life",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:122,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://youyu-eng.carrd.co/",Eng_TL:"https://edanglarstranslations.com/youyu",Synopsis:`A hilarious and well-written novel about an "ordinary" guy and his similarly "ordinary" husband. Having lived a lonely life for way too long, Yu Hua seals his powers and resolves to live a normal life and find love. He marries his cute little husband, You Zhengping, and they live a perfectly ordinary life.\r
-Until his powers start to unseal, and the world becomes chaotic again. In the process, Yu Hua and You Zhengping discover they've been hiding secrets from each other. You Zhengping learns that his crazily OCD perfect, gentle husband is actually petty, vindictive, and takes pleasure in others' suffering. At the same time, Yu Hua learns to trust You Zhengping beyond affection, understanding that it's okay to show weakness and imperfection.`,IMG:178,PRIO:1},{BOOK_TITLE:"My Boyfriend Is A Dragon",AUTHOR:"Chubby Strawberry Sauce",CHAPTERS:272,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.webnovel.com/rssbook/11806027505538905/32882388887465700",Synopsis:"A young boy named Bai Wu was saved and adopted by a thirty-something police sergeant named Xu Lan. It was love at first sight for Bai Wu, and once he started getting older, his heart yearned for a taste of the forbidden fruit – the romantic love of his adoptive father. The question is, will Xu Lan ever reciprocate? With deranged serial killers, parallel dimensions, time warps, dragons, and a bit of ancient black magic, Bai Wu and Xu Lan are caught in a series of crazy adventures while discovering what they truly mean to each other. This is a story of lust and madness!",IMG:182,PRIO:3},{BOOK_TITLE:"My Home is Not a Magical Creature Farm",AUTHOR:"Lips Are Lost 0 唇亡齿寒0",CHAPTERS:43,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/my-home-is-not-a-magical-creature-farm/",Synopsis:"Magician Augusta receives a strange letter and package from his friend one early morning. The box turns out to be a young (and very naked) werewolf! This starts the humorous tale of these two men falling in love with the comedic undertones from a sassy 400-year-old vampire, a germaphobe unicorn, and other magical creatures.",IMG:183,PRIO:2},{BOOK_TITLE:"New Times, New Hell",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:134,EXTRAS:10,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://ntnh.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ntnh/",Synopsis:`Yu Zhengdu joined a small start-up company that claimed to offer “life management services”……as a programmer.\r
-On his first day in office, he received a phone call from a stranger: “Hello, I received a text message from your company that informed me of my reincarnation tomorrow……”\r
-Yu Zhengdu: “……??”\r
-Shang Que, the beautiful little boss, said, “New employee, welcome to the Hell organisation in the human world. A thousand years ago, I was known to the human world as the Ghost King of Luofeng Mountain.”\r
-Yu Zhengdu: “……??” From then on, he was incredibly distressed about the development of Hell.`,IMG:190,PRIO:1},{BOOK_TITLE:"Paper Lover",AUTHOR:"楚寒衣青",CHAPTERS:119,EXTRAS:6,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://paper-lover.carrd.co/",Eng_TL:"https://dummynovels.com/novel/paper-lover/",Synopsis:`Li Shuoxing, the god author of the male channel, got a love nurturing app out of thin air in his phone.\r
-The rules of the game required him to interact with the virtual character “Su Mingqian” to increase his love value and unlock more functions.\r
-Li Shuoxing soon experienced the true reality of Krypton Gold players.\r
-Stage One: “tr*sh game, don’t try to cheat Krypton.”\r
-Stage Two: “I can’t be fooled to buy a dollar gift bag.”\r
-Stage Three: “One more Krypton and I’ll stop.”\r
-Stage Four: “Don’t stop me. For my cub, I’m willing to Krypton the whole world!”\r
-…\r
-Stage N: “For every additional 10,000 votes, I’ll add 10,000 words; monthly votes can be lost, but the King of Fire must be won!”`,IMG:195,PRIO:1},{BOOK_TITLE:"Seizing Dreams",AUTHOR:"Fei Tian Ye Xiang 非天夜翔",CHAPTERS:165,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://seizingdreams-info.carrd.co/",Eng_TL:"https://www.chickengege.org/novels/duomeng/",Synopsis:`In the dreamer’s dream, the dreamed one awoke.\r
-— Borges\r
-\r
-“I exist between the heavens and earth, in the sunlight, in the wind, and in dreams.”\r
-\r
-One night, Yu Hao, a college student who was at his wits’ end had an unexpected encounter with a mysterious visitor – “General” – who had dream travelled. He led Yu Hao in solving the countless riddles that abounded in the realm of the conscious, and lit up the fire beacons on the meandering Great Wall.\r
-\r
-Thereafter, the darkness retreated, the sun rose, and when the long night was thoroughly lit up, the him who existed in reality was reborn.\r
-\r
-The black dragon that roared, the lighthouse and demonic eye on the coastline, the rain forest before Chichén Itzá, the fierce beasts that wreaked havoc in the Colosseum…the bizarre projection of reality in one’s consciousness reflected the hidden place that the sunlight in reality couldn’t touch – the innumerable sins of the human heart.\r
-\r
-The journey of seizing dreams continues, and one can only hope that the sun will continue illuminating the human heart.\r
-\r
-——\r
-\r
-Fire beacons on the Great Wall were lit up to signal a border invasion.`,IMG:216,PRIO:1},{BOOK_TITLE:"Spirit Hotel",AUTHOR:"Su Youbing 酥油饼",CHAPTERS:100,EXTRAS:23,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/spirit-hotel/",Synopsis:`fter being unemployed for a long time, Feisha Shi finally found a new job – the front desk manager at the oldest hotel in the universe.\r
-\r
-This hotel has a fallen angel, vampire, werewolf, faerie, dwarf, titan, invisible person… just no humans.\r
-\r
-This hotel serves customers who are fallen angels, vampires, werewolves, faeries, dwarves, titans, invisible people… still no humans.\r
-\r
-This hotel’s name?\r
-\r
-Noah’s Ark.`,IMG:222,PRIO:2},{BOOK_TITLE:"Transmigrated as the Big Boss Mobile System",AUTHOR:"Tây Tây Fer",CHAPTERS:61,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/team/translator-ch1yo/?m_orderby=alphabet&__cf_chl_rt_tk=VjeD4nxhUjB1IKZwA04RSRs5ClijWLPNZZH3XuFzGQI-1704261103-0-gaNycGzNE_s",Synopsis:`Software engineer Wen Fan accidentally found himself transmigrated as the floating ball system in a mobile phone. He is as tall as the height of a thumb with a ram capacity of hundreds of billion gigabyte.\r
-\r
-He slept while hugging ‘QQ Penguin’, rode on the kangaroo of “Meituan Takeaway”, poked the voice bubble of “WeChat” and lived in the mansion of “The Sims”. He could also see through all network data, decipher all account passwords, and even dig out all lottery accounts.\r
-\r
-Aside from the fact that he could only live on the phone screen, Wen Fan had indeed reached the peak of his life.\r
-\r
-The only bad thing about this was that owner of the mobile phone likes to touch him visually. And he even likes to dress him up.\r
-\r
-‘Little Dragonman’, vampires, European-style nobles, ancient Hanfu; he changed his appearance every day.\r
-\r
-Wen Fan: “…Big brother, spare me.”\r
-\r
-Lou Wei who was deeply addicted to the game of raising a sim said, “Call me hubby.”\r
-\r
-————\r
-\r
-Lou Wei, the founder of LouV Technology, the number one gaming company in Z country, has recently begun to research software every day to come up with a new game.\r
-\r
-As soon as the news came out, people all over the country wanted to squeeze into the research and development room in order to be the first to experience the game.\r
-\r
-After all, Lou Wei is the number one holographic game designer in the world. He can simply design any game and it would be popular around the world.\r
-\r
-Countless LouV fans waited anxiously for the new game to be released. They waited and waited and finally, the big boss started the live broadcast——\r
-\r
-The big boss sat in front of the camera with a serious face: “We are currently looking for good looking erot*c fashion designs for my sim.”\r
-\r
-Wen Fan: “???”\r
-\r
-Fan: “Wow!!”`,IMG:271,PRIO:1},{BOOK_TITLE:"Transmigrated Into A Beast Tribe",AUTHOR:"Purple Thorns 紫色荆棘",CHAPTERS:102,GENRE:"Fantasy",TIMELINE:"Historical",Eng_TL:"https://thisisbananatl.com/bl-%E7%A9%BF%E8%B6%8A%E4%B9%8B%E6%B8%B8%E5%85%BD%E9%83%A8%E8%90%BD-transmigrated-into-a-beast-tribe/",Synopsis:`Lin Mu was pushed down the cliff, but he did not die and arrived in a magical world instead.\r
-\r
-A huge python with wings and the ability to fly. Alright, just think of it as the legendary Mayan Snake God;\r
-\r
-A gigantic centipede that can fly in the sky, alright, he’s kinda seen it before in “Journey to the West”;\r
-\r
-A mighty big wolf with a body as humongous as an elephant, en, just think of it as a mutant;\r
-\r
-..\r
-\r
-Although the animals in front of him were a little strange, they were still animals. Why did all of you suddenly turn into humans? Coming across wild beasts, Lin Mu could still accept it, but coming across ‘*yāojing’, Lin Mu became…. excited instead. What? You guys are the infamous drifter beastmen. I don’t know anything about that. Did you guys commit a lot of heinous crimes? I don’t see that either.\r
-\r
-And so, Lin Mu began a hard but satisfying life of building a home in another world.\r
-\r
-*Yāojing/妖精 doesn’t have a proper English equivalent word. The nearest meaning would be “supernatural being” or “Yokai” (Japanese).`,IMG:272,PRIO:3},{BOOK_TITLE:"You're Causing Chaos Again",AUTHOR:"Shīmián Diàndēng",CHAPTERS:91,EXTRAS:7,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/youre-causing-chaos-again-e-sports-chapter-1/",Synopsis:`Shen Yanming was a hardworking and talented but unlucky esports player in his previous life.\r
-\r
-He was deceived into joining a second-rate team, narrowly missing the chance to win the World Championship trophy time and time again. Eventually, he encountered an accident that ended his professional career.\r
-\r
-One day, he was reborn.\r
-\r
-Since it’s useless to work hard, Shen Yanming decided to let himself go and stop putting in effort.\r
-\r
-He registered an ID called “I’m Messing Around Again” and opened a livestream channel for random play. His fans thought he was just a comedian with no skills.\r
-\r
-Until one day, he encountered a professional player’s alternate account, and the fans were ready to watch clueless Shen Yanming get beaten. However, by a stroke of luck, Shen Yanming unexpectedly turned the tables and defeated the opponent.\r
-\r
-Shen Yanming was asked by his fans about his most admired professional player.\r
-\r
-Shen Yanming: It’s Kong Shen. My greatest wish is to be nursed by Kong Shen.\r
-\r
-Fans: Well, you don’t have a chance in this lifetime. Everyone knows that Kong Shen rarely heals anyone besides his regular teammates. Even in solo games, he switches to a DPS role.\r
-\r
-Just as they were talking, the legendary and aloof Kong Shen entered the livestream, showering Shen Yanming with generous donations and leaving a message: Join my team, I’ll be your exclusive healer.\r
-\r
-Shen Yanming & Fans: …\r
-\r
-Later, Shen Yanming discovered that one by one, his previously unattainable dreams were coming true. He became the most popular rookie king and won championship trophies effortlessly.\r
-\r
-…And he was even kissed by his Kong Shen until his legs turned weak.\r
-\r
-1v1, male-male pairing, double rebirth, sweet romance. The Number One Healer in the Chinese Server, Gong × The King of tr*sh Talk Assassin Shou.\r
-\r
-The Shou is always messing around, flirting every day, while the Gong is serious, getting teased until he loses his temper.\r
-\r
-The game is completely fictional, and not playing the game won’t affect understanding the story.`,IMG:296,PRIO:2},{BOOK_TITLE:"Entering a Split Personality",AUTHOR:"Long Qi",CHAPTERS:944,GENRE:"Fantsy",TIMELINE:"Modern",Eng_TL:"https://banoffeetranslations.blogspot.com/2020/07/entering-split-personality-chapter-1.html",Synopsis:`Xiao He casually filled out an online questionnaire and unexpectedly got a job out of it. As long as he perfectly fulfilled the employer’s requests, he could receive 30 million RMB in remuneration. The cash-strapped Xiao He’s eyes lit up, and he took the task immediately.\r
-\r
-His job was actually to enter the world of a patient with a mental disorder, so he could treat this patient who had a severely split personality…\r
-\r
-Black-bellied, violent, mu*derous, impetuous, gloomy, inhuman, yandere, prejudiced…various different types of personalities, strange and ever-changing mental worlds—Xiao He captured them all one by one. He just felt like he’d become completely ill!\r
-\r
-30 million bucks weren’t that easy to earn. By the time he earned the money, he might already be in a mental hospital.`,IMG:65,PRIO:2},{BOOK_TITLE:"A Broken Mirror Reunited In An Esports",AUTHOR:"雪怀金封",CHAPTERS:82,EXTRAS:9,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://wanderertl130.id/bl-projects/a-broken-mirror-reunited-in-an-e-sports-bl/",Synopsis:`[Cool and beautiful team captain becomes the bottom in a relationship with an ultra-strong and decisive professional gamer] Rong Yi is the captain and chief tactician of the top team RS, cool and calm but suffering from camera phobia, and no one has ever seen his true face. After leading his team for five years and winning the championship for three years, he is betrayed by his team and left with nowhere to go. At this point, he receives a call from his ex.\r
-His ex is a cold-hearted and popular professional gamer who recently returned from overseas, having won numerous championships. He proposes a simple condition: “Join our team and we can restore our romantic relationship to make work easier.”\r
-\r
-Rong Yi: “Okay.”\r
-\r
-But wise men do not fall in love, and competitions are more important than anything.\r
-\r
-On the first day Rong Yi leaves his old team, his former teammates celebrate his departure, while the entire internet is filled with criticism. On the second day, netizens are silenced as they witness Rong Yi as the new team captain, completely dominating the game. On the third day, the media chases after him, but a low-key senior protects him, covering his face and revealing only a small, exquisitely white chin. The internet explodes with excitement.\r
-\r
-On and on the days go.\r
-\r
-Rong Yi’s former teammates are driven to the brink of collapse, asking with red eyes: “Captain, can you still come back?”\r
-\r
-“I’m sorry,” Rong Yi replies gently. “I’m their captain now.”\r
-\r
-Everyone knows that Rong Yi is the treasure of the entire VIT team, especially for the cold and reserved senior who shields him from everything and favors him to an infuriating degree.\r
-\r
-No one knows that this team was built for Rong Yi.\r
-\r
-From the moment Xiao Yin first saw this dusty gem, he wanted to wipe away the dust and protect Rong Yi’s brilliance. For five years, he has done just that.`,IMG:1,PRIO:2},{BOOK_TITLE:"AWM: PUBG",AUTHOR:"Man Man He Qi Duo",CHAPTERS:86,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://awmpubg.carrd.co/",Eng_TL:"https://www.scribblehub.com/series/743807/awm-pubg/",Synopsis:`AWM: PUBG’s highest damage dealing and most difficult to acquire, monstrous sniper rifle within the game. The ultimate air-drop dream, with ample power doing large harm, one shot to the head is enough for one to fall to the ground, regardless of the head gear one may be wearing. Its only disadvantage: The odds of it dropping make it extremely difficult to obtain, in which it all relies on luck.\r
-\r
-You are my AWM, meaning: You are the one who I can only come across serendipitously.`,IMG:33,PRIO:1},{BOOK_TITLE:"Your Teacher I, am Hella Rich",AUTHOR:"Mo Chen Huan",CHAPTERS:36,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://t.co/Yx2bchiv26",Eng_TL:"https://foxaholic.com/novel/your-teacher-i-am-hella-rich/",Synopsis:`On a certain day, Ji Xiao Li led his newly-acquired disciple into a dungeon, feeding him all sorts of priceless red and blue potions.\r
-Teammate: Fck, tyrant, do you have an ore mine at home?\r
-Ji Xiao Li: How did you know my family owns an ore mine?\r
-【Teacher Orders a Salute：disciple, enter the sect, accept my guidance. Tell this teacher, what is the sect’s ancestral creed?】\r
-【Milk Tea Small Crisp：Master, there are only you and I in this sect, what ancestral creed?】\r
-【Teacher Orders a Salute：Evil, evil disciple! I said to say it so say it!】\r
-【Milk Tea Small Crisp：……】\r
-【Milk Tea Small Crisp：Beat to death YueJian Chunhe that son of a btch!】\r
-YueJian ChunHe = Milk Tea Small Crisp = Ruan Fenghe\r
-Teacher Orders a Salute = Ji Xiao Li`,IMG:300,PRIO:1},{BOOK_TITLE:"Escape the Infinite Chambers",AUTHOR:"Zǐ Jiè 紫界",CHAPTERS:201,EXTRAS:5,GENRE:"Horror",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/eic/",Synopsis:`One day, Luo Jian woke up from his sleep and found himself in a locked chamber where the door and window were all sealed. A note with a few lines written on it was tacked to the wall: “Escape from this room within an hour, otherwise, you will die.”\r
-\r
-There is a sequel called Reincarnation Night (轮回之夜) that takes place in the same universe but has different main characters.`,IMG:66,PRIO:3},{BOOK_TITLE:"I Rely On Kisses to Clear Survival Games",AUTHOR:"啾咪啾咪兔",CHAPTERS:90,EXTRAS:9,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://ktcsg.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/09/03/i-rely-on-kisses-to-clear-survival-games-by-%e5%95%be%e5%92%aa%e5%95%be%e5%92%aa%e5%85%94/",Synopsis:`Cheng Zhi Chu was pulled into an infinite stream of horror games. If he didn’t clear them, he would die.\r
-But can someone tell him why others clear the games using violence and force but his method of clearing the game is by kissing the boss?!\r
-Cheng Zhi Chu: I am a straight man. Even if I kill myself or am killed by monsters, I will not kiss the boss!\r
-Boss: Be good. Kiss me and I’ll let you go.\r
-Bai Yi had been trapped in the game for many years.\r
-Rather than exploding in anger in the silence, he had turned crazy. And so…….he split himself. His soul was broken into many pieces and each of them became the boss in the games.\r
-But, regardless of how the soul was split, from the beginning to the end there was one thing that didn’t change —–He, likes Cheng Zhi Chu.\r
-Every fragment of his soul was utterly in love with him.\r
-It was also because of this that he and every fragment of his couldn’t stand seeing people other than himself getting close to Cheng Zhi Chu —- Even if the other party used to be a part of himself.\r
-Dark desire gradually surged inside him.\r
-Anyone who gets between him and Cheng Zhi Chu——even if it’s himself —– he would kill them all.\r
-“The person who you should really kiss……is me.”\r
-▶▶\r
-A possessive, crazy and suicidal demonic gong with multiple personalities X A timid but free-spirited steel straight heartthrob shou`,IMG:129,PRIO:1},{BOOK_TITLE:"Kaleidoscope of Death",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:139,EXTRAS:9,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://k-o-d.carrd.co/",Eng_TL:"https://taidatranslations.wordpress.com/kaleidoscope-of-death/",Synopsis:`It started off peculiarly; first, his domestic cat refused to let him cuddle it.\r
-Lin Qiushi soon found that a sense of disharmony and incongruity began to pervade everything around him.\r
-Then, one odd day, he pushed open a door, and he discovered that the hallway he was familiar with turned into a boundless corridor.\r
-At both ends of this corridor were twelve, identical iron gates.\r
-Thus, the story began.\r
-Ruan Nanzhu said to Lin Qiushi, “When you gaze into the abyss, the abyss gazes back.”\r
-Upon hearing this, Lin Qiushi sank into deep contemplation. He then pulled down the zipper of his trousers and aimed at the abyss…\r
-Ruan Nanzhu: “…Put your pants on properly!”\r
-Super shameless, ill, pampered gong X Shameless, calm shou; a combination of double [or extreme] shamelessness.`,IMG:148,PRIO:1},{BOOK_TITLE:"Welcome to The Nightmare Game",AUTHOR:"Bó Mù Bīng Lún 薄暮冰轮",CHAPTERS:135,EXTRAS:3,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://wtng.carrd.co/",Eng_TL:"https://quazartranslates.tumblr.com/toc",Synopsis:"Qi Leren had just cleared the bad ending of «The Nightmare Games» when his laptop died well before its time. His luck seemed to follow him as he was transported, along with the other passengers, to a hospital following an accident between his bus and a truck. Upon waking in a transfusion hall rather than a ward, QiLeren felt a familiar sense of dread as he took in the hospital that held no trace of other people…",IMG:283,PRIO:1},{BOOK_TITLE:"FIght The Landlord, Fall In Love",AUTHOR:"Cang Wu Bin Bai 苍梧宾白",CHAPTERS:40,EXTRAS:1,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://fl-fl.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/flfl/",Synopsis:`A love story that came about due to Fight the Landlord* (popular Chinese card game with an online app version).\r
-Two eldest young masters who looked down on each other were forced into a blind date. Each discovered that the other was the immoral scoundrel who had poured cold water or thrown rotten tomatoes on him during a game of Fight The Landlord two days prior.\r
-Now what?\r
-Well, let’s secure a partner first and figure the rest out later.\r
-\r
-*NOTE : Fight the Landlord (斗地主) is a very popular 3-player (often gambling) Chinese card game where there are two peasants and one landlord. The goal of the game is to be the first one to get rid of your cards. You can get rid of your cards by playing more “powerful” cards against the opponent’s previous move.`,IMG:80,PRIO:2},{BOOK_TITLE:"Go To Hell, White Lotus",AUTHOR:"月亮好圆",CHAPTERS:62,EXTRAS:2,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:"As an obscured and transparent slag gamer in the gaming world, Bai Lian Hua (White Lotus) had always been fond of those tr*sh forum posts. Until one day: “White Lotus! Go check out the forum! 233333! You’re getting flamed!!!”",IMG:89,PRIO:3},{BOOK_TITLE:"He Lifted My Red Veil",AUTHOR:"Zi Jin 紫矜",CHAPTERS:65,EXTRAS:5,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/he-lifted-my-red-veil/",Synopsis:`As a gay who always falls in love with straight men by accident, Le Han has been single for twenty years. In the border of collapse, he looked up to the sky and requested the love of Lao Gong.\r
-\r
-At this time, the popular virtual game across the country introduced a new way of marriage playing: Tie the knot, also known as ‘Choose the bride and choose the groom.’\r
-\r
-Le Han: Good, it’s just for me.\r
-\r
-However, facing the outstanding and elegant grooms in the ‘Groom Selection’ area, Le Han blushed shyly and was embarrassed to choose.\r
-\r
-So he returned to the ‘Bride Selection’ area, put on a red wedding gown, covered his head with a red veil, and obediently waited for the gong to choose him.\r
-\r
-…He never expected that a big man would come.`,IMG:98,PRIO:2},{BOOK_TITLE:"I Think My Boyfriend is Sick",AUTHOR:"Yi Zhī Dàyàn 一只大雁",CHAPTERS:83,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://rbktrtranslations.wordpress.com/2019/03/02/itmbis-c1/",Synopsis:"I think my boyfriend is sick, the kind of sickness that’s too embarrassing to mention.",IMG:131,PRIO:3},{BOOK_TITLE:"Later, He Became A Royal Healer",AUTHOR:"Yan Gui Kang 艳归康",CHAPTERS:137,EXTRAS:3,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://lhbarh.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/later-he-became-a-royal-healer/",Synopsis:`You Liangxing would never open the speech function in game. That was because his voice was… Particularly! Kittenish!\r
-But there was one day, he queued up with a teammate who had so much to say that they may as well explode. Vexed to the point of no return, he contributed a voice that was capable of splitting heaven and earth, “Don’t BB.”\r
-The other party who was being scolded stilled. In the ensuing silence, he suddenly let out a long, relishing… moan.\r
-Later —\r
-He realised that the person was a great god,\r
-Much later,\r
-Without him realising,\r
-He became the great god’s royal healer.\r
-…. And also his boyfriend.`,IMG:149,PRIO:2},{BOOK_TITLE:"Love You 59 Second",AUTHOR:"Yun Guo Shi Fei 云过是非",CHAPTERS:69,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://59seconds.carrd.co/",Eng_TL:"https://www.wattpad.com/story/94128413-love-you-59-seconds",Synopsis:`Wu Han Ying does not know why a bunch of people were following him around shouting sister-in-law.\r
-Xia Chen does not know why he begins to like the existence of this obedient Little Wudang, who is sometimes a bit silly as well.\r
-Being followed and being called Sister-in-law, Little Wudang could not stand it anymore and retorted, “I’m a man.”\r
-—\r
-Lao Da (Boss) confessed, Sister-in-law (Sao Zi) ran away, so Lao Da is going crazy.\r
-Guild Member 1: Sister-in-law, please come back, Lao Da doesn’t mind that you’re a ladyboy! (ladyboy – a male that plays a female character in game; this happens often in RPG ^^)\r
-Guild Member 2: Pei Pei Pei, ladyboy your ass! Dare to call my sister-in-law as ladyboy, come to Yan Nan* (A place’s name, where players use for PVP)\r
-Guild Members: …\r
-Little Wudang thought to himself, you can’t blame me for disappearing, it’s because the school internet got disconnected.`,IMG:164,PRIO:3},{BOOK_TITLE:"Rebirth of A Supermodel",AUTHOR:"Mo Chen Huan 莫晨欢",CHAPTERS:244,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`In his past life, Ming Yu struggled in the European and United States fashion circles, eventually becoming the well deserved king of the catwalk.\r
-\r
-After dying from a serious illness and being reborn, Ming Yu was surprised to find:\r
-\r
-Huaxia stars shone brightly, there were successful names everywhere!\r
-\r
-In this better world, on a more vigorous and brilliant stage, the first supermodel tries to reproduce the glory of another world!\r
-\r
-Interviewer: May I ask Mr Xi, this year Ming Yu said he would surpass you. As the number one global supermodel, what is your opinion on this?\r
-\r
-Xi Ze: This is a bad question. My family has very strict rules.\r
-\r
-Home Owner Ming Yu: …….\r
-\r
-The pair of black-hearted husbands will sweep the fashion industry, conquering the world.`,IMG:205,PRIO:2},{BOOK_TITLE:"Reborn with an Old Enemy on the Day of our Marriage",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:93,EXTRAS:11,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://roedm-info.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/roedm/",Synopsis:`Lin Qian and Zheng PingQing, two people who have wanted to kill each other for many years, fell in love. After a lot of ups and downs, they finally married.\r
-But they didn’t expect to get reborn together on the day of their wedding.\r
-Back to the year when their feud was at its most intense.\r
-The friends around them also saw each other as enemies.\r
-Yet the two men in question were…in the eyes of the frightened relatives and friends of both sides; they began to scatter dog food.\r
-Friends and relatives: ???\r
-Ermm…..this is awkward.`,IMG:208,PRIO:1},{BOOK_TITLE:"This World Has Gone Crazy",AUTHOR:"A Lifetime Of Beautiful Clothes 一世华裳",CHAPTERS:73,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wgc/",Synopsis:`Qi Le – gender: male, sexual interest: women – suffered from congenital heart disease and died early. However, God played a small trick on him and placed his soul inside the body of a trashy shou.\r
-\r
-From then on, the gates of a new world were opened.\r
-\r
-When Qi Le opened his eyes, he found himself still lying in the hospital, but there was a small problem.\r
-\r
-Everyone helped clear up his confusion: “You’re gay.”\r
-\r
-Qi Le: “……”\r
-\r
-Everyone: “You’re a zero, which means you’re the one on the bottom.”\r
-\r
-Qi Le: “Bullshit! Laozi is a straight man!”\r
-\r
-Everyone stepped forward to pat him on the shoulder: “Forget it, all the men in the world can turn straight, but not you.”\r
-\r
-Qi Le shook with anger: “We’ll see about that!”\r
-\r
-Everyone reminded him: “Everyone knows about your confession, everyone knows that you’re gay. Which girl would be willing to date you ah?”\r
-\r
-Qi Le: “=口=”`,IMG:264,PRIO:3},{BOOK_TITLE:"The Governor Is Sick",AUTHOR:"Yáng sù",CHAPTERS:134,EXTRAS:4,GENRE:"Martial Arts",TIMELINE:"Historical",Carrd:"https://governorissick.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/the-governor-is-sick-chapter-1/",Synopsis:`The world did not expect that the Yama of a mountain of corpses and leader of loafers, Xiahou Lian, would be reduced to the lowest rank of underling in the Eastern Depot. He had a monthly salary of two taels, which wasn’t even enough for rent.\r
-As a rebel in the martial arts world and the Eastern Depot’s most wanted criminal, Xiahou Lian did not expect that the delicate little young master he had met in his childhood would actually become the powerful and arrogant governor of the Eastern Depot.\r
-As for that governor, there was a beam of white moonlight in his heart, a memory of someone he had coveted for a long time yet was out of reach.\r
-“I’ll become a ghost for you, and you’ll become a Buddha for me.”`,IMG:243,PRIO:1},{BOOK_TITLE:"The Defective",AUTHOR:"Priest",CHAPTERS:197,EXTRAS:6,GENRE:"Mecha",TIMELINE:"Modern",Carrd:"https://cancipin.carrd.co/",Eng_TL:"https://www.wattpad.com/story/157456305-can-ci-pin-imperfections-%e6%ae%8b%e6%ac%a1%e5%93%81-bl-by-priest",Synopsis:`"Who will be the one to bury mankind, Orwell or Huxley? No need to give your answer so quick. Let's read a story first.\r
-When Lu Bixing, a hipster from the Eighth Galaxy, fell in love with a gangster called B4, he didn't know that his darling muffin was Commodore Lin Jingheng, the commander of Silver Fortress. As they knew each other further, the world changed dramatically: Interstellar pirates invaded the Interstellar Union. The nasty secrets about Eden emerged in front of them. Lu's pedigree was found to be unbelievably mysterious.\r
-But all they wanted was each other, no matter how peculiar the world was around them.\r
-In a sentence, it's a story about conspiracies and murders, gentlemen and villains, love and hatred.\r
-Coming back to the question, the answer is: "Humans are born from belief, die of belief, and reborn from the ashes of belief." "`,IMG:235,PRIO:1},{BOOK_TITLE:"A Train Named EVil",AUTHOR:"江亭",CHAPTERS:32,EXTRAS:1,GENRE:"Mystery",TIMELINE:"Modern",Eng_TL:"https://18.foxaholic.com/novel/a-train-named-evil/",Synopsis:`Zhou Yanling, a suspect in the Tongzhou 9/27 major mu*der case, appeared on the K4133 train. When the train conductor, Wu Fengrong first received this news, he began making the rounds, investigating. \r
-\r
-On this train, various forces secretly wrestled; the truth was confusing, and the suspect was ambiguously entangled with the conductor. \r
-\r
-Zhou Yanling had never encountered such a splendid person as Wu Fengrong, with a lovable physique and graceful charm. Zhou Yanling was so affected that he solicited that refreshing presence (1). Wu Fengrong was secretly wary that Zhou Yanling was concealing something profound. Who is he going to trick? It could be that he just wants to indulge. And when he was finished doing so, Wu Fengrong would not be able to keep himself from making a scene. In this moment, the two waited silently, each harboring their own designs and intents. \r
-\r
-Thirty hours from Tongzhou to Baihe, the road is long…`,IMG:9,PRIO:1},{BOOK_TITLE:"Global Examination",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:166,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://qqgk.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/11/18/global-university-entrance-examination-by-%E6%9C%A8%E8%8B%8F%E9%87%8C/",Synopsis:`One day, You Huo and his family was pulled into an exam called the Global University Entrance Examination. Going through exams together with other unfortunate examinees, their lives are put at stake and they can only live by passing each exam. However, something about these exams and the system controlling it didn’t seem right — lt seemed to be trying to trap the examinees with ridiculous rules and strange questions…\r
-There, You Huo meets lnvigilator 001 who seems to hold a key to the past he no longer remembered and together they DESTROY THE EXAM`,IMG:88,PRIO:1},{BOOK_TITLE:"Guardian",AUTHOR:"Priest",CHAPTERS:106,EXTRAS:5,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://readguardian.carrd.co/",Eng_TL:"https://drive.google.com/drive/mobile/folders/1J7rTcFYHt71SbwCzkBO2BPmriX-RprCb",Synopsis:`SYNOPSIS\r
-\r
-When Detective Zhao Yunlan is called to investigate a mysterious death at a university, he meets Shen Wei: a polite but reserved professor who he immediately finds himself inexplicably drawn to. Although Shen Wei tries to put distance between them and dismisses Zhao Yunlan’s courting attempts, Zhao Yunlan notices the way Shen Wei’s hands linger a moment too long when he touches him and the look of restrained adoration hidden in his eyes when their gazes meet. And there’s just something so familiar about him that he can’t quite place...\r
-With every mystery they take on, the two of them grow closer, and Shen Wei’s secrets and the reason for his affection towards Zhao Yunlan are slowly revealed. At the center of it all, a long forgotten plot of gods and ghosts threatening the balance of the world is brought to light.`,IMG:94,PRIO:1},{BOOK_TITLE:"Madness of the Heart",AUTHOR:"初禾",CHAPTERS:186,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://xinkuang.carrd.co/",Eng_TL:"https://www.78zaotl.com/xk/",Synopsis:`Upon completing a year-long training program with a special operations team at the Ministry of Public Security, Ming Shu returns to Dongye City to discover that he has a new boss.\r
-Many people said to him, “Ming-ge, the new boss is such an enigma. Don’t let him harass you.”\r
-To which Ming Shu replied, “…that guy has been harassing me for years. You guys just don’t know it.”\r
-Ever since Ming Shu returned to the bustling metropolis of Dongye City, strange murders have been cropping up one after another. An unemployed man suddenly goes berserk in a cafe. A mysterious incident occurs at a long-abandoned playground in the middle of the night. Underneath the body of a man who met a tragic end, a second corpse is discovered to be buried.\r
-Captain of the Serious Crimes Division, Ming Shu, and Deputy Director of the Criminal Investigation Bureau, Xiao Yu’an, join forces to investigate and solve all these bizarre cases and more.\r
-Note: The main plot is a criminal investigation drama. Part of the same series as ‘Poisoned Heart’.`,IMG:167,PRIO:1},{BOOK_TITLE:"Silent Reading",AUTHOR:"Priest",CHAPTERS:180,EXTRAS:5,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://modustarter.carrd.co/",Eng_TL:"http://edanglarstranslations.com/modu",Synopsis:`Childhood, upbringing, family background, social connections, traumas...\r
-We ceaselessly seek and explore the motives of criminals, pursue every faint trace of emotion among them, not to sympathize with them and even forgive them, not to find a reason to exonerate them of their crimes, not to bow before the so-called complexities of human nature, not to reflect on social conflicts, and certainly not to become monsters ourselves—\r
-It is only to find a just account for ourselves and for those who still have hope for the world.`,IMG:219,PRIO:1},{BOOK_TITLE:"Spring Trees and Sunset Clouds",AUTHOR:"Wei Liang 未良",CHAPTERS:54,GENRE:"Mystery",TIMELINE:"Historical",Carrd:"https://readstsc.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/spring-trees-and-sunset-clouds/",Synopsis:`An average, normal university student transmigrates into the royal family in another world, where he becomes one of the successors of the throne. Life in the palace is inevitably difficult though, what with all the scheming enemies around him. This man’s only wish in this world is to be able to protect his “younger brother,” and for that, he’ll do anything–whether by hook or by crook–to ensure his brother’s safety and have him succeed the throne.\r
-The man never once expected, though, that the person whom he swears to protect would be the one to stab him in the back. He got locked in a dungeon where he was tortured for three years. And when he was on the brink of death, his body was thrown away into the river.\r
-When he wakes up, he finds himself in an eccentric and peaceful place, where everyone is suspiciously more than what they seem…`,IMG:223,PRIO:1},{BOOK_TITLE:"The Fourteenth Year of Chenghua",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:151,EXTRAS:18,GENRE:"Mystery",TIMELINE:"Historical",Eng_TL:"https://chichilations.home.blog/fourteenth-year-of-chenghua/",Synopsis:`VSGH is a multiplayer online tactical competitive shooting game.\r
-\r
-When Wen Xi first came into contact with the game, like most people, he used a gun as his main weapon.\r
-\r
-But his shooting skills were too poor, often having teammates vent about whether he was the master of outlining the human body.\r
-\r
-Until one day, he picked up a bow.\r
-\r
-Since then, SGH has had another archer assassin named “Wency”.\r
-\r
-It’s said that his arrows never miss their shot, a hundred shots and a hundred hits, killing with one blow.\r
-\r
-It’s said that only the first ranked sharpshooter “Mac” succeeded in killing him.\r
-\r
-It’s said that he likes “Mac”.\r
-\r
-Wen Xi: …where did this rumor come from? Mac, come out and clarify!\r
-\r
-Mo Chen: En, it’s a rumor. Actually, I like you.\r
-\r
-A shou who wholeheartedly wants to make money through livestreaming vs. A gong who wholeheartedly wants to trick the shou into joining his team.`,IMG:240,PRIO:3},{BOOK_TITLE:"Itinerant Doctor",AUTHOR:"Priest",CHAPTERS:60,EXTRAS:3,GENRE:"Psychological",TIMELINE:"Modern",Carrd:"https://youyi.carrd.co/",Eng_TL:"https://edanglarstranslations.com/yy",Synopsis:`n the year 2041, a miraculous instrument emerges, known to professional insiders as the Projector.\r
-It can link to a human's thoughts, project the complex thoughts into a bizarre actual space. This space can be stable or unstable. All laws of physics are meaningless; all weird things can happen.\r
-Accordingly, a whole new type of psychologist appears. Using the altered space, they put themselves into the thought projection space, going in depth into the origins of patient's illness amid dangers.\r
-Accordingly...this is a cheerful adventure story.\r
-`,IMG:146,PRIO:1},{BOOK_TITLE:"Love Delusion",AUTHOR:"KLBB",CHAPTERS:53,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://xixistranslations.com/love-delusion-bl/",Synopsis:`Lin Anran, an artist with long hair, is an introvert who doesn’t like to leave his house. After his abusive mother left him, she left him an apartment so he began to live alone against what his aunt recommended. Then he met someone. Someone who truly understood him.\r
-\r
-The psychiatrist that Lin Anran saw, “In short, that ‘person’ is only a figment of your mental delusion called erotomania. You feel that the other person is secretly conveying love, and is even secretly showing you love in a TV interview, but in fact, you both have no contact at all in reality. Everything is just your imagination.”\r
-\r
-The man in suit and tie that Lin Anran saw when he got home, “Ranran, you’re finally back.”\r
-\r
-“Erotomania is a rare mental illness in which the patient falls into the delusion that another person (usually someone with a higher social status) is in love with him.” (From Baidu Encyclopedia)`,IMG:161,PRIO:2},{BOOK_TITLE:"Monster",AUTHOR:"Little Devil",CHAPTERS:33,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/monster/chapter-1/",Synopsis:`He was born without eyes, nose or mouth, just a piece of rotting flesh, a cruel and terrible monster.\r
-\r
-He had eyes for only one person, his creator, Feng Yeran: a terminally ill, ambitious scientist.\r
-\r
-He had only one wish, to get him. That included getting his love, his everything, to be with him forever―\r
-\r
-For that he would give everything; anyone who dared to lay their hands on Feng Yeran would be doomed.\r
-\r
-Younger Yandere Monster Top X Weak Researcher Bottom\r
-\r
-Preface:\r
-\r
-There were four pieces of playdough on the table, of different sizes. Little Feng Hua was puzzled.\r
-\r
-—Feng Hua: Ye’er, how do we make a small house out of these four pieces of playdough?\r
-\r
-—Feng Yeran: Squeeze them into the shape you want. This one is the roof, the biggest one is the walls, this one is the doors and windows, and the last small one is the chimney.\r
-\r
-—Feng Hua: There are so many coloured pencils and pastels here!\r
-\r
-—Feng Yeran: When we finish the house, let’s paint the background of the house, the earth, the green grass, the blue sky and the white clouds.\r
-\r
-—Feng Hua: And paint the two of us!\r
-\r
-—Feng Yeran: Yes, one adult and one child!\r
-\r
-—Feng Hua: We’ll be together forever!`,IMG:174,PRIO:1},{BOOK_TITLE:"Outside The Law",AUTHOR:"Ka Bi Qiu 卡比丘",CHAPTERS:13,EXTRAS:2,GENRE:"Psychological",TIMELINE:"Modern",Carrd:"https://otl.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/otl/",Synopsis:"Made up background, fake dog blood gangster, real “dumb white sweet”. Luo Yu x Ruan Zheng",IMG:194,PRIO:1},{BOOK_TITLE:"The Blind Concubine",AUTHOR:"Xi Ni 洗泥",CHAPTERS:29,GENRE:"Psychological",TIMELINE:"Historical",Carrd:"https://xianiangniang.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/xia-niangniang/",Synopsis:"A blind concubine lives in the cold palace. The blind concubine has a snow white cat. Day after day, year after year, he lives quietly in the courtyard of the cold palace. It is as if he has already been forgotten by the entire imperial palace. Until one day, the young emperor accidentally chances upon him… ️️️️️️️️",IMG:232,PRIO:2},{BOOK_TITLE:"The Slag Gong Wants to Kill me",AUTHOR:"跑酷天才",CHAPTERS:38,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/tsgwtkm/",Synopsis:`I think my husband wants to kill me.\r
-\r
-Whether it’s forgetting to turn off the gas or finding the bathroom door locked after I just finished bathing, it all makes me feel that he wants to kill me.\r
-\r
-I know that I shouldn’t be considering this because we are a gay couple and we have been together for seven years.\r
-\r
-Our relationship is also stable, and he is very good to me.\r
-\r
-But I really think he wants to kill me.`,IMG:252,PRIO:3},{BOOK_TITLE:"I Just Want To Be in A Relationship",AUTHOR:"Lian Shuo 连朔",CHAPTERS:217,EXTRAS:4,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/iar/",Synopsis:`In the last life, Movie Emperor Yu listened to the company and listened to his manager in order not to expose his s*xual orientation. Until his death, he never had a relationship.\r
-\r
-Yu Qing Huan didn’t want to be a money making machine in his current life. He wanted to travel to the best place, see the best scenery, eat the best food and then find the best man to live a happy life together.\r
-\r
-Hou Qu is a genius savant who can easily learn chemical formulas just by glancing at them. One day, he gets lost in the busy streets and Yu Qing Huan helps him.\r
-\r
-Little does Yu Qing Huan know that his wish to stay out of the limelight may not ever be granted as he had unknowingly been locked on by a hungry wolf hidden in the shadows because of his single act of kindness…`,IMG:122,PRIO:3},{BOOK_TITLE:"It's Not Easy Being Your Love Rival's Big Brother",AUTHOR:"精分柚子茶",CHAPTERS:58,EXTRAS:2,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`The 27-year-old Wei Han is a slightly fat, slightly chicken-livered, and slightly foolish, pure-hearted and besotted top, and his sweetheart who had been together with him for seven years, in the end, was stolen away by Qi ZhiFan one morning.\r
-\r
-Deeply broken-hearted and in despair, he went overboard with binge eating, and ended up pathetically choking to death…\r
-\r
-Luckily, he received a second chance, yet his timing, position, and destiny all got warped, and the him who returned to being twenty followed his remarried mother into the Qi family, turning into Qi ZhiFan’s non-blood-related older brother.\r
-\r
-Well, Wei Han swore that this time, he must alter his dumped-as-cannon-fodder fate, and since he’s become his love rival’s big bro, he can definitely torment this scumbag little brother to death, restoring his position as the rightful top and quickly carry his bottom home!\r
-\r
-However, why is the development of the plot spiraling further and further out of his control?\r
-\r
-Why is Qi ZhiFan looking at him with a scorching, burning gaze, acting more and more questionable ( ⊙ o ⊙ ) eh?!\r
-\r
-Thus, Wei Han was pushed down into an official bottom…??`,IMG:145,PRIO:3},{BOOK_TITLE:"One Useless Rebirth",AUTHOR:"Can’t Play Chess 不会下棋",CHAPTERS:113,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`He Bai won the lottery, became rich, and reached the pinnacle of life. Then, he inadvertently took a picture of the Film Emperor Di Qiuhe being killed. And after reporting this case to the police, he was reborn in a midst of confusion.\r
-\r
-He Bai: I don’t have any horrible relatives to abuse. Why was I reborn?\r
-\r
-Di Qiuhe: But I do.\r
-\r
-He Bai: I also haven’t been betrayed or harmed by anyone. Why was I reborn?\r
-\r
-Di Qiuhe: But I have.\r
-\r
-He Bai: I just want to have some money to live freely and eat well. I already achieved that goal, so why was I reborn?\r
-\r
-Di Qiuhe: I have money, but don’t live freely or well.\r
-\r
-He Bai angrily flips the table: So what’s the use of my rebirth! Just to make me suffer again?!\r
-\r
-Di Qiuhe (Holding and Touching He Bai): Be my lover, you’re only responsible for eating “lollipops,” you won’t eat any bitterness.\r
-\r
-He Bai: Leave!`,IMG:192,PRIO:3},{BOOK_TITLE:"Rebirth of a Cannon Fodder",AUTHOR:"Yin Er 饮尔",CHAPTERS:126,EXTRAS:3,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://translatingboredom.com/tag/rebirth-of-a-cannon-fodder-from-a-novel/",Synopsis:`As the only girl born in the four generations of the Mo family – a prestigious and powerful family in Hua Xia – Mo Liu Gui has been adored since the day she was born. She is gorgeous, naive and intelligent. Behind her is the noble Mo family and by her side are countless excellent pursuers. Whether in career or relationships, she’s the heaven born life winner.\r
-\r
-It’s a pity that Mo Di is not Mo Liu Gui but a tragic contrast of what one would call life winner.\r
-\r
-He has been disliked by everyone in the Mo family since the day he was born. When he left the incubator, the whole family was competing for his sister but left him in the hospital corridor overnight. He never took a sip of his mother’s milk because it was just enough to feed one child. He has not been held by his father once because his father was extremely disgusted with the culprit who robbed his darling of nutrition in their mother’s womb.\r
-\r
-His five brothers never looked him in the eye. When he was six years old, they even ganged up to beat him till he had a fractured right leg which almost left him permanently disabled, all because he scored first place in his grade while his sister scored third, making Mo Liu Gui sad to the point of crying.\r
-\r
-Countless scolding, neglect, double standard treatment, and even abuse in the name of education have been habitually done to Mo Di. Finally one day, the Mo Di who has been soft and obedient for eighteen years turned black.\r
-\r
-He was no longer a soft and sensible man but had become gloomy and aggressive. He ran away from home, started his own company and made new friends. Everything is booming but when his company was about to go public, he was found by the Mo family. During a struggle with Mo Liu Gui who was asking him to come home, she fell and almost had a miscarriage. This incited everyone’s anger and they forced him into a mental hospital.\r
-\r
-In the end, he died on his 25th birthday…\r
-Afterwards, he was reborn.`,IMG:203,PRIO:2},{BOOK_TITLE:"Special Case Files of Rebirth",AUTHOR:"KuangXiang Zhi Tu 狂想之途",CHAPTERS:132,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/special-case-files-of-rebirth/",Synopsis:`Hei Xiao, who was a famous assassin, could never have imagined that one day, he would be shot in the head. This was retribution.\r
-\r
-But he didn’t die.\r
-\r
-When he opened his eyes, two men and a woman were gathered around the bed and kindly told him that he had ‘amnesia’: “You are our good, beloved coworker.”\r
-\r
-Hei Xiao asked, “What’s our job?”\r
-\r
-They replied, “The police~”\r
-\r
-Hei Xiao was speechless.\r
-\r
-Looking at the strangely pale and thin face in the mirror in front of him, Hei Xiao wished he could die again: God, although I’ve sinned a lot, you don’t have to play me like this!`,IMG:221,PRIO:3},{BOOK_TITLE:"The Path of the Cannon Fodder’s Counterattack",AUTHOR:"Mao Niao 毛鸟",CHAPTERS:71,EXTRAS:1,GENRE:"Reincarnation",TIMELINE:"Historical",Eng_TL:"https://snowycodex.com/translations/novels/tpcfc/",Synopsis:`Ling Xiao was secretly in love with a girl named Mo Qi; because of an accident, they both crossed into the ancient times.\r
-\r
-Mo Qi who was preinstalled with the Mary Sue halo, in these ancient times, walked to the summit with a golden finger.\r
-\r
-However, Ling Xiao continued to be exploited by Mo Qi.\r
-\r
-After he no longer had any values to exploit, he soon became a pitiful cannon fodder.\r
-\r
-The heavens decided to take pity on Ling Xiao.\r
-\r
-And gave Ling Xiao an opportunity for rebirth.\r
-\r
-After rebirth, he vowed that all his enemies would repay him with a debt of blood!\r
-\r
-However, why have all these enemies of his, fallen into the mode of cutting their heads open?\r
-\r
-“Hey, are you really that unremarkable person who used to follow behind Mo Qi?”\r
-\r
-“So this dance was originally danced by you, sigh……”\r
-\r
-“You are obviously a man, yet you move me so much.”\r
-\r
-“Enough! Since you have taken the initiative to provoke me, then you must concentrate on me!”\r
-\r
-Ling Xiao expressed: If you want to counterattack, then counterattack. As long as your golden finger is bigger than Mo Qi’s.\r
-\r
-But how did Mo Qi’s Mary Sue halo end up in his body! He is still a straight man who likes beauties! He definitely, definitely doesn’t want to turn bent!`,IMG:248,PRIO:2},{BOOK_TITLE:"The Submissive Emperor",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:102,GENRE:"Royalty",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/subemp/",Synopsis:`Lou Jing, a high-ranking military officer and heir to a military peerage, was forced to marry the Crown Prince as his male Consort. Doing so meant that he would no longer be the heir to the peerage.\r
-\r
-The only option left to Lou Jing now is to help the Crown Prince to protect the Empire against the evil people scheming against him!\r
-\r
-“My Empress, please note that I’m technically the husband here,” says the Emperor.\r
-\r
-Lou Jing smirked and picked up the Emperor in his arms. “Of course, your Majesty. This loyal subject will make sure he doesn’t tire his husband out in bed!”`,IMG:254,PRIO:2},{BOOK_TITLE:"A Certain Someone",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:112,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://certainsomeone.carrd.co/",Eng_TL:"https://drive.google.com/drive/folders/19z0koGClJS-XWEnDVYTOCg01dfke_YQd",Synopsis:`Sheng Wang moved into his ancestral home at White Horse Lane, along with the woman that his father was presently seeing.\r
-\r
-His dad pointed at that woman’s son and said to him: Call him ge (older brother).\r
-\r
-Unyielding, amenable to coaxing but not coercion cold generator Gong x Regards himself as something precious lazy young master Shou\r
-\r
-Sheng Wang: I’m super straight\r
-\r
-Jiang Tian: I’m homophobic`,IMG:2,PRIO:1},{BOOK_TITLE:"After I Blocked My Crush",AUTHOR:"Gǔjīn",CHAPTERS:28,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://aibmc.carrd.co/",Eng_TL:"https://secondlifetranslations.com/abc/abc-chapter-1/",Synopsis:`Lin Xia: Why did nobody tell me that, if you send a message after blocking someone on WeChat, they can still receive it\r
-\r
-Yi Shang: I told you\r
-\r
-Lin Xia: Thank you, I’m socially dead\r
-\r
-Yi Shang: You’re not dead, you gained a boyfriend`,IMG:18,PRIO:3},{BOOK_TITLE:"Agreement of Being Gay for 30 Days",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:58,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://abg30d.carrd.co/",Eng_TL:"https://ikigainovels.wordpress.com/translations/abg30d-index/",Synopsis:`F University’s two most attractive men, Wang Guangning and Zhang Lingyi, constantly competed with each other regardless in what aspect. \r
-\r
-Whether it was appearance, talent, popularity or even the number of abdominal muscles, they always contested with each other. Even the woman they pursued was the same. \r
-\r
-Yet, these two xiao cao¹ who had self-proclaimed themselves as peerless in the aspect of love were completely rejected by the same woman. \r
-\r
-Hence, they decided to retaliate against society by becoming gay. \r
-\r
-They set an agreement to be gay for thirty days and even especially downloaded the list from the internet, thus preparing themselves to follow these standards in order to become a proper gay couple. \r
-\r
-For example: \r
-\r
-Watching a movie together…Hey, shou shou, remember to lean on my shoulder when you see a frightening scene, alright? \r
-\r
-Warming their hands together in the same pocket…Hey, don’t wear that large military jacket outside, it’s really embarrassing! \r
-\r
-*** \r
-\r
-By learning how to be gay from an unreliable guidebook for couples, two straight guys clash and end up with an unexpected outcome. \r
-\r
-Their thirty days agreement has finished, yet can they truly return to their former lifestyles as if nothing ever happened? \r
-\r
-[1] 校草: the male counterpart of 校花. It’s used to describe the most attractive guy of the school.`,IMG:28,PRIO:2},{BOOK_TITLE:"An Accident in Broad Daylight",AUTHOR:"Gao Tai Shu Se",CHAPTERS:65,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://t.co/MkbXBv1o9z",Eng_TL:"https://sites.google.com/view/brsg/home?authuser=0",Synopsis:`In broad daylight, eyes open and clear of mind \r
-An accident, maddening, possessing.`,IMG:29,PRIO:1},{BOOK_TITLE:"Be Strict On Honesty",AUTHOR:"阿阮有酒",CHAPTERS:91,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/honest/",Synopsis:`Yang Juan, an honest man, was entrusted by his current roommate to play a female account in the game and engage in online dating.\r
-\r
-During the day, he focused on his lab work, during the night, he assiduously played as a soft and gentle girl.\r
-\r
-He kept his fake persona in mind the whole time.\r
-\r
-–\r
-\r
-His online partner wanted to see his photos. He asked his former roommate to ask his girlfriend about the name of the store she frequents. He bought a dress and a wig online to ship overnight and took photos to send to the partner.\r
-\r
-Then the photo was accidentally leaked on the internet, a well-known beautiful player in the same server posted on the forum that what he wore was a knockoff and showed the price on her authentic lolita dress in her large wardrobe.\r
-\r
-Not knowing that there was a difference between knockoff and generic, Yan Juan, the honest man, blushed with shame.\r
-\r
-–\r
-\r
-The next day, he received a large express delivery from his online partner. The box was filled with new Japanese brands dresses.\r
-\r
-Most of them were cute styles like the ones shared by that female player.\r
-\r
-After checking the clothes’ price, the honest Yang Juan. who only intended to deceive the other’s feelings and not his money, was stunned.`,IMG:35,PRIO:1},{BOOK_TITLE:"Don't Try to Corrupt Me",AUTHOR:"萝卜花兔子",CHAPTERS:105,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://dttcm.carrd.co/",Eng_TL:"https://ckandawrites.online/dont-try-to-corrupt-me/",Synopsis:`Sheng Yuan, a model student, excelled year after year, with a life motto of striving for the best and always aiming to be the first. However, fate took an unexpected turn as he found himself transported to a parallel world where school delinquency run rampant.\r
-System: Are you ready to become the most formidable youth delinquent?\r
-Sheng Yuan: “…”\r
-Sheng Yuan had always been devoted to his studies, but he soon realized that only by surpassing the leader of delinquent youths could he ensure his own survival. Thus, he embarked on the path of delinquency.\r
-Skipping classes? No problem. He would make his exit in the last five minutes of each class.\r
-System: Hey!!!\r
-Staying overnight in internet cafes? No problem. The evening news played throughout the night.\r
-Internet café netizens: ???\r
-When he received a challenge to meet in a small grove at 10:30, Sheng Yuan found himself in a difficult situation and expressed his inability to go.\r
-Opponent: “What? Are you scared?!”\r
-Sheng Yuan: “No, it’s just that my home has a curfew at half past ten.”\r
-Opponent: “…”\r
-Soon, Sheng Yuan’s became famous within the delinquent circles due to his impressive exploits, and his delinquency value skyrocketed. In the process, he even managed to lead the delinquent leader onto the right path.\r
-Sheng Yuan: Hi, handsome, would you like to do homework together in the small grove at the back?\r
-Yu Zuojin met Sheng Yuan during a summer filled with lush foliage and vibrant greenery.\r
-He had a congenital hearing impairment and relied on a hearing aid to perceive the sounds of the outside world. Coincidentally, his hearing aid was broken when he met Sheng Yuan. He saw the youth standing under the shade of a verdant tree, and Sheng Yuan uttered a few words to him:\r
-“I like you.”\r
-Yu Zuojin rejected him on the spot.\r
-Sheng Yuan: “Classmate, you dropped some money.”\r
-Yu Zuojin: “I don’t need it.”\r
-Sheng Yuan: ?\r
-“In that case, it’s mine,” Sheng Yuan said. (Slips it into his pocket.)`,IMG:61,PRIO:2},{BOOK_TITLE:"Don't You Like Me",AUTHOR:"Lu Tianyi 吕天逸",CHAPTERS:66,EXTRAS:32,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://dylm.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dylm/",Synopsis:`Short, rich, and handsome, Lin Feiran was always the center of attention. But after transferring schools in his second year of high school, he discovered that his limelight was snatched by his Adonis classmate, Gu Kaifeng.\r
-\r
-Lin Feiran was very resentful, and he and Gu Kaifeng became archnemeses (one-sidedly). Although the two lived together, they were like strangers.\r
-\r
-When Lin Feiran went back home to attend his grandfather’s funeral, he accidentally inherited the Yin-Yang eyes that had been passed down from generation to generation. After gaining the ability to see ghosts, the timid Lin Feiran discovered that his two-person dormitory was actually a sixteen-person (ghost) room. Every day, he was scared to the point of collapsing.\r
-\r
-The more aggravating thing is that because of Gu Kaifeng’s innate body constitution, he possessed an abundant amount of Yang energy. Lin Feiran found out that whenever he touched Gu Kaifeng, Gu Kaifeng’s Yang energy could temporarily disable his Yin-Yang eyes. A light touch would disable it for five minutes, a kiss for an hour, and so on…\r
-\r
-Lin Feiran had no choice but to throw himself into his archnemesis’s embrace. This complete reversal in attitude to being intimate with Gu Kaifeng persisted every day from morning till night.\r
-\r
-When sleeping, he must squeeze in the same bed as Gu Kaifeng. Going to the toilet? He must drag Gu Kaifeng with him. Homework? It must be done hand-in-hand with Gu Kaifeng… He also had to try his best to persuade the teacher to make him Gu Kaifeng’s deskmate. Every day in class, he would rub Gu Kaifeng’s calf with his foot beneath the desks…\r
-\r
-Following the clingy little bastard’s sudden change in personality, the initially shocked Gu Kaifeng gradually became smitten. Every day he would chase Lin Feiran to flirt with him, make crazy confessions, and even routinely push him against the wall and kiss him…\r
-\r
-Gu Kaifeng: “Don’t you like me? I like you, so let’s be together.”\r
-Lin Feiran: “I don’t like you! Don’t come over!”\r
-Gu Kaifeng: “……”\r
-Five minutes later, to avoid seeing ghosts, Lin Feiran sneakily came to touch Gu Kaifeng.\r
-Gu Kaifeng turned around, stopping his hand: “After you just rejected me, you come back to flirt with me!?”\r
-Lin Feiran: “Who’s flirting with you! I was careless and touched you; don’t imagine that I like you back.”\r
-Oh, that’s it.`,IMG:62,PRIO:1},{BOOK_TITLE:"Everyone Thinks That I Like Him",AUTHOR:"飞奔的小蜗牛",CHAPTERS:70,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ettilh.carrd.co/",Eng_TL:"https://oldmosstree.wordpress.com/everyone-thinks-i-like-him/",Synopsis:`From infancy to maturity, what Ye Zhou dislikes the most was “two”.\r
-The reasons were: he was ranked second at home, he had been forever ranked second at school, no matter how diligently he worked and tried, he couldn’t shake off that “second” curse. What was more exasperating was that, at University, not only was he ranked second, but even his appearance that he was proud of had to be classified as second best!\r
-Why can’t I obtain the first place!\r
-The eternal second will rise!\r
-Then, Ye Zhou, after his vigorous efforts finally rises and the result was… the first became his boyfriend.\r
-This is the story of a man who has been forced to be “second” and how he became the first, most popular.\r
-\r
-`,IMG:70,PRIO:2},{BOOK_TITLE:"Fake Dating The Amnesiac School Prince",AUTHOR:"乔陛",CHAPTERS:66,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://t.co/fdkB8wM6Kp",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fdasp/",Synopsis:`Zhen Yuanbai, the good student, accidentally injured Shi Bufan, the school bully, after a crash. Blood spilled everywhere.\r
-\r
-After the ambulance took Shi Bufan to the hospital, Zhen Yuanbai walked home, trembling in fear. He pleads for his parents to transfer him to another school. As expected, his parents rejected his request.\r
-\r
-Zhen Yuanbai has no choice but to brace himself to go and apologize to Shi Bufan. Hopefully, he will show mercy while giving him a beating.\r
-\r
-Who knew —\r
-\r
-Shi Bufan had amnesia.\r
-\r
-Zhen Yuanbai couldn’t control his happiness. You really don’t know me? I’m your friend. After he lied and claimed to be Shi Bufan’s friend, Zhen Yuanbai quickly realized that he looked at himself strangely.\r
-\r
-Until one day, Shi Bufan pushed him against the wall. He pecked his bewildered face and lowly chuckled. What friends? I knew that you like me and used this opportunity to get close to me… Be good. I’ll give you a chance. Call me hubby.\r
-\r
-Zhen Yuanbai was speechless.\r
-\r
-Wake up!\r
-\r
-Don’t mention that I like you as a friend when I was the one who caused you the injury!\r
-\r
-Submissive: Because he, a well-behaved and timid good student, was scared of being beaten up, he lied to the school bully. Confusedly, he ended up in a relationship with Shi Bufan.\r
-\r
-Dominant: After losing his memory, he ended up fake dating Zhen Yuanbai, thinking that the latter was in love with him.`,IMG:73,PRIO:2},{BOOK_TITLE:"Fake Slacker",AUTHOR:"Mu Gua Huang 木瓜黄",CHAPTERS:112,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://fake-slackers.carrd.co/",Eng_TL:"locked",Synopsis:`After class placement were decided, the school’s two infamous ‘problem youth’ not only shared the same class, but the same desk.\r
-They’re clearly good at studies, but pretend to be slackers. Fakers from head to toe who just keep walking farther down the path of their performance.\r
-Hear on the grapevine about the two big brothers who always fight over the last place in class.\r
-Basically, this is a serious comedy. About the little matters of growing up.`,IMG:74,PRIO:1},{BOOK_TITLE:"First Love Choose Me, I'm Super Sweet",AUTHOR:"Shui Mang 睡芒",CHAPTERS:60,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://flcmiss.carrd.co/",Eng_TL:"https://travistranslations.com/novel/14860/first-love-choose-me-im-super-sweet/",Synopsis:`Ding Xuerun, a good student with both moral and academic excellence, had a wound on his face on the day he transferred to school. Lou Cheng thought he was being pretentious and repeatedly provoked him, “Don’t pretend to be a good student, what homework will you do?” It was not until after the monthly exam that Lou Cheng found out that he really was an excellent student, the first in his grade.\r
-After playing basketball, he showed off and pressed his drenched jersey onto his clean deskmate, “Do you know what is mean by virtue, intelligence, physical fitness and aesthetic sense*? It’s no use getting good grades. Smell it. This is called the smell of a man. “\r
-Then one day, the teaching building’s lighting tripped, and the whole class cheered in the dark. No one noticed that in the back row of the most corner, Lou Cheng pressed his little deskmate against the wall and kissed him.\r
-Lou Cheng: Puppy love is so sweet and scheming.\r
-The two-good students will be attacked by X sorrows when they disagree with each other.`,IMG:82,PRIO:1},{BOOK_TITLE:"I'll Have My Seatmate Beat You",AUTHOR:"Kao Kao 靠靠",CHAPTERS:66,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ihmsby.carrd.co/",Eng_TL:"https://thatlazypotato.wordpress.com/ill-have-my-seatmate-beat-you/",Synopsis:`Poor little top student was bullied by his school, so he transferred from an elite high school to an ordinary school.\r
-School tyrant · 1.9 meters · no one dare to provoke · Brother Zhan: I cover this little brother.\r
-Poor little · 1.7 meters · Gu Qinan: Zhan-ge is just a child. He’s poor, weak, helpless, kind and soft(hearted), I need to love him well.\r
-Everyone: ???\r
-Class teacher: Zhan Ming, what kind of score is this?!\r
-Zhan Ming: I’ll have my seatmate teach me.\r
-Former classmates: Gu Qinan, don’t think we won’t be able to find you just because you transferred.\r
-Gu Qinan: I’ll have my seatmate beat you.\r
-Translator’s Summary\r
-After being bullied at his old school, Gu Qinan transferred to a new school. He gets assigned to sit next to the school’s tyrant, Zhan Ming.\r
-This seatmate sleeps in class, rarely studies, and never does his homework. Even the teachers have given up on him.\r
-However, whenever Gu Qinan gets in trouble, his seatmate would save him each time. Whenever he’s upset, his seatmate would always pamper and spoil him.\r
-Zhan-ge! Zhan-ge! Why are you so nice to me Q^Q?\r
-A story about an innocent but proactive top student and a cold but loyal school bully. This is a journey of healing, growing up, and improving yourself.\r
-\r
-`,IMG:134,PRIO:1},{BOOK_TITLE:"It Seems There Is Light",AUTHOR:"Xu Qingrang",CHAPTERS:48,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/it-seems-there-is-light-chapter-1/",Synopsis:`What is a small southern town with warm mountains and gentle water suitable for? Fall in love.\r
-\r
-Yan Liang: The name is in the shape of loving you. ¹\r
-\r
-Shi An: …Afraid of the sun.²\r
-\r
-I think.\r
-\r
-You’ve probably learned the magic of warming hearts .\r
-\r
-Notes:\r
-1. ….是爱你的形状 (… is in the shape of loving you) is a meme. It’s basically Yan Liang confessing his love for Shi An\r
-2. This is a word play on his name. Yan Liang’s Yan consists of 日 on top of 安, and Shi An’s An is also (安). Basically, Shi An adds 日 on his 安 so he feels very hot because the sun is on top of him, so that’s why he says he’s afraid of the sun.`,IMG:142,PRIO:1},{BOOK_TITLE:"Lemon Lightning",AUTHOR:"Dr. Solo",CHAPTERS:65,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://thatlazypotato.wordpress.com/2021/04/29/chapter-1/",Synopsis:`n Ning is a poor law student at A University. He’s nice, hardworking and has a huge sense of justice. His time is spent on studying and working to provide for himself.\r
-\r
-Qin Weihang is a handsome law student who is blunt and closed-off. He rarely attends classes and doesn’t put effort in his studies. Most of his time is spent outside of school doing the one thing he loves—rock climbing.\r
-\r
-Two people with different personalities became roommates at the start of the school year.\r
-\r
-This is a slow journey of a blossoming relationship between the top student and the school’s grass of the Faculty of Law.`,IMG:150,PRIO:1},{BOOK_TITLE:"Living Next to Male God",AUTHOR:"爱看天",CHAPTERS:170,EXTRAS:10,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://whitecherrybl.wordpress.com/2021/02/06/lntmg-1/",Synopsis:`One day, when Xiao Tang read a semi-autobiographical book that smeared his male god’s name, Xiao Tang angrily threw the book and ended up passing through.\r
-\r
-A book separates the two worlds, on one side is the 5G era, and on the other side is inside the book named “Thank you, for your love in 1999.”\r
-\r
-Tang Jinyu, a 17-year-old high school student, has shrunk to a small toddler. He tries to step on a small stepping stool to see the world outside his front door, but he ends up seeing his male god carrying a schoolbag passing by…\r
-\r
-He lives next door to his male god =口=! !`,IMG:158,PRIO:3},{BOOK_TITLE:"Love Stops Rumors",AUTHOR:"Xiao Chen 萧辰",CHAPTERS:30,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/lsr/",Synopsis:`On the first day of school, Wei Ru Song accidentally fell in front of Xiao Nian’s dick. With his girlfriend witnessing this incident and thinking that he was giving another man a bl**job, this led to a series of misunderstandings.\r
-\r
-WRS: I’m not gay, I’m not gay, I’m not gay!\r
-\r
-XN: Neither am I.\r
-\r
-WRS: It seems like we need to come up with a scheme to clear our names now.\r
-\r
-XN: OK.\r
-\r
-So…\r
-\r
-Counsellor: I saw you and that junior doing it in the grass, *cough*, kiddo, please take note on not being a bad influence.\r
-\r
-WRS: No, we just fell accidentally…\r
-\r
-Neighbour: Wei Ru Song can you be quieter in bed? We couldn’t sleep the entire night.\r
-\r
-WRS: No, that was just Xiao Nian giving me a massage ah…\r
-\r
-Gym Teacher: You guys know what you did in the equipment room, go clean the mats!\r
-\r
-WRS: Noooooooo!!! That was just the milk I spilt!!!\r
-\r
-Finally…\r
-\r
-XN: Senior.\r
-\r
-WRS: Yeah?\r
-\r
-XN: Since they already think we’re gay, why don’t we just let this work itself out.\r
-\r
-WRS: … Just what I was thinking.`,IMG:163,PRIO:3},{BOOK_TITLE:"Lovely Allergen",AUTHOR:"Zhìchǔ 稚楚",CHAPTERS:102,EXTRAS:7,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://lovelyallergen.carrd.co/",Eng_TL:"https://amytranslations929.wordpress.com/lovely-allergen/",Synopsis:`Song Yu has three requirements for Yue Zhishi:\r
-– You cannot call me gege in public.\r
-– We won’t do anything together in public.\r
-– You cannot let other people know you live with me.\r
-Yue Zhishi has always been obediently following these rules. They were practically strangers at school. At the opening ceremony, he suddenly collapsed due to an allergy-related asthma attack, sending everything into chaos. At this moment, the student representative Song Yu suddenly stopped speaking…….\r
-That night, a hot post appeared on the school forum.\r
-【Shock!! Our junior high school department male idol and our senior high school department male idol are actually ‘brothers’!】\r
-—————-\r
-Ever since his father brought back a mixed-race baby when he was six years old, Song Yu’s life has been completely entangled by this clingy little guy who couldn’t speak Chinese well.\r
-Le Le who was in kindergarten: Xiao Yu gege, my classmate said today that he has a beautiful sister-in-law. What is a sister-in-law?\r
-Song Yu: His older brother’s wife.\r
-Le Le: No! I don’t want a sister-in-law!\r
-Song Yu: ……..\r
-Le Le: I’ll be your sister-in-law! (Something isn’t quite right…….)\r
-Song Yu: Please study up on Chinese familial relationships.\r
-Le Le: Wait, wait. I’ll be my sister-in-law!\r
-Song Yu: ……\r
-Mouth says one thing but body does the other, cat-like gong x mixed-race, obedient and straight forward puppy-like shou.`,IMG:166,PRIO:1},{BOOK_TITLE:"My Underachieving Seatmate Doesn’t Need Any Comforting",AUTHOR:"Long Qi 龙柒",CHAPTERS:113,EXTRAS:9,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://musdnc.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/musdnc/",Synopsis:`Qiao Shao, who worked hard to stay up all night and study, was first in class — if you count from the bottom.\r
-He Shen, who was able to get a perfect score even when he slept all day, in a rare display of kindness, bought a bottle of drink to comfort his s*upid seatmate.\r
-Then he saw the messages popping up on Qiao Shao’s phone—\r
-Dad: Don’t panic, it’s okay if you didn’t do well in the exam. Dad just ordered a new sports car for you.\r
-Granddad: Grandson, there’s no need to hurry. It’s alright even if you didn’t do well in your exam. Granddad bought a new yacht for you, come and take a break.\r
-Grandpa: Grandson, don’t cry, it’s okay if you didn’t do well in the exam. Grandpa’s billions-worth of properties are all yours.\r
-With a blank expression, He Shen threw his 2.5 Yuan worth bottle of drink into the tr@sh.`,IMG:187,PRIO:1},{BOOK_TITLE:"Social Outcast",AUTHOR:"Ka Bi Qiu 卡比丘",CHAPTERS:33,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://socialoutcast.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/so/",Synopsis:"A cold and homophobic top matched with a person he hated on a dating app, and discovered that the other was even more clingy than he thought!",IMG:220,PRIO:1},{BOOK_TITLE:"The Daily Life of Being the Campus Idol’s Fake Boyfriend",AUTHOR:"Xi He Qing Ling",CHAPTERS:65,EXTRAS:9,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://fakeboyfriend.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/cifb/",Synopsis:`The year he was fifteen, Ling Ke realized he was gay, and that he fell in love with a hot guy the same gender he was! Ling Ke spied on the other’s online friend group, paid attention to that person’s every move, and privately, started his fanatical fan-boying actions. Unfortunately, the hot guy he liked was someone who changed girlfriends like he changed clothes, a pretentious and straight male.\r
-A few years later, Ling Ke and the hot guy he was secretly in love with got into the same university and became good friends. In order to prevent his beloved from hating him, Ling Ke repressed his true feelings and forced himself to pretend to be a 24k, pure gold straight guy.\r
-……\r
-Having high-spec looks, Qi Feng was a networking expert, but in order to preserve his all-around shining and popular heartthrob image, he always hid his true sexuality, that he was gay. He got himself (fake) girlfriends all throughout school, literally playing himself into being branded as a skirt-chaser.\r
-Until one day, he met his true love. The other looked delicate and gentle, cold and out-of-reach, as if the ideal lover he’d dreamed of in his heart.\r
-Except, there was just one thing. That guy also looked completely straight……\r
-In short, this is the love story of two scared, in-the-closet gay guys pretending to be straight while mutually trying to feel the other out.`,IMG:233,PRIO:1},{BOOK_TITLE:"The Moon is Coming To Me",AUTHOR:"Bó Àn Biān 泊岸边",CHAPTERS:65,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ylbwel.carrd.co/",Eng_TL:"https://knoxt.space/the-moon-comes-to-me/",Synopsis:`Tao Xi knew the fate of being deliberately exchanged at birth by his “mother” in the third year of middle school. He lived in daze, until he saw Lin Qinhe of Wenhua No.1 High School, a prestigious school thousands of kilometers away, on the remote live broadcast screen of a high school in a poverty-stricken county.\r
-\r
-It was him who lived in the bottom of the well, and for the first time, he caught a glimpse of the moon in the sky.\r
-\r
-But when he exhausted all his energy to climb out of the well and waded towards the moon, he found that the star beside the moon should have been his position.\r
-\r
-Tao Xi wanted Lin Qinhe, along with the love he lost.`,IMG:246,PRIO:1},{BOOK_TITLE:"Through The Strait Gates",AUTHOR:"Priest",CHAPTERS:69,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://info-guomen.carrd.co/",Eng_TL:"https://docs.google.com/document/u/0/d/11fjv9Gn21tbQDh7YZ1jYSLznIJht4qCkWr0HWtcBQSE/mobilebasic",Synopsis:`Guomen follows the story of Xu Xilin and Dou Xun starting from the adolescence to adulthood. If it had to be summarized with a sentence without going into spoiler territory, this would probably be the ideal one.\r
-However Guomen, for me, is about the life itself; with all the ups and downs, joys and sorrows, success and failure and the mix of all. It's about the deskmate you had in highschool, the neighbour next door, the passersby you brushed shoulders with on the street and it's about you.\r
-Priest's writing brings out the emotions so raw and sincere and lays them out for you not to read but feel. The issues covered are handled with care and realistically. It tells about the mundane life, family disputes, the battles people fight with their environment and inner selves, sometimes losing and sometimes conquering these battles in a way that makes it relatable and touches a spot deep within your heart. What made me personally connect with Guomen was how it's able to make readers feel heard in how it represents the topics mentioned before. There might be times where you might find yourself facing and reflecting on your own life and your environment because you see yourself in the characters.`,IMG:268,PRIO:1},{BOOK_TITLE:"Transmigrated into a School Idol and Forced to Do Business",AUTHOR:"Yu Wu Xiao Tian Bing 雨雾小甜饼",CHAPTERS:61,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://cwastranslations.wordpress.com/transmigrated-into-a-school-idol-and-forced-to-do-business/",Synopsis:`Yu Bai Zhou transmigrated into a book.\r
-\r
-The talented protagonist was the top student in school. Due to his excellence in every subject, many people were dissatisfied with him, so they devised various schemes to mess with him, to the extent that they left a dark shadow on his high school years.\r
-\r
-However, the villains did not know that the seemingly poor protagonist was actually the eldest son of the richest man in City A.\r
-\r
-And in six years, the protagonist would replace his father’s position as the new richest man in City A with his own capabilities. Ten years later, he would become the youngest and richest man in the country! When that happens, the villains would be tortured to death by the protagonist!\r
-\r
-… As bad luck would have it, Yu Bai Zhou transmigrated into the villain that bullied the protagonist the most.\r
-\r
-In order to live for a few more years, Yu Bai Zhou, the villain, begins to formulate a character correction plan.\r
-\r
-However, just as he is struggling to save his image in the eyes of the protagonist, out of the blue, the protagonist anxiously pushes him against the wall, and traps him within the circle of his arms. Those refined brown eyes watch him attentively. “Yu Bai Zhou, if you make trouble again, I will kiss you.”\r
-\r
-Yu Bai Zhou, who was just kabedon’ed, panics. “Can someone tell me, exactly where did I go wrong?!”`,IMG:274,PRIO:3},{BOOK_TITLE:"Wait For Me After School",AUTHOR:"Jiang Zi Bei",CHAPTERS:92,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://wfmas.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2022/11/28/wait-for-me-after-school-by-%e9%85%b1%e5%ad%90%e8%b4%9d/",Synopsis:`Yu Fan didn’t like the sight of the new transfer student in his class.\r
-The other party glanced at him.\r
-Yu Fan: He’s looking for a fight.\r
-The second glance.\r
-Yu Fan: He’s asking if I’m scared.\r
-Third glance.\r
-\r
-The transfer student with his usual expressionless, iceberg-like face handed him a letter, “Classmate Yu.”\r
-Yu Fan internally felt that this top student is annoyingly fastidious, even handing out a letter of challenge to request for a fight. He proceeded to roll up his sleeves and stand up.\r
-“Please accept my love letter.”\r
-Classmate Yu immediately sat back down.`,IMG:281,PRIO:1},{BOOK_TITLE:"What Should I Do if the School Bully is Interested in Me",AUTHOR:"Shí xián 时闲",CHAPTERS:90,EXTRAS:36,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbim/",Synopsis:`i Liao was particularly distressed lately. He had been “sexually harassed” for no reason. Moreover, the other party was a man! Never mind that it was a man but it was well-known class grass and school bully——He Cheng Ming!\r
-\r
-– He Cheng Ming in front of others: “You wanna fucking die?” “Better shut your mouth!” “Get lost! As far as you can!” He Cheng Ming in front of Ji Liao: “Baby, you smell so nice~” “My dear, you’re so sexy!” “I’ll always listen to you. Kiss me okay?”\r
-\r
-– Experienced Overbearing Perverted Seme VS Novice Shy Cowardly Uke`,IMG:284,PRIO:1},{BOOK_TITLE:"Yes, I’m Straight. But What Have I Done Wrong?",AUTHOR:"Ale 鎏白",CHAPTERS:57,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://novelsite.net/novel/yes-im-straight-but-what-have-i-done-wrong-novel/",Synopsis:`A weak little straight boy goes to the same college and lives in the same dorm with his two roommates from high school. Seeing his two brothers getting more intimate every day, this little straight boy tries to blend in, offering many times to help. And, guess what? His two roommates were in love with each other since the very beginning!\r
-\r
-“Gosh! How s*upid am I to not even notice that?”\r
-\r
-“How many times have I made fool of myself by trying to be a kind roommate?”\r
-\r
-“Alas! Being a great and straight roommate is indeed difficult.”\r
-\r
-“But, what have I done wrong?”\r
-\r
-“Oh! Great! I’m a gay now.”`,IMG:293,PRIO:1},{BOOK_TITLE:"C Language Cultivation",AUTHOR:"Yi Shi Si Zho",CHAPTERS:142,EXTRAS:3,GENRE:"Sci-Fi",TIMELINE:"Modern",Carrd:"https://ccultivation.carrd.co/",Eng_TL:"https://sebastianorra.wordpress.com/c-language-cultivation/",Synopsis:`Lin Xun is a programmer. After coding all night, he found a program input window in his body.\r
-He tried to program a cycle program.\r
-The next day, the old man next door came to the door: Xiao Xun, you are so young but you have entered the Qi Refining period. Do you want to be my disciple?\r
-On the third day, Lin Xun was patted on the street with a shoulder: Boy, your Spiritual roots are surprising, how about joining my sect?\r
-Lin Xun: “? ? ?”\r
-Later, he discovered that modern society really has immortals. While others rely on spiritual power to cultivate immortals, he relies on programming himself, and he can also see the programs in other immortals.\r
-A Nascent Soul: “How can you peep through my flaws?”\r
-Lin Xun calmly withdrew the sword: “Your program has a bug.”\r
-A half-immortal: “… that’s impossible! What is the name of your moves?\r
-Lin Xun pushed up his glasses: “Monte Carlo algorithm.”\r
-——Then he gradually became a legend in the cultivation world.`,IMG:41,PRIO:1},{BOOK_TITLE:"Why are the Protagonist Gong and Shou Fighting Because of Me",AUTHOR:"Tian Huafang",CHAPTERS:134,EXTRAS:13,GENRE:"Sci-Fi",TIMELINE:"Modern",Eng_TL:"https://www.teanovel.com/novel/why-are-the-protagonist-gong-and-shou-fighting-because-of-me",Synopsis:`Tang Bai was born into a wealthy family. His body was soft and slender, and he loved to act spoiled. His family searched far and wide to find him a handsome and rich prospective fiancé. However, the prospective fiancé liked independent and strong omegas and was very resistant to this business marriage.\r
-\r
-One day, Tang Bai’s brain short circuited, causing him to believe that he lived in a book. He was the cannon fodder shou, and his prospective fiancé was the protagonist gong. The protagonist shou, Xie Ruheng, was a strong, independent omega of the new era who pretended to be an alpha. In the future, he would become a marshal and the light of the omegas.\r
-\r
-No wonder the love-filled bento that he worked super hard to make was rejected by his prospective fiancé who didn’t even look at it. Tang Bai’s eyes reddened as he turned around. He saw that Xie Ruheng was eating the horrible tasting training meal. How could the future light of the omegas eat this kind of devil’s cruise that was fed to the pigs?\r
-\r
-Tang Bai shyly said: “This was personally made by me. Us omegas need to pay attention to our diet and take care of our bodies~”\r
-\r
-Xie Ruheng: ……?\r
-\r
-The first time Xie Ruheng saw Tang Bai, he thought that even when this omega cried, he was still like the omega of his dreams. Although Tang Bai was virtuous, delicate, beautiful, and cute, he already had a prospective fiancé!\r
-\r
-Xie Ruheng expressed with grief: “I won’t be the third party.”\r
-\r
-Tang Bai was extremely moved, thinking that Xie Ruheng had already become good sisters with him and wouldn’t come to steal his man. There was a saying that Alphas were like clothes and good sisters were like one’s hands and feet. Don’t worry, I will definitely take good care of you!\r
-\r
-Xie Ruheng: ……\r
-\r
-Very soon, Xie Ruheng heard a rumor. Tang Bai’s prospective fiancé hated Tang Bai, but he couldn’t defy the orders of his family, so he could only create trouble for Tang Bai everywhere.\r
-\r
-Xie Ruheng: This is the omega of my dreams that I want to hold in the palm of my hands, and you actually don’t cherish him? tr*sh!\r
-\r
-Xie Ruheng: Isn’t it just stealing a man? So sweet.\r
-\r
-Tang Bai found out in horror: Why are the protagonist gong and shou fighting because of me?!\r
-\r
-Tang Bai: Oh! They must have a love and hate relationship!`,IMG:288,PRIO:3},{BOOK_TITLE:"Mist",AUTHOR:"Wei Feng Ji Xu 微风几许)",CHAPTERS:103,EXTRAS:3,GENRE:"Science-Fiction",TIMELINE:"Modern",Carrd:"https://mistunlimited.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2020/11/16/mist-unlimited/",Synopsis:`Hyperthymesia. Those with this condition can remember every detail of their lives from something as significant as the world’s turning point to something as small and as insignificant as a minor fleeting thought. They cannot forget and their thirst for knowledge allow them to be considered as a genius in some senses.\r
-Legend has it that Ji Yushi was this kind of genius.\r
-In addition, it was said that he was gay, and very beautiful.\r
-As soon as the news that he was going to support Tianqiong’s seventh squad broke out, it sent everyone buzzing.\r
-Everyone knew that the captain of the seventh squad, Song Qinglan, was a hoodlum and deeply homophobic.\r
-He not only relied on his super powerful abilities to become the dark horse on the battlefield in less than two years, he also hates it when those at the top forces a flower vase into his squad.\r
-Sure enough, Song Qinglan announced in front of everyone, “Useful? Us brothers are going out there working ourselves to the bone, we don’t need a little genius who can only speedread quantum waves!”\r
-Later.\r
-The squad was forced into a dire situation during their mission.\r
-That beautiful little genius calmly continued on, every gunfire hitting the mark, his fighting power peaking.\r
-Song Qinglan begged in front of everyone, “Adviser Ji, stay.”\r
-At the end, he added, “I’ll work myself to the bone for you.”\r
-*****\r
-Ji Yushi had a secret.\r
-He would often be awake at night, suffering from memory overload and recurring nightmares.\r
-There was only one thing that could let him fall asleep peacefully.\r
-And that was Song Qinglan.`,IMG:172,PRIO:1},{BOOK_TITLE:"My Vegetative Partner Opened His Eyes in Anger After I Ran Away",AUTHOR:"Hēi Māo Nì Nì 黑猫睨睨",CHAPTERS:55,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/vpohe/",Synopsis:`Pet shop owner Tang Wan was accidentally reborn into an interstellar world. When he opened his eyes, he found himself automatically married to a vegetable via the StarNetwork. A social status worth ten billion yuan; but with an unconscious husband, he was unable to withdraw any money. Tang Wan held the empty position of the First Gentleman, but was, in fact, a poor man.\r
-\r
-In order to secure his future livelihood, Tang Wan was bound to the “Earth Pet System” and returned to his old business, with the goal of saving money, getting a divorce, and looking for a second spring!\r
-\r
-After thousands of years of evolution, Earth’s energy depletion had long been abandoned to the distant corners of the Milky Way. All of the animals in the galaxy had evolved tremendously, and little furry cute ones only lived in textbooks. When Tang Wan and his cute little ones appeared, they became the treasures of the whole universe! The pet shop soon became famous in the interstellar world, and the whole universe lined up to be cat slaves~\r
-\r
-Finally surviving past the compulsory marriage period, Tang Wan happily took off the diamond ring worth billions: he can finally sell it for money!\r
-\r
-However, Tang Wan could never have imagined that when he sat down at the dining table on a blind date with some fresh meat, the vegetative partner that he had come to an agreement with would suddenly open his eyes.\r
-\r
-Gong: I heard you sold your wedding ring for one billion yuan?\r
-\r
-Tang Wan reached out and pushed him down on the bed: Open what eyes, quickly close them [begging for your cooperation.jpg]\r
-\r
-Alternate names:\r
-\r
-#There are 10 billion people worshipping cats in my online store#\r
-\r
-#I conquered the whole galaxy with fluff#\r
-\r
-#All the great ancestors of Mao Zedong call me dad#\r
-\r
-Food guidelines: Sweet and warm cookies, more fuzzy plushes, interstellar overhead. Please do not compare with the new legal system of socialist civilization. The cat had its own mirror, with a 100% rebound against attacks. It is measured when attacked and sprayed ^_^`,IMG:188,PRIO:3},{BOOK_TITLE:"Shh, There’s a Beast in the Imperial Palace",AUTHOR:"Metasequoia 水杉",CHAPTERS:74,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`ust before his death, Chi Jun one-sidedly broke up with Gu Yanzheng. His claws came out as he screamed, “You old tree, get lost! I am fed up with you!”\r
-\r
-Then Chi Jun’s two paws held down the zombie emperor and… they perished together.\r
-\r
-Once he woke up again, Chi Jun discovered that as a person with the beast transformation and metal ability, he became a little lion of the imperial palace. The tree in the courtyard next to the imperial palace was extremely familiar.\r
-\r
-The little lion struggled over the wall and secretly marked beneath the tree. Then the major general, who was away on an expedition, looked at his feet and fell into thought…`,IMG:218,PRIO:3},{BOOK_TITLE:"Vanguard of the Eternal Night",AUTHOR:"Zhǐ jiān de yǒngtàndiào 指尖的咏叹调",CHAPTERS:157,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ven/",Synopsis:`A master assassin transmigrates into an interstellar era.\r
-\r
-Other players were responsible for competing in the e-sports arena, while he was responsible for stringing up and beating up the other players.\r
-\r
-His sword was hidden during the peak of day, and he was a gentleman who arrived in a flash of light;\r
-\r
-As a vanguard of the eternal night, he was the variable between life and death in the world.\r
-\r
-“As you know, the Star League’s difficulty levels are arranged in this way:\r
-Paradise < Simple < Normal < Difficult < Nightmare < Hell < [Tyron Odin]”`,IMG:279,PRIO:1},{BOOK_TITLE:"Employment Guide For Professional Fans",AUTHOR:"Ginger Taro",CHAPTERS:39,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://thatlazypotato.wordpress.com/2021/08/22/egfpf-chapter-1-5/",Synopsis:`Article one of the “Code of Practice for Professional Fans”: Professional fans are not allowed to screw around with the celebrity, or else they’ll be removed from the registry, and their name will be eternally engraved on the pillar of shame in the fan leader circle.\r
-\r
-Of course, there are exceptions to everything.\r
-\r
-Such as a professional fan like Qi Yu, who is being screwed by the celebrity—he is the light of the fan club.`,IMG:64,PRIO:2},{BOOK_TITLE:"I Ship My Adversary x Me",AUTHOR:"PEPA",CHAPTERS:47,EXTRAS:1,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://ismm-pepa.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/ismm/",Synopsis:`"A very sweet entertainment circle novel about a closeted gong x fudanshi shou.\r
-And get overloaded with sugar everyday!"\r
-∽\r
-Note: Ok I know the original description doesn't help at all lol. So here's a simple description by me:\r
-Both MC and ML were actors, but they stand on different level. ML's fans despise him and think of him as a vicious person who want to riding their idol's fame. Until one day things be different when he finds the world of shipping through internet. MC decides to became a shipper of himself and ML!\r
-There is a misunderstanding between the MC and ML but don't worry, it's a cute and hilarious misunderstanding and not the type of dramatic one, they are so dumb I love them lol. So much sugar but it did not turn out cringey at all.`,IMG:130,PRIO:1},{BOOK_TITLE:"Mr. Fashionable",AUTHOR:"Yu Xiao Lanshan",CHAPTERS:98,EXTRAS:11,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/mr-f-chapter-1/",Synopsis:`As a male fashion model, Su Nuo didn’t like others calling him feminine. But against all of his hopes, his beautiful appearance really betrayed him.\r
-\r
-This was the saddest tragedy of all time!\r
-\r
-Dear god, Su Nuo finally couldn’t stop himself from exploding, “I am actually very manly, ok!”\r
-\r
-“Are you sure? Come here, let me check whether you have abs or not.” The black bellied (black-hearted) director pushed him down on to a bed and took off his pajamas in high spirits.\r
-\r
-Two minutes later.\r
-\r
-“Your sister! Abs don’t form there!” The model Su struggled in tears.\r
-\r
-How would he live through this day?`,IMG:177,PRIO:3},{BOOK_TITLE:"Stop Bothering Me, Emperor",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:120,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbme/",Synopsis:`When Song Xiao was young, he wanted to become a Virtuous Official for a lifetime, but was forced to marry into the palace by that uncooperative Emperor; when his Virtuous Empress For A Lifetime career had just started, the Emperor died……\r
-\r
-Opening his eyes again, he’d come to the twenty-first century. The once highly-talented and literary Scholar Lang also has to carry his book bag and face the college entrance examinations. Just that, this desk-mate looks a little familiar……\r
-\r
-His Majesty the Emperor: Lend me your homework to copy\r
-\r
-Song Xiao: ……`,IMG:225,PRIO:2},{BOOK_TITLE:"Accidentally Married A Man Full of VIinegar",AUTHOR:"Yi Mei Niukou",CHAPTERS:83,EXTRAS:8,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://shanghaifantasy.com/novel/accidentally-married-a-man-full-of-vinegar/",Synopsis:`On a certain day, Chu Yi, feeling quite peculiar, goes to a bar for a drink and ends up drastically changing his life.\r
-\r
-Unspeakable deeds were done and he accidentally picks up a husband.\r
-\r
-It was quite a coincidence that this husband of his turned out to be a senior from his school, the one who people call a ‘mountaintop flower’.\r
-\r
-However, he didn’t expect that this aloof and hard-to-approach husband of his to not only flirt without batting an eye but also love eating vinegar (getting jealous).\r
-\r
-When he talks to others, his husband eats vinegar.\r
-\r
-When he laugh with others, his husband eats vinegar.\r
-\r
-When he compliment others, his husband eats vinegar.\r
-\r
-Even when he post about anything related to others on his Moments on WeChat, his husband eats vinegar.\r
-\r
-Chu Yi understood later that his husband should be pampered, and should be the only one in his heart.\r
-\r
-—\r
-\r
-Qin Yiheng has always lived his life the way he planned and he has never strayed off from his plans. Until one day, he met a certain person in a bar and certain things happened.\r
-\r
-In a responsible manner, he decided to marry this person, brought them back home and included him in his plans. He was ready to live a life of mutual respect with this person.\r
-\r
-However, he didn’t expect that the husband he picked up would actually make him so addicted.`,IMG:13,PRIO:1},{BOOK_TITLE:"Advance Bravely",AUTHOR:"Chai Jidan",CHAPTERS:215,EXTRAS:10,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://www.wattpad.com/967976403-advance-bravely-shi-bu-ke-dang-%E5%8A%BF%E4%B8%8D%E5%8F%AF%E6%8C%A1-epilogue-part",Synopsis:`Sergeant Xia Yao, born into a wealthy and renown ancestry, is a playboy who has turned over a new leaf. Yuan Zong is an ex soldier from the special forces who opened a bodyguard training company after being discharged. \r
-\r
-When Yuan Ru, Yuan Zong’s sister fell for Xia Yao’s charms, but could not break down his erected barriers, she came to Yuan Zong for assistance. Little did she know, the moment Yuan Zong saw Xia Yao, this ex-special force knew no other person would ever catch his eye. \r
-\r
-And so begins the battle between brother and sister for the most coveted price – Xia Yao’s heart.`,IMG:15,PRIO:2},{BOOK_TITLE:"After I Flopped on My Crush",AUTHOR:"Pine Nut Tea",CHAPTERS:58,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/afmc/afmc-1/",Synopsis:`How can a secret admirer promote themselves? Simple, just bed him.\r
-\r
-Bai Xi woke up one day and found that he had slept with the man whom he had a crush on for six years.\r
-\r
-A mere slip of the foot caused an eternal sorrow.\r
-\r
-Red wine was indeed a source of trouble.\r
-\r
-He shivered and thought he would be kicked out by Qi Xun.\r
-\r
-Instead, he heard Qi Xun calmly asked him, “Are you being witty with me?”\r
-\r
-Bai Xi: “?”\r
-\r
-Why was this different from what he imagined?\r
-\r
-October 23rd, Frost Descends.\r
-\r
-The weather had begun to turn cold.\r
-\r
-But Qi Xun’s efforts were warm and soft.\r
-\r
-In the sixth year of loving Qi Xun secretly, Bai Xi finally becomes his first love’s love.`,IMG:19,PRIO:2},{BOOK_TITLE:"After Marrying the Wealthy Disabled Tyrant",AUTHOR:"Yi Mei Niukou",CHAPTERS:63,EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/after-marrying-the-wealthy-disabled-tyrant-chapter-1/",Synopsis:`In order to save the family business, Wen Yuan had to marry a certain wealthy tyrant.\r
+Cold and gentle snow god shou x domineering when outside, controlled by his wife when inside gong`,IMG:21,PRIO:1},{BOOK_TITLE:"After Marrying the Wealthy Disabled Tyrant",AUTHOR:"Yi Mei Niukou",CHAPTERS:63,EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/after-marrying-the-wealthy-disabled-tyrant-chapter-1/",Synopsis:`In order to save the family business, Wen Yuan had to marry a certain wealthy tyrant.\r
 \r
 Father: Don’t mention how rich his family is, they own more than half the high-end hotels in Wancheng…\r
 \r
@@ -2094,27 +756,643 @@ A two-way crush. \r
 \r
 It happened that I turned around, and you were always behind me. \r
 \r
-So, two people holding hands, happily going to college and breaking the bad story ~`,IMG:25,PRIO:2},{BOOK_TITLE:"Assistant Architect",AUTHOR:"Xi He Qing Ling 羲和清零",CHAPTERS:227,EXTRAS:9,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://snowynotes.home.blog/books/",Synopsis:`Zhang Siyi comes back from his overseas studies in architecture and is looking for work. His girlfriend, however, is full of complaints, for Zhang Siyi never has time for her. She breaks up with him in a fit of rage while throwing coffee over him.\r
+So, two people holding hands, happily going to college and breaking the bad story ~`,IMG:25,PRIO:2},{BOOK_TITLE:"After The Disabled God of War Became my Concubine",AUTHOR:"Liu Gou Hua",CHAPTERS:123,EXTRAS:13,GENRE:"Fantasy",TIMELINE:"Historical",Carrd:"https://t.co/tlJlP7luwx",Eng_TL:"https://sleepytranslations.com/series/after-i-married-the-disabled-war-god-as-my-concubine/",Synopsis:`According to a popular legend, the famous God of War of Great Liang, Huo Wujiu, was once captured by an enemy country. He had his meridians severed and both his legs broken before he was thrown into the prison. In order to humiliate him, that incapable ruler of the country gifted him to his cutsleeve brother as a concubine.\r
+\r
+General Huo suffered a great deal of humiliation. He laid in wait for three years before he shed his cicada skin and returned to the Great Jing. He treated his crippled legs, and three months later, he led his army to storm the enemy’s capital. He slaughtered the emperor, razed the capital, and finally beheaded that tr*sh of a cutsleeve, displaying his head on the city’s walls for the next three years.\r
+\r
+Since then, the world has been united.\r
+\r
+——\r
+\r
+A certain university’s history lecturer received a graduation thesis depicting the legend of Huo Wujiu, and he wrote a full page of criticism for the student.\r
+\r
+Then he blinked, and he was transmigrated into the body of that cutsleeve prince.\r
+\r
+There were lanterns and decorations everywhere. A man came, sending word that the disabled general of the enemy state had already entered the manor in his wedding sedan.\r
+\r
+As he looked at the General Huo in front of him, taking in his malicious gaze, his tortured state, clad in a red wedding gown, Jiang Suizhou realised that even legends can come true.\r
+\r
+This legend could even cause him to be beheaded in public in the future, with his head hung on the city walls for three years.\r
+\r
+Jiang Suizhou’s only option was to take good care of General Huo.\r
+\r
+In spite of the hidden arrows of the court’s political agendas and the incapable ruler’s endless attempts to humiliate him, he could only bite the bullet and bear the brunt of it; his only wish was that after three years, he could protect his own head.\r
+\r
+Of course, he didn’t dare to even dream of asking this 3 meters tall “concubine” to serve him.\r
+\r
+However, before the three years was up, General Huo’s legs recovered on their own.\r
+\r
+He didn’t just slaughter the incapable ruler and unite the land under the heavens, but he also climbed into his own bed and pinned him down with a heated gaze, stubbornly wanting to establish his status as a concubine.`,IMG:26,PRIO:1},{BOOK_TITLE:"After Transmigrating I Made The Antagonist Cry",AUTHOR:"qiáo mù lǐ",CHAPTERS:75,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://storyseedling.com/series/20024/",Synopsis:`He transmigrated into this book with the mission to prevent the antagonist from ending up ‘blackened’ too early. \r
+\r
+And became a cannon fodder that is supposed to abandon the antagonist and prostrate himself at the Protagonist Bottom’s feet. \r
+\r
+To this, Liu Yu’an would like to say – To abandon a bossy CEO antagonist who likes him and is elegant and beautiful and can even shut down the world economy with one sentence, and go prostrate at the feet of the little idol, the Protagonist Bottom who doesn’t even like him? \r
+\r
+The original person must have had his brain bonked silly. \r
+\r
+Thank the gods he transmigrated instead. \r
+\r
+Later, Liu Yu’an realises – that the elegance and distance is merely a shell the bossy CEO has put about himself. The bossy CEO without the shell is sensitive, lacks confidence and especially lacks a sense of security. He’s also… a crybaby. \r
+\r
+— \r
+\r
+As a member of the Virtual Worlds Management Centre, Liu Yu’an has been through dozens of different worlds already. He has been the emperor, the evil court minister, the Lord of all Demons, the Demonic Cultivator Overlord, the Ruler of the Ascended Realm, a teacher, a student, a doctor, a CEO, a general… \r
+\r
+Though he never did expect to one day have to play the role of the characters he has been as an actor in another world. \r
+\r
+Looking at the Internet, with all sorts of, \r
+\r
+Commenter A: Aaaaah! Gege’s acting looks like the genuine Demon Lord himself. \r
+\r
+Commenter B: Holy shit! An-ge tell us in all honesty were you a high school homeroom teacher before you debuted?! \r
+\r
+Commenter C: I’m in love, seriously, is it too late for me to declare my fanhood allegiance now?! \r
+\r
+… \r
+\r
+Liu Yu’an is quite nonplussed, my, oh my, you all are too young, too young… \r
+\r
+Yet, not even the experienced transmigrator that he was expected that, one day, he would apply to be allowed taking a book character back out to the real world.`,IMG:27,PRIO:2},{BOOK_TITLE:"Agreement of Being Gay for 30 Days",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:58,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://abg30d.carrd.co/",Eng_TL:"https://ikigainovels.wordpress.com/translations/abg30d-index/",Synopsis:`F University’s two most attractive men, Wang Guangning and Zhang Lingyi, constantly competed with each other regardless in what aspect. \r
+\r
+Whether it was appearance, talent, popularity or even the number of abdominal muscles, they always contested with each other. Even the woman they pursued was the same. \r
+\r
+Yet, these two xiao cao¹ who had self-proclaimed themselves as peerless in the aspect of love were completely rejected by the same woman. \r
+\r
+Hence, they decided to retaliate against society by becoming gay. \r
+\r
+They set an agreement to be gay for thirty days and even especially downloaded the list from the internet, thus preparing themselves to follow these standards in order to become a proper gay couple. \r
+\r
+For example: \r
+\r
+Watching a movie together…Hey, shou shou, remember to lean on my shoulder when you see a frightening scene, alright? \r
+\r
+Warming their hands together in the same pocket…Hey, don’t wear that large military jacket outside, it’s really embarrassing! \r
+\r
+*** \r
+\r
+By learning how to be gay from an unreliable guidebook for couples, two straight guys clash and end up with an unexpected outcome. \r
+\r
+Their thirty days agreement has finished, yet can they truly return to their former lifestyles as if nothing ever happened? \r
+\r
+[1] 校草: the male counterpart of 校花. It’s used to describe the most attractive guy of the school.`,IMG:28,PRIO:2},{BOOK_TITLE:"An Accident in Broad Daylight",AUTHOR:"Gao Tai Shu Se",CHAPTERS:65,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://t.co/MkbXBv1o9z",Eng_TL:"https://sites.google.com/view/brsg/home?authuser=0",Synopsis:`In broad daylight, eyes open and clear of mind \r
+An accident, maddening, possessing.`,IMG:29,PRIO:1},{BOOK_TITLE:"Annoying Zhao Gongzi",AUTHOR:"Yourwei",CHAPTERS:26,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/annoy/",Synopsis:`Yu Chu was living with this oppressive wife and touched the back of his hand, which was slapped red. He was fierce in his heart: Sooner or later, I will kill this biggest “fly” by holding it down.The fact that I like men is something that the whole town knows, because my boyfriend is Zhao Gongzi. \r
+\r
+Zhao Gongzi, who is the mayor’s grandson, Gangster leader Master Zhao Si’s son and Warlord General Huo’s little brother-in-law. The Zhao Gongzi who is, in name, my adopted brother, since I was taken in by Master Zhao Si . The reason I was adopted and wasn’t simply a servant is because of Zhao Gongzi. He needed someone to accompany him at school, and I filled that role till I was 18. Then, after I had graduated and Zhao Gongzi had completed school without graduating, we slept together–that is to say, he f*cked me. \r
+\r
+Before I turned 18, I was always confused as to why he treated me so nicely, and I finally got the answer. I also lost something with that knowledge. \r
+\r
+　　f*ck his mom. \r
+\r
+I said nothing, you all heard nothing.`,IMG:30,PRIO:3},{BOOK_TITLE:"As the Minor Gay Rival in Het Novels",AUTHOR:"XiXiLi 夕夕里",CHAPTERS:106,EXTRAS:11,GENRE:"World Hopping",Eng_TL:"https://www.ainushi.com/projects/chinese/as-the-minor-gay-love-rival-in-hetero-novels/",Synopsis:`There are always four kinds of people in the traditional Mary Sue world. The Male Lead, the Mary Sue female lead, the woman who never wanted to see the female protagonist live a good life, and the infatuated man willing to destroy heaven and earth to get the female lead. \r
+\r
+However, with the rapid expansion of the army of rotten women, there is also a growing type of character, and that is a man who is also infatuated with the male lead… This character is referred to as the gay guy. They share the same infatuation as the second man, also has a tragic end and works together in hindering the male and female protagonist’s love. \r
+\r
+Fan Yuan has walked in every time and space playing as the gay man. He had always enjoyed it, until one day, with superb acting, he made the male lead bent… o (╯-╰) o \r
+\r
+Fan Yuan (affectionate confession): “I do not want to be your brother, in fact, I have always loved you.” \r
+\r
+Someone (fondly looking back): “Me too.” \r
+\r
+Fan Yuan (⊙_⊙): “…” \r
+\r
+You’ve got the wrong line, bro!`,IMG:31,PRIO:3},{BOOK_TITLE:"Assistant Architect",AUTHOR:"Xi He Qing Ling 羲和清零",CHAPTERS:227,EXTRAS:9,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://snowynotes.home.blog/books/",Synopsis:`Zhang Siyi comes back from his overseas studies in architecture and is looking for work. His girlfriend, however, is full of complaints, for Zhang Siyi never has time for her. She breaks up with him in a fit of rage while throwing coffee over him.\r
 \r
 Zhang Siyi manages to dodge the coffee, but unfortunately, it hits the guy behind him instead. Just when he is about to do something about it, the guy dismisses him and leaves.\r
 \r
-Zhang Siyi thought that would be the end of it, but who would’ve thought that the very next day, he will meet the man again… in a job interview. And being hired by him will be just the beginning.`,IMG:32,PRIO:1},{BOOK_TITLE:"Cai Cai",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:90,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://cai-cai-read-online.blogspot.com/p/table-of-contents.html",Synopsis:`Voice Actor gong x Musical Actor shou\r
+Zhang Siyi thought that would be the end of it, but who would’ve thought that the very next day, he will meet the man again… in a job interview. And being hired by him will be just the beginning.`,IMG:32,PRIO:1},{BOOK_TITLE:"AWM: PUBG",AUTHOR:"Man Man He Qi Duo",CHAPTERS:86,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://awmpubg.carrd.co/",Eng_TL:"https://www.scribblehub.com/series/743807/awm-pubg/",Synopsis:`AWM: PUBG’s highest damage dealing and most difficult to acquire, monstrous sniper rifle within the game. The ultimate air-drop dream, with ample power doing large harm, one shot to the head is enough for one to fall to the ground, regardless of the head gear one may be wearing. Its only disadvantage: The odds of it dropping make it extremely difficult to obtain, in which it all relies on luck.\r
+\r
+You are my AWM, meaning: You are the one who I can only come across serendipitously.`,IMG:33,PRIO:1},{BOOK_TITLE:"Back to the Apocalypse",AUTHOR:"Ye Yo 夜悠",CHAPTERS:130,EXTRAS:3,GENRE:"Apocalypse",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/btta/",Synopsis:`t’s the beginning of the Apocalypse, and zombies are running rampant over the Earth.\r
+\r
+Bai Jing brought his space dimension with him when he was reborn.\r
+\r
+A lousy man becomes a loyal lover.\r
+\r
+Hidden dimension, check. Food supplies, check. Golden finger, check.\r
+\r
+Next, I’m not good at introductions, so please forgive me.`,IMG:34,PRIO:3},{BOOK_TITLE:"Be Strict On Honesty",AUTHOR:"阿阮有酒",CHAPTERS:91,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/honest/",Synopsis:`Yang Juan, an honest man, was entrusted by his current roommate to play a female account in the game and engage in online dating.\r
+\r
+During the day, he focused on his lab work, during the night, he assiduously played as a soft and gentle girl.\r
+\r
+He kept his fake persona in mind the whole time.\r
+\r
+–\r
+\r
+His online partner wanted to see his photos. He asked his former roommate to ask his girlfriend about the name of the store she frequents. He bought a dress and a wig online to ship overnight and took photos to send to the partner.\r
+\r
+Then the photo was accidentally leaked on the internet, a well-known beautiful player in the same server posted on the forum that what he wore was a knockoff and showed the price on her authentic lolita dress in her large wardrobe.\r
+\r
+Not knowing that there was a difference between knockoff and generic, Yan Juan, the honest man, blushed with shame.\r
+\r
+–\r
+\r
+The next day, he received a large express delivery from his online partner. The box was filled with new Japanese brands dresses.\r
+\r
+Most of them were cute styles like the ones shared by that female player.\r
+\r
+After checking the clothes’ price, the honest Yang Juan. who only intended to deceive the other’s feelings and not his money, was stunned.`,IMG:35,PRIO:1},{BOOK_TITLE:"Beloved Enemy",AUTHOR:"Shui Qian Cheng 水千丞",CHAPTERS:118,EXTRAS:3,GENRE:"Enemies to Lovers",TIMELINE:"Modern",Eng_TL:"https://rosyspell.wordpress.com/beloved-enemy/",Synopsis:`uQingPei, the new director who was poached with a high salary, his first challenge at his new post was to help his boss raise his son!\r
+\r
+A rich, hot-tempered, and arrogant second generation princeling best at causing trouble — YuanYang who had been cultured in the army for many years is rebellious and domineering but GuQingPei has the confidence to make him bow down and submit. No one in this life has dared to make him (YuanYang) feel so grievous and troubled! Facing GuQingPei’s treacherous smiles and oppressing advances step by step, forcing him to learn to take over the family business, YuanYang decides to give GuQingPei a profound lesson. Instead, he loses control of the situation and they developed into another type of relationship!\r
+\r
+With GuQingPei and YuanYang’s equally opposing and hostile attitude… like enemies….will they look at each other with hatred or will it ignite into a different kind of spark!?`,IMG:36,PRIO:1},{BOOK_TITLE:"Beloved Husband",AUTHOR:"Jué Jué 决绝",CHAPTERS:257,GENRE:"World Hopping",Eng_TL:"https://awanderingpotato.com/beloved-husband-quick-wear/",Synopsis:`Yan Jing Ze encountered an accident while escaping with his lover, was accidentally parasitized, and was involved in reincarnations.\r
+\r
+He was lost in reincarnation and almost couldn’t wake up, but if he doesn’t wake up again, his dear will be doomed!\r
+\r
+So at certain critical moments, the phoenix man who squeezed the bamboo horse, the scumbag who framed the learning God… they all became sober, no, they were “pierced”.\r
+\r
+Various scum gong began to spoil their beloved shou crazily.\r
+\r
+Story of the amnesiac gong, Yan Jing Ze, transmigrating into multiple worlds as the scum gong of his beloved wife.`,IMG:37,PRIO:2},{BOOK_TITLE:"Bite Your Fingertips",AUTHOR:"Su Jingxian",CHAPTERS:88,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://t.co/Wx58xT4l9S",Eng_TL:"https://dummynovels.com/novel/bite-your-fingertips/",Synopsis:`Chu Yu was good-looking and had a good family background. Despite being male and an irredeemable slacker, he was still elected as Jianing Private School’s school flower by an overwhelming number of votes.\r
+\r
+The whole school knew that Chu Yu was on bad terms with the second year’s top student who’d won so many awards from various competitions that his hand had gone limp with exhaustion just from holding them. He was the cold, restrained, taciturn, and indifferent to anyone school grass, Lu Shi.\r
+\r
+That was until one certain day after school, when someone saw Chu Yu amongst the trees behind the school building, pulling on the sleeves of the study god’s white shirt while speaking pitifully, “Lu Shi, give me a bite, I’ll be gentle.”\r
+\r
+Lu Shi put his finger in Chu Yu’s mouth. “It doesn’t matter if it hurts a little.”\r
+\r
+——\r
+\r
+Chu Yu was frightened to discover that, overnight, he had awakened a strange bloodline that required him to suck a drop or two of blood everyday in order to survive. However, the blood of everyone was bitter and smelly, except…Lu Shi’s.\r
+\r
+#The Heavens must be pitting me#\r
+\r
+——\r
+\r
+*坑 (lit. Pit.) means a teammate that intentionally or unintentionally screws their teammate over.`,IMG:38,PRIO:1},{BOOK_TITLE:"BOOK_TITLE",AUTHOR:"AUTHOR",CHAPTERS:"CHAPTERS",EXTRAS:"EXTRAS",GENRE:"GENRE",TIMELINE:"TIMELINE",Carrd:"Carrd",Eng_TL:"Eng_TL",Synopsis:"Synopsis",IMG:"IMG",PRIO:"PRIO"},{BOOK_TITLE:"Born to Be Rebellious",AUTHOR:"Sang Wo",CHAPTERS:213,EXTRAS:1,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://bambootriangle.wordpress.com/2021/09/15/born-to-be-rebellious-quick-transmigration-%E5%A4%A9%E7%94%9F%E5%8F%8D%E9%AA%A8%E5%BF%AB%E7%A9%BF/",Synopsis:`Ge Xiu is a nefarious star criminal. After being arrested, according to the Interstellar Supreme Law, he will face two choices: either serve a sentence of 1156 years in black prison or enter countless virtual worlds and become a miserable person who is tortured and abused all his life. How much he suffers is how much his sentence can be reduced. Ge Xiu chose the second one without hesitation.\r
+\r
+So… The trial surveillance system stared dumbfounded at the Former•Interstellar Most•Wanted•Criminal•Currently•Weak•Poor Ge Xiu in the virtual world, punching the empire, kicking the Federation, overthrowing oppression and building a new world. Then he turned his head to the camera and cried: “I’ve had a miserable life, really.”\r
+\r
+“…” The surveillance system that was about to explode of anger: “Like hell I’d believe you!”`,IMG:39,PRIO:1},{BOOK_TITLE:"BOSS Transmigrates as a Little Cutie",AUTHOR:"光明在案",CHAPTERS:154,EXTRAS:5,GENRE:"World Hopping",Eng_TL:"https://www.foxaholic.com/novel/boss-transmigrates-as-a-little-cutie/",Synopsis:`Qing Yun was probably the only villain who had suffered this much.\r
+\r
+For hundreds of years, a protagonist had always been barking at him and attempting to harm him, but just couldn’t kill him.\r
+\r
+When he spent his days bedridden like a dying man, his life was no better than that of the dead.\r
+\r
+People respected him, feared him, secretly cursed at him, but he just wouldn’t die!\r
+\r
+But he, the ultimate BOSS, has become an insignificant cannon fodder only to be manipulated and destroyed?\r
+\r
+That’ll never happen.\r
+\r
+A certain green-eyed man: Cutie, come into my arms.\r
+\r
+Qing Yun: Heh heh, Lao Zi will teach you how to behave.\r
+\r
+*Ding* the world’s most ferocious little cutie has come online~`,IMG:40,PRIO:3},{BOOK_TITLE:"C Language Cultivation",AUTHOR:"Yi Shi Si Zho",CHAPTERS:142,EXTRAS:3,GENRE:"Sci-Fi",TIMELINE:"Modern",Carrd:"https://ccultivation.carrd.co/",Eng_TL:"https://sebastianorra.wordpress.com/c-language-cultivation/",Synopsis:`Lin Xun is a programmer. After coding all night, he found a program input window in his body.\r
+He tried to program a cycle program.\r
+The next day, the old man next door came to the door: Xiao Xun, you are so young but you have entered the Qi Refining period. Do you want to be my disciple?\r
+On the third day, Lin Xun was patted on the street with a shoulder: Boy, your Spiritual roots are surprising, how about joining my sect?\r
+Lin Xun: “? ? ?”\r
+Later, he discovered that modern society really has immortals. While others rely on spiritual power to cultivate immortals, he relies on programming himself, and he can also see the programs in other immortals.\r
+A Nascent Soul: “How can you peep through my flaws?”\r
+Lin Xun calmly withdrew the sword: “Your program has a bug.”\r
+A half-immortal: “… that’s impossible! What is the name of your moves?\r
+Lin Xun pushed up his glasses: “Monte Carlo algorithm.”\r
+——Then he gradually became a legend in the cultivation world.`,IMG:41,PRIO:1},{BOOK_TITLE:"Cai Cai",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:90,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://cai-cai-read-online.blogspot.com/p/table-of-contents.html",Synopsis:`Voice Actor gong x Musical Actor shou\r
 \r
 This is a story about ‘learning how to fly again after the wings of your dreams are broken.’\r
 \r
-This is also a story about ‘how to love others and also love yourself.’`,IMG:42,PRIO:1},{BOOK_TITLE:"Don't Discriminate Against Species",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:133,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ddas/",Synopsis:`Fu Li was a yaoguai from the countryside who had never seen the world. After entering the city, his biggest dream was to become a civil servant and leave his name in historical records.\r
+This is also a story about ‘how to love others and also love yourself.’`,IMG:42,PRIO:1},{BOOK_TITLE:"Cannon Fodder Cheat System",AUTHOR:"júzi zhōu",CHAPTERS:228,GENRE:"World Hopping",Eng_TL:"https://auroranovels.wordpress.com/cannon-fodder-cheat-system/",Synopsis:`At first, when he learned that he was forced to go to many different routine worlds and be reborn into all kinds of cannon fodder, he was against it.\r
+\r
+Because while villains usually all only have a moment of satisfaction, the endings of cannon fodder are also frequently quite miserable.\r
+\r
+But the man who gave him the system told him that this system not only has all types of powerful functions, but he can also break the routine lives of the cannon fodder. If he achieves this satisfactorily for each world, he can even become a god.\r
+\r
+He’s already experienced over a thousand reincarnations, but hasn’t yet been a god. Since it sounds pretty great, why not just try it out.\r
+\r
+From that moment on, he began the irreversible path of tyrannically oppressing people, while conveniently tearing open those white moonlights and so-called righteous people’s hypocritical masks.\r
+\r
+His goal: wearing the villain’s role to walk other people’s righteous paths, leaving them no path to follow.`,IMG:43,PRIO:3},{BOOK_TITLE:"Carrying a Hoe to Cultivate",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:69,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/carrying-a-hoe-to-cultivate-transmigration-into-a-book/",Synopsis:`Xia Yi had transmigrated, with a cultivation system into a farming novel. Orz\r
+\r
+Mission: Becoming an apprentice in the Qi Shan Sect to obtain a mythical beast.\r
+\r
+With his hoe on his shoulder, Xia Yi gazed at the large area of farmland in front of him, he almost blacked out: How am I going to complete cultivation missions in a farming novel?\r
+\r
+System: It’s fine. There is always a fix to a problem…\r
+\r
+And so, Xia Yi was forced to go between the two worlds, farmed a bit here, cultivated a bit there.\r
+\r
+Although the rubbish missions were torturing him to death, there was always a loyal doggie beside him…\r
+\r
+Xia Yi: Cultivating is so hard.\r
+\r
+Gu Wen Zhu: I’ll teach you.\r
+\r
+Xia Yi: Farming is so exhausting.\r
+\r
+Gu Wen Zhu: I’ll help.\r
+\r
+Xia Yi: I don’t want to have a child.\r
+\r
+Gu Wen Zhu: Yes, you want to.\r
+\r
+As the worlds mixed up, the characters in the cultivation novel frequently appeared beside him.\r
+\r
+The whole thing was a mess, traveling between two worlds. Claiming to be relatives with people, arranging a marriage, becoming sworn brothers with others…\r
+\r
+Why not let his dog at home join the party too!`,IMG:44,PRIO:3},{BOOK_TITLE:"Cherry Blossoms Upon A Wintry Sword",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:92,EXTRAS:7,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://cbuaws.carrd.co/",Eng_TL:"https://acupofhalfmoon.wordpress.com/2021/07/08/cherry-blossoms-upon-a-wintry-sword/",Synopsis:`Lin Rufei was the youngest son of the head of the Kunlun Sect.\r
+The disciples of Kunlun had been the sharpest among those in Jianghu, and were revered as legends among men.\r
+But Lin Rufei had a problem. If he so much as tripped, he would need to lay in bed for three days.\r
+As Lin Rufei thought about whether he could salvage something from his ill health or not, he realized that a mysterious … phenomenon had happened to his body.`,IMG:45,PRIO:1},{BOOK_TITLE:"Cold Sands",AUTHOR:"Mu Yun Lan Qing 牧云岚卿",CHAPTERS:41,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://coldsands.carrd.co/",Eng_TL:"http://bltranslation.blogspot.com/2014/08/cold-sands-by-mu-yun-lan-qing.html?m=1",Synopsis:`He’s just a low-ranking deputy general and he’s a prince. They meet on the battlefield but it turns out to be the beginning of a complicated and beautiful story.\r
+Murong Yu is a very confident man – until he meets Han Xin.\r
+There’s nothing he cannot get; there’s nothing he cannot destroy.\r
+To let live or not, is all up to him.\r
+He is the future ruler of Great Yan and so it’s only natural that the world should bow down at his feet.\r
+But he had never thought that one day he would lose control of it.\r
+That even his own will would be uncontrollable.\r
+Murong Yu can neither get nor destroy this prisoner of war.\r
+Han Xin has never given a care about the world – until he meets Murong Yu.\r
+He has never cared about anyone, nor has anyone cared about him.\r
+It doesn’t matter if you’re alone or sad, as long as you can still laugh, life will go on.\r
+He has learned long ago how to not question, how not to believe, how not to lose and how not to care.\r
+Destiny’s uncaring teasing and humiliations have already become numb to him.\r
+That’s right, he doesn’t have a care in the world.\r
+Even if it’s this Prince Royal of Great Yan who’s started to warm up to him.`,IMG:46,PRIO:1},{BOOK_TITLE:"Copper Coins",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:102,EXTRAS:1,GENRE:"Fantasy",TIMELINE:"Historical",Carrd:"https://coppercoins.carrd.co/",Eng_TL:"https://tongqiankanshi.blogspot.com/",Synopsis:`It was the twenty-third year of Tianxi. Rumours traversed the streets that the all-knowing Imperial Advisor suffered a great calamity and could not help but enter seclusion to focus on cultivation. However, the commoners secretly clapped their hands and rejoiced. In the winter of the same year, a young monk appeared in the Hui Zhou Fu’s Ningyang District.\r
+The monk’s monastic title was Xuan Min, his memories all missing, yet was versed in the arts of Feng Shui Kan Yu. On the very first day arriving in Ningyang, he did not hesitate to take care of a dangerous manor, picking up Xue Xian, who was hidden there, along the way.\r
+Since then, Xue Xian – who had been all-powerful in the first half of his life – gained a new life pursuit: to get this bald donkey who had only a good outer appearance to take his last breath and “smile from his grave”.\r
+Xue Xian: If you are unhappy, then I will be happy. If you die, I’ll laugh my ass off.\r
+Xuan Min: …`,IMG:47,PRIO:1},{BOOK_TITLE:"Creator's Internship Guide",AUTHOR:"Jiuyi 酒矣",CHAPTERS:35,EXTRAS:2,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/creators-internship-guide/",Synopsis:`iang Ci created a game called “Creator’s Internship Guide” and became the god. He first created the Celestials, then the dragons, Shadow Race, and last, humans. An accident makes him travel into the game world he created. He is told that the six races went to war 1,700 years ago over which race was his favorite.\r
+\r
+For the sake of world peace, Jiang Ci works diligently to calm down the tides of war, with his ultimate goal of choosing one of the six races administrators to become the new God so he may go back to his original world.`,IMG:48,PRIO:3},{BOOK_TITLE:"Cub Raising Association",AUTHOR:"Jiuyi 酒矣",CHAPTERS:130,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://midnightrambles.in/2021/07/14/cub-raising-association/",Synopsis:`Xie Luan had always believed in science until one day, a meteorite smashed into his yard, forcing him to bind to a heroic world saving script. The worst thing was that the script didn’t even follow common sense.\r
+\r
+Others become superheroes while he became a super-nanny. So in his left hand was a “Cub Encyclopedia” and in the right, a small milk bottle to feed the small cub clinging onto his leg.\r
+\r
+Today, Xie Luan is trying his best to save the world.`,IMG:49,PRIO:2},{BOOK_TITLE:"Cute Beast Store No. 138",AUTHOR:"Dǎ JiāngShī",CHAPTERS:171,EXTRAS:6,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/cute-beast-store-no-138/",Synopsis:`Thousands of years ago, a small planet collided with Earth and destroyed the world. In five days, ninety percent of humans had been wiped out, leaving behind the last ten percent to earnestly struggle on death’s door.\r
+\r
+Jinyu was one of those people who survived. Due to a special heredity trait, he could understand beast language. After the apocalyptic disasters, Jinyu had been living for a month with the few small beast brothers that he’d subdued. Previously, Jinyu had thought that he would live like that until he died. Yet, inexplicably, one day he opened his eyes to find that he was in a monstrous, lawless world that was full of vitality and life.\r
+\r
+Jinyu’s transmigration into the future let him skip over almost one hundred thousand years. In the year 106825, beasts rule the galaxies and ‘pure’ humans are extinct. As the one and only ‘pure’ human left in the entire universe, Jinyu braves this new chaotic world to find a place for himself and thus begins to work at Beast Store number 138.`,IMG:50,PRIO:3},{BOOK_TITLE:"Daily Disposable Persona",AUTHOR:"Wang Ya 妄鸦",CHAPTERS:124,EXTRAS:14,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/daily-disposable-persona/chapter-138/",Synopsis:`As Zong Yan sat in the classroom, he always felt like the odd man out. His body was there but his soul had sneaked out the window. He wanted to do anything, wanted to be anyone, as long as he wasn’t himself.\r
+\r
+He had a cool and unbelievable superpower:\r
+\r
+He could extract different persona cards from the void with his bare hands. With a high enough “SAN” value, Zong Yan could become an entirely different being. Superpowers, ancient gods, eldritch powers, even… an Outer God.\r
+\r
+Soaring above the dome of the magical city, he was the free-flying son of the wind.\r
+\r
+Strolling through the rain-soaked, foggy streets of London, he was the secretive and unpredictable night watchman.\r
+\r
+Walking in the extravagance and glamour of New York, he was the sun god who held the light in his hands.\r
+\r
+Diving into the geometric city of R’lyeh, he was the indescribable king.\r
+\r
+In the gorgeous and colorful world of dreams, he was the original belief in the universe.\r
+\r
+Early to bed, early to rise, going to school on time, working late to save the world. A senior at Qingyang High School by day, honors scholar at Miskatonic University by night. Investigating unusual events all over the world during summer and winter vacation, battling wits and courage with evil gods, dedicated to preserving peace and saving a faltering world.\r
+\r
+Zong Yan: Thanks, but I’m just an ordinary high school kid.`,IMG:51,PRIO:1},{BOOK_TITLE:"Dao of The Salted Fish",AUTHOR:"bafflinghaze",CHAPTERS:126,EXTRAS:13,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dsf/",Synopsis:`Wen Zhihao is tired of life. When he dies…meh. That’s life.\r
+\r
+But when he gets transmigrated into the body of a young cultivator of the prestigious Golden Sun Sect, full of possibilities…no thanks! He has no effort/energy to work hard on cultivation! He just wants to be a salted fish!\r
+\r
+…it turns out sleeping = meditation and absently watching beautiful scenery = meditation.\r
+\r
+And meditation = cultivation…\r
+\r
+This is not the Dao of Indifference. This is the Dao of the Salted Fish!! With calm emotions, Wen Zhihao accidentally cultivates strongly!\r
+\r
+…but he’s still a salted fish, bah. Don’t make him fight!\r
+\r
+Feat: slow build / slice of life~ [subtitle: Salted Fish Cultivator~]`,IMG:52,PRIO:3},{BOOK_TITLE:"Delicious Food Got Me Famous Across the Galaxy",AUTHOR:"Wǎ Lún Dīng 瓦伦丁",CHAPTERS:28,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/delicious-food-got-me-famous-across-the-galaxy/",Synopsis:`Xie Yan was in an accident while acting. After crossing into a different world, he finds that he is thin and small. While setting up a strict weight and strength training plan for himself, he is very satisfied with his life cooking and playing with robots. He didn’t realize that it was an ABO world and that he was an omega.\r
+\r
+“My queen can’t be an omega.” Huo Nai, the prince of the Galactic Empire, made a high-profile claim that he would not indulge in his instincts and yield to pheromones. Who knew that someone would try to assassinate him on his way back from his expedition and that an accident would occur while trying to land on the planet Murdo. He was rescued by Xie Yan, and he became the other side’s …bodyguard and permanent worker.\r
+\r
+Huo Nai: “How can I like this strange Omega?!”`,IMG:53,PRIO:3},{BOOK_TITLE:"Demon Boss In The Human World",AUTHOR:"Tức Mặc Dao",CHAPTERS:96,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://hellitranslations.wordpress.com/projects/demon-boss-in-the-human-realm-entertainment-circle/",Synopsis:`The general of the demon world possessed the body of a third-rate small time celebrity. This was the story of him coming over, determined to make preparations for the demon world’s invasion of the human world, but accidentally got mixed in with the entertainment circle instead.\r
+\r
+From endless scandals to endless gossiping, and from a nobody to a hot topic, the third-rate star had become the most eye-catching male god in the entertainment industry with a leap.\r
+\r
+The reporters were tirelessly unearthing the ‘story’ behind him!\r
+\r
+The object of their gossip had expressed that he had a pair of very strong thighs, and anyone could feel free to hug them! Please, come and hug them!\r
+\r
+Gu Yan says: s*upid humans, what I want to conquer is the human world.\r
+\r
+Domineering and ruthless villain boss bottom x Cheating protagonist type beautiful and aloof dominant top.`,IMG:54,PRIO:3},{BOOK_TITLE:"Devil Venerable Also Wants to Know",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:80,EXTRAS:2,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://devilvenerable.carrd.co/",Eng_TL:"https://mourningcrow.wordpress.com/2021/03/27/devil-venerable-also-wants-to-know-%e9%ad%94%e5%b0%8a%e4%b9%9f%e6%83%b3%e7%9f%a5%e9%81%93/",Synopsis:`In a Mary-Sue novel, the readers all liked the Devil Venerable, the second male lead who devoted himself whole-heartedly to the female lead. However, the female lead only loved the male lead who abused her physically and mentally.\r
+Readers: Why doesn’t the female lead like the Devil Venerable?!\r
+Devil Venerable: This Venerable also wants to know. But what I really want to know is why I even like the female lead at all.\r
+In order to understand why the female lead wasn’t attracted to him, the self-conscious Devil Venerable brutally interrogated the entire cast of characters from the novel.\r
+Background characters: I have so many things I want to say but I don’t dare to say it to his face!\r
+–\r
+After obtaining the book, the Devil Venerable discovered that the book described the world he lived in. This book said that after he sacrificed himself for the female lead, the fourth male lead, his silent and loyal subordinate Yin Hanjiang, blackened and attempted to kill her as a sacrificial offering for his lord.\r
+Devil Venerable Wenren E: Yin Hanjiang, this Venerable wants to know why you wanted to kill the female lead.\r
+Yin Hanjiang was silent.\r
+Wenren E: If you refuse to speak, this Venerable will cut out your tongue and drink it with alcohol!\r
+Yin Hanjiang: …\r
+Wenren E: What the hell are you blushing for?!`,IMG:55,PRIO:1},{BOOK_TITLE:"Devil's Political Marriage",AUTHOR:112,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/devils-political-marriage/",Synopsis:`egend had it there was a demon of nightmares, the enemy of mankind, who desired to dominate the universe.\r
+\r
+On the first day, he left the human fleet broken and in disorder.\r
+\r
+The next day, he wanted to eliminate the Galactic Federation.\r
+\r
+The third day he said–unless the soldier who had wounded him was married to him, he would destroy everything.\r
+\r
+The leaders of the Galactic Federation discussed and decided to send the soldier Wu Xingyun to become the male-wife of the devil.\r
+\r
+Wu Xingyun embarked on his mission…For the peace of the universe and the happiness of mankind.\r
+\r
+“Soldier, are you confident to complete this mission?!”\r
+\r
+“Yes Sir, will resolutely complete this task!”`,IMG:56,PRIO:3},{BOOK_TITLE:"Does Love at First Sight Exist In Esports",AUTHOR:"Luxifa",CHAPTERS:70,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://dlfsee.carrd.co/",Eng_TL:"https://gooseberrytl.wordpress.com/at-first-sight/",Synopsis:`Having nothing better to do, Asia’s champion decided to carry a girl in the game. With great difficulty, he finally convinced the girl he carried to turn on her mic, only to discover that the other party was actually a boy?!\r
+This online love affair that had ended before it even began was tossed away to the back of the champion’s mind. Unexpectedly, when his club went to train in another city, they encountered a mishap and had a small conflict with another team.\r
+When the other team’s vice captain showed up, the champion was so moved that he started doubting life, but as soon as the other opened his mouth, it turned out that this was the “girl” that he had personally carried with his own hands that day.\r
+Does love at first sight exist in e-sports? It does.`,IMG:57,PRIO:1},{BOOK_TITLE:"Don't Covet the Beautiful System",AUTHOR:"温泉笨蛋",CHAPTERS:130,EXTRAS:8,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonlightnovels.com/dbcs-chapter-1/",Synopsis:`i Tong transmigrated into a city-themed, feel-good novel where the protagonist, a cannon fodder, relies on a system to counterattack and reach the peak of life, obtaining the love of a powerful figure.\r
+\r
+Ji Tong excitedly asks, “Did I transmigrate as a pitiful cannon fodder or a cool and awesome big shot?”\r
+\r
+Intelligent Customer Service: Hello, you have transmigrated into a beautifully designed system.\r
+\r
+Ji Tong: ?\r
+\r
+Intelligent Customer Service: According to my research, you have the same name as the system. “Xi” has multiple pronunciations, so you were fortunate to have this transmigration opportunity.\r
+\r
+Ji Tong: … Ji Tong reluctantly shoulders this new and peculiar burden, diligently serving as the pitiful cannon fodder protagonist, Pei Qingyuan, in the book.\r
+\r
+However, pretending to be intellectually challenged is dull. Ji Tong’s only source of amus**ent becomes teasing the seemingly cold high school student, Pei Qingyuan, under the guise of “happy education.” Once things get out of hand, they blame it on a virus…`,IMG:58,PRIO:1},{BOOK_TITLE:"Don't Discriminate Against Species",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:133,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ddas/",Synopsis:`Fu Li was a yaoguai from the countryside who had never seen the world. After entering the city, his biggest dream was to become a civil servant and leave his name in historical records.\r
 \r
 However… He didn’t have a university degree. Not even a high school graduation certificate.\r
 \r
-So, even a yaoguai would not be able to find a good job if they didn’t study well.`,IMG:59,PRIO:2},{BOOK_TITLE:"Ex Husband's Call",AUTHOR:"Qin Sanjian",CHAPTERS:55,EXTRAS:8,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://e-h-c.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ehc/",Synopsis:`After the legalization of same-s*x marriage, Tong Qiu didn’t expect to be part of the first batch of people shoved onto the marriage market. A relative set him up with a man who had a handsome face and a great body – a police officer who used to work for the criminal investigation unit but became a uniformed officer after suffering an injury. Tong Qiu had a uniform fetish and the two of them got along and so, under the excessive urging of both of their families, they decided to tie the knot.\r
+So, even a yaoguai would not be able to find a good job if they didn’t study well.`,IMG:59,PRIO:2},{BOOK_TITLE:"Don’t Pick Up Boyfriends From the Trash Bin",AUTHOR:"Riding a Whale South",CHAPTERS:270,EXTRAS:14,GENRE:"World Hopping",TIMELINE:"Modern",Carrd:"https://dpubfttb.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dpubftb/",Synopsis:`Chi Xiaochi: fourth-rate citizen at birth, three-time award-winning film emperor, second-rate temper, first-class looks. He crawled his way out of hell on hard mode to become a winner at life.\r
+\r
+Then, he was smashed into a vegetative state by a chandelier.\r
+\r
+061: Hello, here’s a brief rundown on the scum gong reconditioning system. This system measures the regret level of the scum gong. Every time their regret level reaches one hundred points, you will be able to leave the current world. A friendly tip, usually, through dedication and self-sacrifice, our employees slowly foster a sense of dependency in the scum gongs, gradually making it so the scum gongs can’t live without them…\r
+\r
+Chi Xiaochi: How many regret points is a complete loss of reputation and standing worth? How about a fall from grace? Or wanting something but never being able to obtain it?\r
+\r
+061: ……`,IMG:60,PRIO:1},{BOOK_TITLE:"Don't Try to Corrupt Me",AUTHOR:"萝卜花兔子",CHAPTERS:105,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://dttcm.carrd.co/",Eng_TL:"https://ckandawrites.online/dont-try-to-corrupt-me/",Synopsis:`Sheng Yuan, a model student, excelled year after year, with a life motto of striving for the best and always aiming to be the first. However, fate took an unexpected turn as he found himself transported to a parallel world where school delinquency run rampant.\r
+System: Are you ready to become the most formidable youth delinquent?\r
+Sheng Yuan: “…”\r
+Sheng Yuan had always been devoted to his studies, but he soon realized that only by surpassing the leader of delinquent youths could he ensure his own survival. Thus, he embarked on the path of delinquency.\r
+Skipping classes? No problem. He would make his exit in the last five minutes of each class.\r
+System: Hey!!!\r
+Staying overnight in internet cafes? No problem. The evening news played throughout the night.\r
+Internet café netizens: ???\r
+When he received a challenge to meet in a small grove at 10:30, Sheng Yuan found himself in a difficult situation and expressed his inability to go.\r
+Opponent: “What? Are you scared?!”\r
+Sheng Yuan: “No, it’s just that my home has a curfew at half past ten.”\r
+Opponent: “…”\r
+Soon, Sheng Yuan’s became famous within the delinquent circles due to his impressive exploits, and his delinquency value skyrocketed. In the process, he even managed to lead the delinquent leader onto the right path.\r
+Sheng Yuan: Hi, handsome, would you like to do homework together in the small grove at the back?\r
+Yu Zuojin met Sheng Yuan during a summer filled with lush foliage and vibrant greenery.\r
+He had a congenital hearing impairment and relied on a hearing aid to perceive the sounds of the outside world. Coincidentally, his hearing aid was broken when he met Sheng Yuan. He saw the youth standing under the shade of a verdant tree, and Sheng Yuan uttered a few words to him:\r
+“I like you.”\r
+Yu Zuojin rejected him on the spot.\r
+Sheng Yuan: “Classmate, you dropped some money.”\r
+Yu Zuojin: “I don’t need it.”\r
+Sheng Yuan: ?\r
+“In that case, it’s mine,” Sheng Yuan said. (Slips it into his pocket.)`,IMG:61,PRIO:2},{BOOK_TITLE:"Don't You Like Me",AUTHOR:"Lu Tianyi 吕天逸",CHAPTERS:66,EXTRAS:32,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://dylm.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dylm/",Synopsis:`Short, rich, and handsome, Lin Feiran was always the center of attention. But after transferring schools in his second year of high school, he discovered that his limelight was snatched by his Adonis classmate, Gu Kaifeng.\r
+\r
+Lin Feiran was very resentful, and he and Gu Kaifeng became archnemeses (one-sidedly). Although the two lived together, they were like strangers.\r
+\r
+When Lin Feiran went back home to attend his grandfather’s funeral, he accidentally inherited the Yin-Yang eyes that had been passed down from generation to generation. After gaining the ability to see ghosts, the timid Lin Feiran discovered that his two-person dormitory was actually a sixteen-person (ghost) room. Every day, he was scared to the point of collapsing.\r
+\r
+The more aggravating thing is that because of Gu Kaifeng’s innate body constitution, he possessed an abundant amount of Yang energy. Lin Feiran found out that whenever he touched Gu Kaifeng, Gu Kaifeng’s Yang energy could temporarily disable his Yin-Yang eyes. A light touch would disable it for five minutes, a kiss for an hour, and so on…\r
+\r
+Lin Feiran had no choice but to throw himself into his archnemesis’s embrace. This complete reversal in attitude to being intimate with Gu Kaifeng persisted every day from morning till night.\r
+\r
+When sleeping, he must squeeze in the same bed as Gu Kaifeng. Going to the toilet? He must drag Gu Kaifeng with him. Homework? It must be done hand-in-hand with Gu Kaifeng… He also had to try his best to persuade the teacher to make him Gu Kaifeng’s deskmate. Every day in class, he would rub Gu Kaifeng’s calf with his foot beneath the desks…\r
+\r
+Following the clingy little bastard’s sudden change in personality, the initially shocked Gu Kaifeng gradually became smitten. Every day he would chase Lin Feiran to flirt with him, make crazy confessions, and even routinely push him against the wall and kiss him…\r
+\r
+Gu Kaifeng: “Don’t you like me? I like you, so let’s be together.”\r
+Lin Feiran: “I don’t like you! Don’t come over!”\r
+Gu Kaifeng: “……”\r
+Five minutes later, to avoid seeing ghosts, Lin Feiran sneakily came to touch Gu Kaifeng.\r
+Gu Kaifeng turned around, stopping his hand: “After you just rejected me, you come back to flirt with me!?”\r
+Lin Feiran: “Who’s flirting with you! I was careless and touched you; don’t imagine that I like you back.”\r
+Oh, that’s it.`,IMG:62,PRIO:1},{BOOK_TITLE:`Dongfang Bubai’s Reborn Yang Lianting\r
+`,AUTHOR:"Clever And Witty",CHAPTERS:66,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://invincibleeast.carrd.co/",Eng_TL:"https://docs.google.com/document/d/1qQhcjTkNrc9Pko69rTcGp8_KiYz7ejoLOTiYrZ3AcrU/edit#heading=h.pvz2ic4l61sp",Synopsis:`From beginning to end, the only one Dongfang Bubai loved was Yang Lianting.\r
+In their past life, even though Yang Lianting coveted power and position, even though he never held him in his heart–\r
+But Dongfang Bubai’s love, isn’t it just like this?\r
+Falling in love with such a person means not only accepting his good, but also tolerating his evil.\r
+Reborn Yang Lianting returned to a time when everything had yet to happen, which gives him the chance to relfect upon himself, the chance to treat Dongfang well and to return him a lifetime filled with happiness.\r
+\r
+`,IMG:63,PRIO:2},{BOOK_TITLE:"Employment Guide For Professional Fans",AUTHOR:"Ginger Taro",CHAPTERS:39,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://thatlazypotato.wordpress.com/2021/08/22/egfpf-chapter-1-5/",Synopsis:`Article one of the “Code of Practice for Professional Fans”: Professional fans are not allowed to screw around with the celebrity, or else they’ll be removed from the registry, and their name will be eternally engraved on the pillar of shame in the fan leader circle.\r
+\r
+Of course, there are exceptions to everything.\r
+\r
+Such as a professional fan like Qi Yu, who is being screwed by the celebrity—he is the light of the fan club.`,IMG:64,PRIO:2},{BOOK_TITLE:"Entering a Split Personality",AUTHOR:"Long Qi",CHAPTERS:944,GENRE:"Fantsy",TIMELINE:"Modern",Eng_TL:"https://banoffeetranslations.blogspot.com/2020/07/entering-split-personality-chapter-1.html",Synopsis:`Xiao He casually filled out an online questionnaire and unexpectedly got a job out of it. As long as he perfectly fulfilled the employer’s requests, he could receive 30 million RMB in remuneration. The cash-strapped Xiao He’s eyes lit up, and he took the task immediately.\r
+\r
+His job was actually to enter the world of a patient with a mental disorder, so he could treat this patient who had a severely split personality…\r
+\r
+Black-bellied, violent, mu*derous, impetuous, gloomy, inhuman, yandere, prejudiced…various different types of personalities, strange and ever-changing mental worlds—Xiao He captured them all one by one. He just felt like he’d become completely ill!\r
+\r
+30 million bucks weren’t that easy to earn. By the time he earned the money, he might already be in a mental hospital.`,IMG:65,PRIO:2},{BOOK_TITLE:"Escape the Infinite Chambers",AUTHOR:"Zǐ Jiè 紫界",CHAPTERS:201,EXTRAS:5,GENRE:"Horror",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/eic/",Synopsis:`One day, Luo Jian woke up from his sleep and found himself in a locked chamber where the door and window were all sealed. A note with a few lines written on it was tacked to the wall: “Escape from this room within an hour, otherwise, you will die.”\r
+\r
+There is a sequel called Reincarnation Night (轮回之夜) that takes place in the same universe but has different main characters.`,IMG:66,PRIO:3},{BOOK_TITLE:"Everyday I get Up to See The villain Stealing The Show",AUTHOR:"Zhong Xiaosheng 钟晓生",CHAPTERS:110,GENRE:"Wuxia",TIMELINE:"Historical",Eng_TL:"https://betwixtedbutterfly.com/translations/evss/",Synopsis:`The wrong way to act as a villain no.1: Get rid of the protagonist while he still hasn’t become powerful.\r
+\r
+The wrong way to act as a villain no.2: Take the limelight from the protagonist at the key moment.\r
+\r
+The wrong way to act as a villain no.3: Make the protagonist fall in love with you, thus making him incapable of completing the final step – eliminating the major villain.\r
+\r
+Han Changsheng, Head of the Demonic Cult, is the major villain who’s employed all three incorrect methods.\r
+\r
+—————\r
+\r
+As the leader of the first Demonic Cult in the underground world of martial arts and cultivation, Tianning Cult, Han Changsheng carried on the long-standing tradition of an unstable mind and a refusal to seek any treatment.\r
+\r
+Originally, his life should have passed by quickly and simply, but one day he kicked a descended Immortal Lord off a cliff. In order to make up for this mistake, he must aid the Immortal Lord in ascending back to his position… but why does this mistake keep growing? Hey, Lao zi doesn’t need you as a younger brother, you should look for An Yuan! Don’t chase after Lao zi, you’re destined to be An Yuan’s wife! Don’t worship Lao zi as a martial arts lord, lao zi is the genuine leader of the Demonic Cult! Hey, Hey Lao zi is obviously the major villain! What the hell are you doing?!`,IMG:67,PRIO:3},{BOOK_TITLE:"Everyday The Protagonist Wants To Capture Me",AUTHOR:"Qing Duan 青端",CHAPTERS:80,EXTRAS:8,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://epwcm.carrd.co/",Eng_TL:"http://bcnovels.com/table-contents-every-day-protagonist-wants-capture/",Synopsis:`Transmigrated into the body of a cannon fodder villain, Chu Yu has three major worries:\r
+1. How can he help the protagonist turn into a real harem master?\r
+2. How can he develop a good relationship with the protagonist?\r
+3. How can he live properly without holding on to the protagonist’s thigh?\r
+The protagonist has three major worries:\r
+1. Eldest disciple brother has changed\r
+2. Eldest disciple brother has really changed\r
+3. How can he marry eldest disciple brother?\r
+System: Congratulations! Sprinkle Flowers Grow Old Together Happily!\r
+Chu Yu: … Wait, what about the harem novel?`,IMG:68,PRIO:1},{BOOK_TITLE:"Everyone Knows I'm A Good Person",AUTHOR:"Tang Wei Shuai 糖尾帅",CHAPTERS:176,EXTRAS:1,GENRE:"World Hopping",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ekigp/",Synopsis:`Shi Qing’s task was to be a protector.\r
+\r
+It was only after transmigrating to various worlds and eagerly counterattacking the villains there that he realized he was the biggest villain out of everyone.\r
+\r
+– A king that liked to conquer other worlds\r
+\r
+– A Film Emperor that had a malicious personality\r
+\r
+– A Blackened Young Master with deviant intentions\r
+\r
+– A Schoolyard Bully that was overbearing to others\r
+\r
+Afterwards the gong that initially despised Shi Qing discovered:\r
+\r
+– The Machine King that seemed like an invader was really a million-year-old baby\r
+\r
+– The Film Emperor that seemed malicious was secretly helping upcoming actors\r
+\r
+– The Young Master that seemed to harbor deviant intentions was a pure-hearted young boy\r
+\r
+– The Schoolyard Bully that seemed overbearing was secretly in love\r
+\r
+In the end….\r
+\r
+The entire world: He’s such a good person!`,IMG:69,PRIO:2},{BOOK_TITLE:"Everyone Thinks That I Like Him",AUTHOR:"飞奔的小蜗牛",CHAPTERS:70,EXTRAS:5,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ettilh.carrd.co/",Eng_TL:"https://oldmosstree.wordpress.com/everyone-thinks-i-like-him/",Synopsis:`From infancy to maturity, what Ye Zhou dislikes the most was “two”.\r
+The reasons were: he was ranked second at home, he had been forever ranked second at school, no matter how diligently he worked and tried, he couldn’t shake off that “second” curse. What was more exasperating was that, at University, not only was he ranked second, but even his appearance that he was proud of had to be classified as second best!\r
+Why can’t I obtain the first place!\r
+The eternal second will rise!\r
+Then, Ye Zhou, after his vigorous efforts finally rises and the result was… the first became his boyfriend.\r
+This is the story of a man who has been forced to be “second” and how he became the first, most popular.\r
+\r
+`,IMG:70,PRIO:2},{BOOK_TITLE:"Evil Love Appears",AUTHOR:"Crazy Melon Skin",CHAPTERS:129,EXTRAS:7,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/evil-love-appears-chapter-1/",Synopsis:`Xu Jiale, a divorced and pessimistic Alpha, has the following life vision:\r
+\r
+“I hope my dad hasn’t spent all the money my grandfather left behind, so I won’t have to work hard.”\r
+\r
+Fu Xiaoyu, 25 years old, an urban beauty in the ABO world. A returned elite with A-level pheromones, working nearly 12 hours a day.\r
+\r
+Xu Jiale, can list Fu Xiaoyu’s shortcomings like reading off a menu: proud, unapproachable, workaholic, ambitious, lacking in charm, and pheromones so sweet it’s nauseating.\r
+\r
+He absolutely, completely, utterly does not like him.\r
+\r
+But their initially incompatible business partnership takes a bizarre turn after an unexpected incident.\r
+\r
+Fu Xiaoyu: “Xu Jiale, I want to pursue you.” 0.0\r
+\r
+Xu Jiale: Do you know how ridiculous it is for an Omega like you to actively pursue a divorced Alpha like me? -.-\r
+\r
+…\r
+\r
+Love arrives at an unpredictable moment, making it all the more wonderful.\r
+\r
+Fu Xiaoyu remembers Xu Jiale at the KTV booth, one hand holding a cat named Xia’an, the other holding a microphone.\r
+\r
+This Alpha sings Cantonese songs well, and he sang the song “No Man’s Land”:\r
+\r
+In this world, the worst crime is being too easily moved,\r
+\r
+But I like this crime,\r
+\r
+It’s earth-shattering, but it’s a pity that heaven and earth are indifferent,\r
+\r
+Without sound, without wind, this love has no witnesses.\r
+\r
+It was at that moment that he thought— he truly wanted to possess this Alpha.`,IMG:71,PRIO:1},{BOOK_TITLE:"Ex Husband's Call",AUTHOR:"Qin Sanjian",CHAPTERS:55,EXTRAS:8,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://e-h-c.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ehc/",Synopsis:`After the legalization of same-s*x marriage, Tong Qiu didn’t expect to be part of the first batch of people shoved onto the marriage market. A relative set him up with a man who had a handsome face and a great body – a police officer who used to work for the criminal investigation unit but became a uniformed officer after suffering an injury. Tong Qiu had a uniform fetish and the two of them got along and so, under the excessive urging of both of their families, they decided to tie the knot.\r
 Before their wedding, they agreed that if they were incompatible after a year of marriage, they would get divorced and part amicably.\r
 A year later, Tong Qiu said, “Huo Zhixing, let’s file for a divorce.”\r
 Huo Zhixing’s friend asked him, “He said he wanted a divorce and you just agreed?”\r
-Huo Zhixing: “Of course I agreed. We have to respect other people’s decisions. If he wants a divorce, then he can have a divorce. All I have to do is win him back.”`,IMG:72,PRIO:1},{BOOK_TITLE:"First-Class Lawyer",AUTHOR:"Mu Su Li",CHAPTERS:215,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://yijilushi.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/law/",Synopsis:"Yan Suizhi, the young and accomplished dean of the interstellar Maze University’s law school, wakes up in a body that has been gene-modified to resemble that of a twenty-something-year-old. He had supposedly ‘died’ in a premeditated explosion a few months ago but someone had managed to save him. In his search for his saviour as well as his murderer, Yan Suizhi encounters his former student, Gu Yan, who is now a successful lawyer at Southcross Law Firm.",IMG:83,PRIO:1},{BOOK_TITLE:"Green Plum Island",AUTHOR:"Hui Nan Que 回南雀",CHAPTERS:53,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://greenplumisland.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/gpi/",Synopsis:`When I was ten, I fell from a tree and hit my head. When I woke up, the world around me had changed. I could see people’s emotions in the form of numbers and colours—pink for love, red for anger, green for awkwardness, blue for sorrow, yellow for desire…\r
+Huo Zhixing: “Of course I agreed. We have to respect other people’s decisions. If he wants a divorce, then he can have a divorce. All I have to do is win him back.”`,IMG:72,PRIO:1},{BOOK_TITLE:"Fake Dating The Amnesiac School Prince",AUTHOR:"乔陛",CHAPTERS:66,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://t.co/fdkB8wM6Kp",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fdasp/",Synopsis:`Zhen Yuanbai, the good student, accidentally injured Shi Bufan, the school bully, after a crash. Blood spilled everywhere.\r
+\r
+After the ambulance took Shi Bufan to the hospital, Zhen Yuanbai walked home, trembling in fear. He pleads for his parents to transfer him to another school. As expected, his parents rejected his request.\r
+\r
+Zhen Yuanbai has no choice but to brace himself to go and apologize to Shi Bufan. Hopefully, he will show mercy while giving him a beating.\r
+\r
+Who knew —\r
+\r
+Shi Bufan had amnesia.\r
+\r
+Zhen Yuanbai couldn’t control his happiness. You really don’t know me? I’m your friend. After he lied and claimed to be Shi Bufan’s friend, Zhen Yuanbai quickly realized that he looked at himself strangely.\r
+\r
+Until one day, Shi Bufan pushed him against the wall. He pecked his bewildered face and lowly chuckled. What friends? I knew that you like me and used this opportunity to get close to me… Be good. I’ll give you a chance. Call me hubby.\r
+\r
+Zhen Yuanbai was speechless.\r
+\r
+Wake up!\r
+\r
+Don’t mention that I like you as a friend when I was the one who caused you the injury!\r
+\r
+Submissive: Because he, a well-behaved and timid good student, was scared of being beaten up, he lied to the school bully. Confusedly, he ended up in a relationship with Shi Bufan.\r
+\r
+Dominant: After losing his memory, he ended up fake dating Zhen Yuanbai, thinking that the latter was in love with him.`,IMG:73,PRIO:2},{BOOK_TITLE:"Fake Slacker",AUTHOR:"Mu Gua Huang 木瓜黄",CHAPTERS:112,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://fake-slackers.carrd.co/",Eng_TL:"locked",Synopsis:`After class placement were decided, the school’s two infamous ‘problem youth’ not only shared the same class, but the same desk.\r
+They’re clearly good at studies, but pretend to be slackers. Fakers from head to toe who just keep walking farther down the path of their performance.\r
+Hear on the grapevine about the two big brothers who always fight over the last place in class.\r
+Basically, this is a serious comedy. About the little matters of growing up.`,IMG:74,PRIO:1},{BOOK_TITLE:"Falling in Love in the Supernatural World",AUTHOR:"Jimo Yao",CHAPTERS:47,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/supernatural-world-chapter-1/",Synopsis:`Fang Chu, a little-known star, went to a luxury cruise party and met his ex-boyfriend, with whom he had broken up with two years ago. Only then did he find out that, while he thought he was an ordinary man’s ex-boyfriend, he was a super-rich man with a mysterious identity!\r
+\r
+If I didn’t break up, I guess I would’ve already married into a rich family by now?\r
+\r
+I feel like I’ve missed out on a hundred million.\r
+\r
+Just as Fang Chu was thinking about whether to get back together with him, he suddenly found himself involved in a strange homicide.\r
+\r
+But this was only the beginning.\r
+\r
+Fang Chu: Forget it. I just want to live a peaceful life. I don’t want this rich family.\r
+\r
+Yu Si’ze: It’s too late.`,IMG:75,PRIO:3},{BOOK_TITLE:"Falling Into The Abyss",AUTHOR:"莲兮莲兮",CHAPTERS:132,GENRE:"Dystopian",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/abyss/",Synopsis:`Ethan, the former secretary working for the Energy Bureau of Earth Union, was detained in a place called ‘Forbidden City’ after being deprived of his moral value points for committing treason. Everyone in the city is tr*sh among humans. They have to continually go on specified hazardous and terrifying missions for the sake of atonement and to exchange moral values points. If their moral value points reach 100 one day, they would obtain a chance to be released from the Forbidden City and return to the world of the humans to restart their lives as a human. But it was said that once someone enters the Forbidden City, no one can come out alive.\r
+\r
+Ethan just wanted to live, but from his first mission, he felt like he had descended into a whirlpool of terror. In front of these huge monsters that could devour the entire universe, he can only keep falling.\r
+\r
+This novel is inspired by Lovecraftian horror.`,IMG:76,PRIO:3},{BOOK_TITLE:"Fanservice Paradox",AUTHOR:"Zhìchǔ 稚楚",CHAPTERS:109,EXTRAS:11,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://fanserviceparadox.carrd.co/",Eng_TL:"https://peachpitting.com/novel/fp",Synopsis:"Kaleido a super talented but not well known boyband shot to fame after a video of Pei Tingsong the rebellious most gong-like youngest member bullying Fang Juexia Gege surfaced and created a new CP. Join Kaleido as they navigate through the dark and light sides of the entertainment industry. This novel is well-paced light yet deep action packed with Kaleidos humorous sense of variety and plenty of mathematical and philosophical concepts being teased apart and answered. Most importantly watch main CP Fang Juexia and Pei Tingsong who initially have opposing unyielding views inevitably collide and entangle on their journey to stardom and love!!",IMG:77,PRIO:1},{BOOK_TITLE:"Fantasy Farm",AUTHOR:"Xī Zǐxù",CHAPTERS:117,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ff/ff-1/",Synopsis:`After being fired, Lu Qingjiu finally decided to return to his hometown to farm.\r
+\r
+At first, he started raising a pig, and then he found that the pig could solve more high-level math questions than he could.\r
+\r
+After that, he started raising a flock of chickens, and then he found that his own fighting ability was one-tenth of that of a single chicken.\r
+\r
+Finally, Lu Qingjiu finally realised that this old home wasn’t quite right… Especially a certain person by his side who constantly stared at him day in and day out.\r
+\r
+Lu Qingjiu: “Are you drooling because of the spicy stir-fry I’m holding or because of me?”\r
+\r
+Bai Yuehu pointed at the stir-fry.\r
+\r
+Lu Qingjiu: “Then can you let go??”\r
+\r
+Bai Yuehu reluctantly glanced at Lu Qingjiu’s arm, before loosening his teeth.`,IMG:78,PRIO:2},{BOOK_TITLE:"Faraway Wanderers",AUTHOR:"Priest",CHAPTERS:77,EXTRAS:4,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://tian-ya-ke.carrd.co/",Eng_TL:"https://sparklingwatertrans.wordpress.com/projects/faraway-wanderers/",Synopsis:`A story about the former leader of a special organization served under royalty, now leaving his past life behind and unwittingly getting involved with the martial world.\r
+Zhou Zhishu is the leader of the emperor's special organization, Tian Chuang. After three years of bloodshed, he leaves the organization and travels the Jianghu Mountains to lead a peaceful and leisurely life.\r
+However, with virtuous intentions in mind, he engages in a war in jianghu, where he meets Wen Kexing, a valley master who likes "beautiful people". Wen Kexing follows Zhou Zhishu closely and the two eventually reunite during their journey through jianghu.`,IMG:79,PRIO:1},{BOOK_TITLE:"FIght The Landlord, Fall In Love",AUTHOR:"Cang Wu Bin Bai 苍梧宾白",CHAPTERS:40,EXTRAS:1,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://fl-fl.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/flfl/",Synopsis:`A love story that came about due to Fight the Landlord* (popular Chinese card game with an online app version).\r
+Two eldest young masters who looked down on each other were forced into a blind date. Each discovered that the other was the immoral scoundrel who had poured cold water or thrown rotten tomatoes on him during a game of Fight The Landlord two days prior.\r
+Now what?\r
+Well, let’s secure a partner first and figure the rest out later.\r
+\r
+*NOTE : Fight the Landlord (斗地主) is a very popular 3-player (often gambling) Chinese card game where there are two peasants and one landlord. The goal of the game is to be the first one to get rid of your cards. You can get rid of your cards by playing more “powerful” cards against the opponent’s previous move.`,IMG:80,PRIO:2},{BOOK_TITLE:"Film Emperor's Adorable Wife From Ancient Times",AUTHOR:"精分柚子茶",CHAPTERS:68,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/feaw/",Synopsis:`Yang Anyu, he is the general’s personal bodyguard. In the end, his soul transmigrated into a second-generation young master from the modern world, and after that, he once again encountered his “General” Yi Chenyan.\r
+\r
+The great general he especially respected and revered, actually became an actor? (And is in fact, the popular Film Emperor)\r
+\r
+What made Yang Anyu more shocked——he was already “married” to Yi Chenyan.\r
+\r
+Several years later——\r
+\r
+Fan A: Our Little Yu’s face-quality is high, acting ability is good, can sing and dance, when filming action scenes he is even more handsome, handsome to the point of collapse! Completely is a capitalized Su word!\r
+\r
+Fan B: If I cannot sleep with Yang Anyu in this life is there still any meaning to it?\r
+\r
+Fan C: But I heard he’s already married, his wife must have saved the whole world in her last life ah!\r
+\r
+Yi Chenyan: ……\r
+\r
+Big Film Emperor Yi looked at a certain Yang Someone under his body, recently he’s been becoming more and more possessive towards him, what to do?`,IMG:81,PRIO:3},{BOOK_TITLE:"First Love Choose Me, I'm Super Sweet",AUTHOR:"Shui Mang 睡芒",CHAPTERS:60,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://flcmiss.carrd.co/",Eng_TL:"https://travistranslations.com/novel/14860/first-love-choose-me-im-super-sweet/",Synopsis:`Ding Xuerun, a good student with both moral and academic excellence, had a wound on his face on the day he transferred to school. Lou Cheng thought he was being pretentious and repeatedly provoked him, “Don’t pretend to be a good student, what homework will you do?” It was not until after the monthly exam that Lou Cheng found out that he really was an excellent student, the first in his grade.\r
+After playing basketball, he showed off and pressed his drenched jersey onto his clean deskmate, “Do you know what is mean by virtue, intelligence, physical fitness and aesthetic sense*? It’s no use getting good grades. Smell it. This is called the smell of a man. “\r
+Then one day, the teaching building’s lighting tripped, and the whole class cheered in the dark. No one noticed that in the back row of the most corner, Lou Cheng pressed his little deskmate against the wall and kissed him.\r
+Lou Cheng: Puppy love is so sweet and scheming.\r
+The two-good students will be attacked by X sorrows when they disagree with each other.`,IMG:82,PRIO:1},{BOOK_TITLE:"First-Class Lawyer",AUTHOR:"Mu Su Li",CHAPTERS:215,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://yijilushi.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/law/",Synopsis:"Yan Suizhi, the young and accomplished dean of the interstellar Maze University’s law school, wakes up in a body that has been gene-modified to resemble that of a twenty-something-year-old. He had supposedly ‘died’ in a premeditated explosion a few months ago but someone had managed to save him. In his search for his saviour as well as his murderer, Yan Suizhi encounters his former student, Gu Yan, who is now a successful lawyer at Southcross Law Firm.",IMG:83,PRIO:1},{BOOK_TITLE:"FOG",AUTHOR:"Man Man He Qi Duo 漫漫何其多",CHAPTERS:132,EXTRAS:4,GENRE:"E-Sports",TIMELINE:"Modern",Carrd:"https://withinthefog.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fog/",Synopsis:`Yu Sui and Shi Luo met each other when they were much younger. One was a pro-gamer, a widely-renowned, best of the best, in-game medic. The other was an e-sports newcomer who was just starting out. The two originally played for the same team, during which their relationship became increasingly deep.\r
+But things did not go as expected. Yu Sui went to Europe and Shi Luo changed his in-game job to become a striker. The two belonged to different teams and different divisions, with oceans between them, each doing wonderfully …\r
+They had become two tigers on separate mountains. The last thing anyone expected was for Yu Sui to return to the domestic league two years later. There was no way to avoid it and the two met once again.\r
+Male god x male god ; Medic Gong x Striker Shou`,IMG:84,PRIO:1},{BOOK_TITLE:"Fouls Prohibited",AUTHOR:"Lu Tianyi",CHAPTERS:45,EXTRAS:9,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://foulsprohibited.carrd.co/",Eng_TL:"https://neondragonfly.org/2022/10/17/fouls-prohibited-%E7%A6%81%E6%AD%A2%E7%8A%AF%E8%A7%84/",Synopsis:`As a rising Formula One race car driver, Ye Ci had always been criticized.\r
+“Aloof and indifferent, unable to be reasoned with.”\r
+“Suspected to have a mental illness, is this person really suitable for the track?”\r
+“He doesn’t really love the sport, racing is just his way of venting his violent emotions.”\r
+Huo Tinglan’s demeanor was always elegant and protective in front of the media, and he said that his husband was just quiet and introverted. After five years of marriage, they respected each other and were quite harmonious.\r
+It was not until Ye Ci died unexpectedly during a race that Huo Tinglan gradually realized . . . . . .\r
+He wasn’t quiet and introverted, but instead lifeless. Before finding his refuge, Ye Ci had gone through too many dark and painful moments.\r
+After enduring years of suffering and longing, Huo Tinglan was unexpectedly reborn. Ye Ci was only eighteen years old this year, and everything was within reach.\r
+Huo Tinglan was cheeky and went directly to his door to ask for a kiss.`,IMG:85,PRIO:1},{BOOK_TITLE:"Fox Demon Cultivation Manual",AUTHOR:"Feng Ge Qie Xing 风歌且行",CHAPTERS:101,EXTRAS:1,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://fdcm.carrd.co/",Eng_TL:"https://jade-rabbit.net/category/bl/yaohu/",Synopsis:`By some freak coincidence, Song Ci mistakenly consumed the blood of the Demon King, causing himself to become a demon too. A weak scholar…… forced to suffer in silence.\r
+What was even more tragic was that no matter where he went, demons would attack him from all directions braying for his blood, or they would squeeze his neck while interrogating him about his relationship with the Demon King.\r
+As such, Song Ci became an anti-fan of the Demon King. Regardless of who praised the Demon King, he would be the first to stand out and refute them.\r
+Song Ci fled for his life as he searched for the gate leading to the Demon Realm. Along the way, he clung on to the thigh of an influential man, and went to great pains to persuade him to slay the Demon King together with him and restore peace to the human world.\r
+Song Ci, “Sooner or later, I will skin the Demon King, rip the tendons off him, and drink his blood!”\r
+Rong Bai (smiling), “I admire the way you think.”\r
+Who knew that, after entering the demon realm —\r
+Tens of thousands of monsters bowed their heads and kowtowed to this thigh beside him and shouted “Long live the Demon King!”\r
+Song Ci was stunned.\r
+Rong Bai (smiling), “What did you say you were going to do when you came to the Demon Realm?”\r
+Song Ci, “It, it’s all a misunderstanding……”`,IMG:86,PRIO:2},{BOOK_TITLE:"Game Loading",AUTHOR:"Long Qi 龙柒",CHAPTERS:304,EXTRAS:5,GENRE:"Transmigration",Carrd:"https://gameloading.carrd.co/",Eng_TL:"https://arkmachinetranslations.wordpress.com/gl-index/",Synopsis:`Xie Xi was someone with luck off the charts! The advantage was that any game could be easily cleared. The disadvantage was that all games were boring! Then one day, the words ‘Game loading’ appeared in front of his eyes and he began to clear real games!\r
+The emperor of luck ran into a bottleneck in the first game.\r
+Game Name: Love to the Left or Right\r
+The vampire prince has invited you to a meal. Will you go?\r
+Xie Xi: I won’t go.\r
+Arrow through the heart. The vampire prince says you can’t leave him and takes your life.\r
+After loading the file, Xie Xi changed the option: I will go.\r
+The housekeeper has cut off your head because of love and hatred.\r
+Xie Xi: ???`,IMG:87,PRIO:1},{BOOK_TITLE:"Global Examination",AUTHOR:"Mu Su Li 木苏里",CHAPTERS:166,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://qqgk.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/11/18/global-university-entrance-examination-by-%E6%9C%A8%E8%8B%8F%E9%87%8C/",Synopsis:`One day, You Huo and his family was pulled into an exam called the Global University Entrance Examination. Going through exams together with other unfortunate examinees, their lives are put at stake and they can only live by passing each exam. However, something about these exams and the system controlling it didn’t seem right — lt seemed to be trying to trap the examinees with ridiculous rules and strange questions…\r
+There, You Huo meets lnvigilator 001 who seems to hold a key to the past he no longer remembered and together they DESTROY THE EXAM`,IMG:88,PRIO:1},{BOOK_TITLE:"Go To Hell, White Lotus",AUTHOR:"月亮好圆",CHAPTERS:62,EXTRAS:2,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:"As an obscured and transparent slag gamer in the gaming world, Bai Lian Hua (White Lotus) had always been fond of those tr*sh forum posts. Until one day: “White Lotus! Go check out the forum! 233333! You’re getting flamed!!!”",IMG:89,PRIO:3},{BOOK_TITLE:"Golden Stage",AUTHOR:"cang Wu Bin Bai 苍梧宾白",CHAPTERS:79,EXTRAS:4,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://goldenstageinfo.carrd.co/",Eng_TL:"https://chichilations.home.blog/golden-stage/",Synopsis:`"The notorious imperial court lackey and the meritorious military general were well-known for their mutual dislike, a pair of arch-enemies set in stone. Who could have foreseen the unexpected change in the winds of heaven: the general injured on the battlefield, both legs disabled, and even forced by the emperor to marry his nemesis.\r
+With one marriage edict, two people with mutual hostility are forced to marry and live under the same roof. Yet after these long days together, they come to the realization that this fellow is not truly devoid of any saving grace/unattainable and high out of reach."`,IMG:90,PRIO:1},{BOOK_TITLE:"Good God, Stop!",AUTHOR:"Green Plum Sauce",CHAPTERS:18,EXTRAS:5,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://goodgodstop.carrd.co/",Eng_TL:"https://dummynovels.com/novel/good-god-stop/",Synopsis:`Lin Xiao, who just won China’s first World trophy, got in an accident and was reborn five years later.\r
+With the rapid development of the eSports industry, the career as professional player bloomed, the Club’s Gods circle/Professional Commentators circle/Popular MCs circle, the old friends from back then were all over the place.\r
+The return of a King, aiming for the League, going from an unknown rookie to once again rising to the top.\r
+Reporter: Regarding the rumours between you and Captain You, is there anything you want to say?\r
+Lin Xiao: With all due respect, with my ability there is no need for un-spoken-rules!\r
+Reporter: Captain You, is there anything you want to add?\r
+You Jing: The rumours are true, back then he was vying for my love.\r
+Lin Xiao: …how many times do I need to say it, that person wasn’t me!`,IMG:91,PRIO:1},{BOOK_TITLE:"Grandmaster Of Demonic Cultivation",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:113,EXTRAS:13,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://stanwangxian.carrd.co/",Eng_TL:"locked",Synopsis:`"As the grandmaster who founded the Demonic Sect, Wei WuXian roamed the world in his wanton ways, hated by millions for the chaos he created. In the end, he was backstabbed by his dearest shidi and killed by powerful clans that combined to overpower him. He incarnates into the body of a lunatic who was abandoned by his clan and is later, unwillingly, taken away by a famous cultivator among the clans—Lan WangJi, his archenemy.\r
+This marks the start of a thrilling yet hilarious journey of attacking monsters, solving mysteries, and raising children. From the mutual flirtation along the way, Wei WuXian slowly realizes that Lan WangJi, a seemingly haughty and indifferent poker-face, holds more feelings for Wei WuXian than he is letting on."`,IMG:92,PRIO:1},{BOOK_TITLE:"Green Plum Island",AUTHOR:"Hui Nan Que 回南雀",CHAPTERS:53,EXTRAS:5,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://greenplumisland.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/gpi/",Synopsis:`When I was ten, I fell from a tree and hit my head. When I woke up, the world around me had changed. I could see people’s emotions in the form of numbers and colours—pink for love, red for anger, green for awkwardness, blue for sorrow, yellow for desire…\r
 I met Yan Kongshan the summer after college entrance exams on Green Plum Island. Mysterious and handsome, with a tinge of melancholy, he was the ideal man of every woman on the island. And mine.\r
 I wanted him to turn pink for me, but one day, he suddenly turned yellow. Despite that, he seemed ever so nonchalant when facing me.\r
 Love is like lemon soda water. Sour and sweet, filled with energy.\r
-You never know how a person’s heart beats for you, hidden in its cage beneath their flesh.`,IMG:93,PRIO:1},{BOOK_TITLE:"Guide on How to Fail At Online Dating",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:117,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://ghfod.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ghfod/",Synopsis:`The cousin that Jing Huan has been closest to since he was a child was labelled as “the other woman” in a certain popular online game: only after devoting herself did she know that the other party was a jerk with a girlfriend.\r
+You never know how a person’s heart beats for you, hidden in its cage beneath their flesh.`,IMG:93,PRIO:1},{BOOK_TITLE:"Guardian",AUTHOR:"Priest",CHAPTERS:106,EXTRAS:5,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://readguardian.carrd.co/",Eng_TL:"https://drive.google.com/drive/mobile/folders/1J7rTcFYHt71SbwCzkBO2BPmriX-RprCb",Synopsis:`SYNOPSIS\r
+\r
+When Detective Zhao Yunlan is called to investigate a mysterious death at a university, he meets Shen Wei: a polite but reserved professor who he immediately finds himself inexplicably drawn to. Although Shen Wei tries to put distance between them and dismisses Zhao Yunlan’s courting attempts, Zhao Yunlan notices the way Shen Wei’s hands linger a moment too long when he touches him and the look of restrained adoration hidden in his eyes when their gazes meet. And there’s just something so familiar about him that he can’t quite place...\r
+With every mystery they take on, the two of them grow closer, and Shen Wei’s secrets and the reason for his affection towards Zhao Yunlan are slowly revealed. At the center of it all, a long forgotten plot of gods and ghosts threatening the balance of the world is brought to light.`,IMG:94,PRIO:1},{BOOK_TITLE:"Guide on How to Fail At Online Dating",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:117,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://ghfod.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ghfod/",Synopsis:`The cousin that Jing Huan has been closest to since he was a child was labelled as “the other woman” in a certain popular online game: only after devoting herself did she know that the other party was a jerk with a girlfriend.\r
 \r
 After several days of being bullied online by people in the game, his cousin went abroad in a fit of anger and sorrow.\r
 \r
@@ -2128,9 +1406,146 @@ Conclusion: Can’t screw him over.\r
 \r
 Jing Huan felt despondent. He was just about to give up when he personally witnessed his dormmate’s online relationship end right after meeting each other in real life. The other party had sent fake photos and changed their voice, and had even cheated him of his money, triggering his dormmate so much that he was almost admitted to a hospital.\r
 \r
-Jing Huan felt enlightened as a sudden realisation dawned on him. After comforting his roommate, he moved the high-priced voice changer back to his rented house overnight.`,IMG:95,PRIO:1},{BOOK_TITLE:"Have You Ever Met Such a Cold Author",AUTHOR:"Shou Chu",CHAPTERS:60,EXTRAS:12,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://gldzz.carrd.co/",Eng_TL:"https://drive.google.com/folderview?id=1G5AaAauy9nJbRNdwjsUZvqFPBRZX9Lt1",Synopsis:"Tang Cu, the godly author with a severe social anxiety disorder, gathered his courage to meet with the Tai Tai who has been writing fanfiction for his novels. However...the Tai Tai turned out to be a man. (Tai Tai 太太 refers to a female author)",IMG:96,PRIO:1},{BOOK_TITLE:"He's Not My Shadow Guard, He's My Lover",AUTHOR:"Luo Gu",CHAPTERS:21,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/hes-not-my-shadow-guard-hes-my-lover/",Synopsis:"The illegitimate son of a modern magnate who suffered from social disorder went through ancient times and became an unpopular prince. With the strange environment, the inner uneasiness, fortunately, he also has a silent loyal dog shadow guard. Through ancient times, he met the loyal dog, returned to modern times, and turned into a lover.",IMG:99,PRIO:3},{BOOK_TITLE:"Hope You've Been Well",AUTHOR:"Bei Nan 北南",CHAPTERS:98,EXTRAS:1,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://blwy.carrd.co/",Eng_TL:"locked",Synopsis:`Gu Zhuoyan and Zhuang Fanxin met in their teenage years and became each other’s first love, passing the happiest days of their lives together, but eventually broke up.\r
+Jing Huan felt enlightened as a sudden realisation dawned on him. After comforting his roommate, he moved the high-priced voice changer back to his rented house overnight.`,IMG:95,PRIO:1},{BOOK_TITLE:"Have You Ever Met Such a Cold Author",AUTHOR:"Shou Chu",CHAPTERS:60,EXTRAS:12,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://gldzz.carrd.co/",Eng_TL:"https://drive.google.com/folderview?id=1G5AaAauy9nJbRNdwjsUZvqFPBRZX9Lt1",Synopsis:"Tang Cu, the godly author with a severe social anxiety disorder, gathered his courage to meet with the Tai Tai who has been writing fanfiction for his novels. However...the Tai Tai turned out to be a man. (Tai Tai 太太 refers to a female author)",IMG:96,PRIO:1},{BOOK_TITLE:"He Doesn't Know I'm Dead",AUTHOR:"时崽",CHAPTERS:21,EXTRAS:4,Eng_TL:"locked",Synopsis:"The first month I left, Lu Jiangming was still happy. The second month, Lu Jiangming occasionally suffered from insomnia. The third month, Lu Jiangming started looking for me. Unfortunately, I died, but he didn’t know that. —No matter how bad you are, I’ll still smile at the thought of you, but you’re the night breeze that I can’t hold back. You are also my obsession. Goodbye, Mr. Lu",IMG:97,PRIO:3},{BOOK_TITLE:"He Lifted My Red Veil",AUTHOR:"Zi Jin 紫矜",CHAPTERS:65,EXTRAS:5,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/he-lifted-my-red-veil/",Synopsis:`As a gay who always falls in love with straight men by accident, Le Han has been single for twenty years. In the border of collapse, he looked up to the sky and requested the love of Lao Gong.\r
+\r
+At this time, the popular virtual game across the country introduced a new way of marriage playing: Tie the knot, also known as ‘Choose the bride and choose the groom.’\r
+\r
+Le Han: Good, it’s just for me.\r
+\r
+However, facing the outstanding and elegant grooms in the ‘Groom Selection’ area, Le Han blushed shyly and was embarrassed to choose.\r
+\r
+So he returned to the ‘Bride Selection’ area, put on a red wedding gown, covered his head with a red veil, and obediently waited for the gong to choose him.\r
+\r
+…He never expected that a big man would come.`,IMG:98,PRIO:2},{BOOK_TITLE:"He's Not My Shadow Guard, He's My Lover",AUTHOR:"Luo Gu",CHAPTERS:21,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/hes-not-my-shadow-guard-hes-my-lover/",Synopsis:"The illegitimate son of a modern magnate who suffered from social disorder went through ancient times and became an unpopular prince. With the strange environment, the inner uneasiness, fortunately, he also has a silent loyal dog shadow guard. Through ancient times, he met the loyal dog, returned to modern times, and turned into a lover.",IMG:99,PRIO:3},{BOOK_TITLE:"He's So Sweet After Class",AUTHOR:"沽飞双",CHAPTERS:57,EXTRAS:5,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/hes-so-sweet-after-class/chapter-1/",Synopsis:`Mo Lingqiu was employed as University A’s Professor of Chinese Language two years ago. Due to his good-looking appearance, he became popular in school and there were countless omegas who wanted to flirt with him.\r
+\r
+As the PE department’s prince, Jiang Chenming was one of the most outstanding alphas and was chased by many omegas.\r
+\r
+Both people who originally did not have any encounter met during a night jog. Mo Lingqiu who had sprayed the blocker, gave his legs away and sat directly onto the floor.\r
+\r
+Jiang Chenming: Teacher Mo, you’re an omega?\r
+\r
+Mo Lingqiu stared at him, both of his eyes under the spectacles slightly turned red.\r
+\r
+Jiang Chenming: Your pheromones smell so good.`,IMG:100,PRIO:2},{BOOK_TITLE:"Heart Has Ling Xi",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:46,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://lingxi.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/lingxi/",Synopsis:`ing Xi was discovered by a talent scout in an underpass.\r
+His personality was optimistic, silly and his appearance delicate and pretty. Ling Xi who could only compose music and write lyrics, did not manage to be a superstar. His record sales were not very good and could only float in the entertainment world where newbies are always coming in. Until his agent used all his effort to obtain a job for him – to perform the ending song of a xian xia show and act a small role in it.\r
+An Ruifeng was an extremely popular idol male god with a mixed-race looks. Even though he debuted not long ago, but he had the looks, the talent and a good background. Such a gifted person would have a number of rivalry scenes with Ling Xi in the show.\r
+But what surprised Ling Xi even more was, the mighty An Ruifeng was actually very kind to a humble, insignificant singer like him, and willingly let him hug his golden thigh to increase exposure!`,IMG:101,PRIO:2},{BOOK_TITLE:"Heaven's Official Blessing",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:244,EXTRAS:8,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://tgcfmxtx.carrd.co/",Eng_TL:"locked",Synopsis:`For you, I'll become invincible!\r
+"Ah! That Scrap-Collecting Official from the Heavens is having an affair with the Head Honcho of the Ghost Realm!"\r
+Eight hundred years ago, Xie Lian was the noble and gracious Crown Prince of Xianle, the glorious Darling of the Heavens. Yet who knew the once Martial God, who had ascended after enlightenment, worshipped by millions, had fallen so abruptly, disgraced and dishonored, hitting as rock bottom as it got.\r
+Eight hundred years after that, Xie Lian ascended again with an uproar. This time, he had neither devotees nor merits. One day, on the way home from collecting scraps he picked up a young man. This young man was actually that Ghost King of countless faces much talked of in the three realms—Hua Cheng.`,IMG:102,PRIO:1},{BOOK_TITLE:"Heroic Death System",AUTHOR:"Xue Yuan Specter 雪原幽灵",CHAPTERS:271,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://snowycodex.com/translations/novels/hds/",Synopsis:`“I curse you to never die in peace!”\r
+\r
+Thus, Shang Ke started a never-ending cycle of constantly throwing away his miserable life.\r
+\r
+He would always show himself as a martyr while letting others cry over his death.\r
+\r
+It was because of a woman’s curse that Shang Ke was hit by a car and turned into a human vegetable. This led to him becoming bound by an unlucky system in which he was cursed to die. The most unfortunate part was that he never cheated on anyone’s feelings. The reason for why he was cursed by a woman was because of a guy named Qi Chen. Qi Chen was a ladies man, and he would always use Shang Ke as an excuse to break up with any woman that he was with. As a result, Shang Ke was always blamed for the breakups. Since then, the main character could only be forced to cross into different worlds. He would thus experience for himself, the hero’s “thrill”.`,IMG:103,PRIO:3},{BOOK_TITLE:"His Little Deer Wife is Very Fierce",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:56,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/his-little-deer-wife-is-very-fierce/",Synopsis:`When Lu Rong was only four years old, he was kidnapped and taken to a small rural village to be sold to a family living there. After failing to find the buyer, the kidnapper left Lu Rong for dead. The village chief finds the little boy and cares for him like he is his own. But Lu Rong has a secret: he can turn into a small deer, with beautiful white fur and gentle eyes, and four clattering hooves.\r
+\r
+At the age of eight, Lu Rong meets an eleven-year-old outsider by the name of Shen Jize.\r
+\r
+Together, whether they understand at their young age or not, they go through many trials of life and death, caught between fantasy and reality, dreams and nightmares, demons and ghosts.\r
+\r
+When they must part after a single summer together, the two make a promise.\r
+\r
+“Rong Rong, I won’t leave you, I will never leave you.”`,IMG:104,PRIO:1},{BOOK_TITLE:"His Marriage Partner is Scheming",AUTHOR:"温泉笨蛋",CHAPTERS:57,EXTRAS:2,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://whitemoonlightnovels.com/series/his-marriage-partner-is-scheming/",Synopsis:`The rebellious, rich second-generation Chi Xueyan was forced to go on a blind date for the 11th time. He cut straight to the chase: I have a hot temper, I snore when I sleep, and I haven’t deleted my countless exes. If you can accept it, we will get the marriage certificate on the spot.\r
+\r
+The handsome man named He Qiao sat opposite him and was silent for a moment with a strange expression. Then he nodded and said he was a book transmigrator. He knew that Chi Xueyan was the supporting male villain in this novel role and would become the future marriage partner of the protagonist Lu Siyi. He gradually lost himself in an increasingly paranoid unrequited love, did all sorts of bad things and eventually died.\r
+\r
+He Qiao couldn’t bear to see Chi Xueyan, who was still active and healthy, end up like that. Therefore, he proposed to marry Chi Xueyan to avoid the plot. In any case, he was a workaholic straight man who only wanted to use the information from the novel to develop his career for the benefit of the public.\r
+\r
+Chi Xueyan heard this and suddenly realized: Use advance as a retreat and use the typical schizophrenic symptoms to scare off blind dates. This person was an expert.\r
+\r
+He decisively remembered this trick and waved his hand to pay the bill as his token of appreciation.\r
+\r
+Soon, Chi Xueyan ran into a handsome man who completely matched his aesthetics. Moreover, he didn’t hesitate to take the initiative to ask for the other person’s name and contact information.\r
+\r
+As a result, the handsome man replied with an indifferent expression, “I am Lu Siyi.”\r
+\r
+Chi Xueyan: “……!!!”\r
+\r
+This name was too familiar.\r
+\r
+Two weeks later, under the gazes of his relatives and friends, Chi Xueyan affectionately exchanged rings and kisses with his 11th blind date and the mysterious book transmigrator, He Qiao.\r
+\r
+Initially, He Qiao was very wary of Chi Xueyan, the scheming and vicious villain of the novel. After the two of them cooperated to pretend to love each other and tricked their families into allowing them to get married smoothly, he planned to focus on his career and not interfere with the other person.\r
+\r
+However, Chi Xueyan finally settled down from the chaos and started seriously studying the novel’s plot. He would occasionally come to the company to find He Qiao.\r
+\r
+Unlike the arrogant and willful boss’ wife that the employees imagined, Chi Xueyan mostly curled up on the sofa with a small blanket while quietly reflecting on his 2D life.\r
+\r
+Occasionally, he would raise his head and ask, “Did Lu Siyi never like me at all?”\r
+\r
+“…Yes.”\r
+\r
+“He has no vision.” Chi Xueyan sneered and rolled over. “How did he become the male protagonist when you are obviously much better than him!”\r
+\r
+He Qiao didn’t know why, but the investment plan in his hand suddenly became unsatisfactory.\r
+\r
+What a scheming villain.\r
+\r
+On the first anniversary of their agreed-upon wedding, He Qiao arranged the most romantic dinner and the brightest roses. He met Chi Xueyan’s blank eyes and finally asked the question he had been worrying about in his heart for a long time.\r
+\r
+“You have a good temper and you sleep very quietly so…” He Qiao seemed casual. “Is it true that you haven’t deleted any of your exes?”\r
+\r
+Chi Xueyan: “……”\r
+\r
+What a scheming straight man.`,IMG:105,PRIO:1},{BOOK_TITLE:"Holding Onto My Man",AUTHOR:"Hong Yao Yao 红妖妖",CHAPTERS:109,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/homm/",Synopsis:`After an accidental death, in order to continue to live, Gu Bai had to choose to go through various wonderful books to complete tasks.\r
+\r
+Every time he became a variety of small cannon fodder inside the story, Gu Bai’s code of conduct when completing task is – by all means, don’t be inferior, don’t be shameless, don’t be upright… hold on to a golden thigh.\r
+\r
+… N times after transmigrating\r
+\r
+Cannon fodder: (angry contempt) … You’re already so powerful, why are you still shamelessly holding on to a golden thigh to deal with us!?\r
+\r
+Gu Bai: (deadpan) That… holding and holding… got used to it…`,IMG:106,PRIO:2},{BOOK_TITLE:"Hope You've Been Well",AUTHOR:"Bei Nan 北南",CHAPTERS:98,EXTRAS:1,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://blwy.carrd.co/",Eng_TL:"locked",Synopsis:`Gu Zhuoyan and Zhuang Fanxin met in their teenage years and became each other’s first love, passing the happiest days of their lives together, but eventually broke up.\r
 Losing contact for ten years, the two grew up apart from each other. Unexpectedly, they find each other again in a restaurant on a blind date. But time changes people– on a blind date, you meet the one that got away, only to discover that they have changed greatly…\r
-This is a story of reconciliation and slice of life romance, divided between the younger years and the adult years. After all these twists and turns, will the two be able to go back to where they started from?`,IMG:107,PRIO:1},{BOOK_TITLE:"How To Deal With A Tsundere Gong",AUTHOR:"卡列夫司机",CHAPTERS:45,EXTRAS:13,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://grimtranslations.home.blog/blog/how-to-deal-with-a-tsundere-gong/chapter-1/",Synopsis:"Feel pleasure from being a tsundere but having to chase a wife is hell.",IMG:109,PRIO:3},{BOOK_TITLE:"I Became Popular After Online Dating WIth A Big Shot",AUTHOR:"山柚子",CHAPTERS:150,EXTRAS:17,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/i-became-popular-after-online-dating-with-a-big-shot/",Synopsis:`On his 17th birthday, Shen Chi was kicked out by the Shen family.\r
+This is a story of reconciliation and slice of life romance, divided between the younger years and the adult years. After all these twists and turns, will the two be able to go back to where they started from?`,IMG:107,PRIO:1},{BOOK_TITLE:"How Many Tomorrows There Are",AUTHOR:"吃肉能瘦",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/18965/how-many-tomorrows-there-are",Synopsis:`Deeply-closeted Xiaoming has downloaded a zipped file and opened one of the novels at random. He closed it immediately after two pages because he found it way too kinky for his tastes, and can only faintly recall the cannon fodder and the antagonist.\r
+\r
+Waking up later, he became that cannon fodder on his way to tomorrow’s killing gauntlet reality show. Failing to return even after reciting the core values a hundred times, he could only pick up his sword. As long as the tragic fate could be rewritten, it’s fine to become tainted or whatever.`,IMG:108,PRIO:3},{BOOK_TITLE:"How To Deal With A Tsundere Gong",AUTHOR:"卡列夫司机",CHAPTERS:45,EXTRAS:13,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://grimtranslations.home.blog/blog/how-to-deal-with-a-tsundere-gong/chapter-1/",Synopsis:"Feel pleasure from being a tsundere but having to chase a wife is hell.",IMG:109,PRIO:3},{BOOK_TITLE:"How to Feed an Abyss",AUTHOR:"Jiang Weiji",CHAPTERS:124,EXTRAS:12,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://moonlightnovel.com/how-to-feed-an-abyss/hfa-chapter-1-1/",Synopsis:`【if you stare into the abyss, the abyss stares back at you】\r
+\r
+The abyss, the most feared thing by the human race today. The animals infected by the abyss mutate into monsters, and humans are reduced to walking corpses.\r
+\r
+Lu Tinghan is an abyss watcher. He has been guarding the world’s most terrifying abyss for ten years.\r
+\r
+This abyss is not only scary, but also strange.\r
+\r
+Throw the garbage down, after a few days, the garbage will be buried safely next to the abyss – like someone took a shovel and tossed it all night to bury them.\r
+\r
+Throw hazardous waste down, after a few days, the waste will be thrown back with unbridled fury.\r
+\r
+Lu Tinghan: ?\r
+\r
+Ten years later, he left the post and became the youngest general in the Alliance.\r
+\r
+The next day, the abyss was also gone.\r
+\r
+——The whole thing disappeared and turned into flat land.\r
+\r
+The whole world was shocked.\r
+\r
+Until one day, there was a knock on Lu Tinghan’s door.\r
+\r
+A boy with little devil horns stood outside the door, with delicate features and bright eyes. Obviously, he was scared to death, but he still plucked up the courage to say: “Hello, I, I am Abyss, can you continue to stare at me? QAQ”\r
+\r
+He added: “I have helped you bury the garbage every day, oh!”\r
+\r
+During their long time together, Lu Tinghan learned two things:\r
+\r
+1. Staring at your abyss every day, the abyss will be happy\r
+\r
+2. When the abyss is happy, it will purr toward you`,IMG:110,PRIO:1},{BOOK_TITLE:"How To Survive as A villain",AUTHOR:"Yi Yi Yi Yi 伊依以翼",CHAPTERS:210,EXTRAS:26,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://hsav.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/hsav/",Synopsis:`Xiao YuAn trasmigrated into a novel. As the homosexual young Emperor imprisoning the Male Lead of a Stallion novel. This is indeed miserable, and sad. Because of this, Xiao YuAn began to work hard to survive.\r
+But! To those cannon fodders, even if you want to badly treat the Male Lead, can you stop sending him to my bed? Xiao YuAn thinks that there’s nothing wrong in pampering the Male Lead, but that’s just because he wants to bathe in the glory of the Protagonist!\r
+Xiao YuAn: “Don’t abuse the Male Lead ever again!!! You guys aren’t afraid of death, but I wanna live!!!”\r
+A story that starts out with the Shou taking care of the Gong, and then, the Gong takes care of the Shou.\r
+\r
+`,IMG:111,PRIO:2},{BOOK_TITLE:"I am a Chef In The Modern Era",AUTHOR:"Táozi Sū 桃子苏",CHAPTERS:118,EXTRAS:7,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/i-am-a-chef-in-the-modern-era/",Synopsis:`Lin ShuYi was sentenced to death by the traitorous Emperor for a treasonous crime he didn’t commit. Before drinking the poisonous wine on the execution ground, he stared up at the snow falling from the sky and said to himself, “This is for the best, I will be a cook in my next life! I miss roast chicken…”\r
+\r
+Then he woke up inside a body of a teenager in an era completely different from his past life. After that, he meets a nice old man who owns a small restaurant. Completely lost in this new modern world, he found that the only thing that would never change, no matter where one lived, was cooking.\r
+\r
+Thus he picked up the promise he made to himself, to be a chef in this life.`,IMG:112,PRIO:3},{BOOK_TITLE:"I am The Lucky Cat of An MMORPG",AUTHOR:"Black Wings 黑色的羽翼",CHAPTERS:89,EXTRAS:7,GENRE:"Video Game",TIMELINE:"Modern",Eng_TL:"https://shibbsden.com/lucky-cat/",Synopsis:`Bai XiaoYu, a student who had become an otaku due to being forced into living a life of seclusion after a tragic event in real life, met a magical lucky pet cat when he took to secluding himself in a game.\r
+\r
+Not only did the cat beckon fortune, it also beckoned a sugar daddy and enemies.\r
+\r
+Can it beckon ultimate happiness?`,IMG:113,PRIO:3},{BOOK_TITLE:"I Became Popular After Online Dating WIth A Big Shot",AUTHOR:"山柚子",CHAPTERS:150,EXTRAS:17,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/i-became-popular-after-online-dating-with-a-big-shot/",Synopsis:`On his 17th birthday, Shen Chi was kicked out by the Shen family.\r
 \r
 He bought himself an innocent and beautiful virtual girlfriend.\r
 \r
@@ -2164,7 +1579,74 @@ The whole world knows the news that Yan Xuexiao returned to power, and the Shen 
 \r
 It seems to be the one they abandoned …… Shen Chi.\r
 \r
-[The young Shen Chi thought he would rot and take root in stagnant water, until he saw the moon in the sky running towards him] The lonely young master was attacked by X step by step`,IMG:114,PRIO:1},{BOOK_TITLE:"I Have Paid Too Much For This Home",AUTHOR:"千峰一鹤",CHAPTERS:69,EXTRAS:2,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://whitemoonxblacksun.ca/2020/02/06/ipmh-chapter-1/",Synopsis:`Su Xingchen inherited a house where a rare spatial overlap occurred inside.\r
+[The young Shen Chi thought he would rot and take root in stagnant water, until he saw the moon in the sky running towards him] The lonely young master was attacked by X step by step`,IMG:114,PRIO:1},{BOOK_TITLE:"I Can Do It",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:134,EXTRAS:9,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://icdi.carrd.co/",Eng_TL:"https://tinysalttranslations.com/novels/icdi/",Synopsis:`For a certain LOL competition, a certain online streamer famous for pissing people off was currently explaining and broadcasting it at the same time.\r
+Streamer: This support, so tr*sh.\r
+Streamer: If that jungler was my teammate, I would already be idling at the fountain and playing piano for him by now.\r
+Streamer: I recommend that this player go back and properly practice how to last hit.\r
+Audience: What bullshit! If you’re any better, then you do it!\r
+Streamer: Daddy I really can do it.\r
+Audience: Okokok. If you can do it then I’ll chop off my head so you can kick it.\r
+A few months later, LOL’s veteran pro team TTC announced a new mid laner, Soft. A boy with flashy blue hair appeared in front of the audience and played Zed to utter perfection, killing everyone he saw, causing all the female fans to begin toeing the line of infidelity.\r
+During the MVP interview after the match, everyone held their breath and eagerly watched this newcomer.\r
+Only to see the boy accept the microphone, smile and ask, “That water friend with the StarTV user ID ‘Suburb King 101,’ my team’s address is on the official website, when will you mail your head over?”\r
+After a certain regular season match finished, the staff member went backstage to urge the team members to go onstage and conduct their interviews, only to see TTC’s new mid laner and jungler standing in the corner.\r
+TTC’s number one ace · jungler daddy Road pressed their team’s new mid laner Soft against the wall. He lowered his eyes and asked lowly, “At the interview, do you know what you did?”\r
+That quick-tempered mid laner, who had solidified his image as a troll in the audience’s eyes the very first time he went on stage, turned completely red. “I know. I won’t curse at anyone… I definitely won’t curse at anyone.”`,IMG:115,PRIO:1},{BOOK_TITLE:"I Don’t Dare to Oppose a Protagonist Anymore",AUTHOR:"Jiu Pin",CHAPTERS:87,Eng_TL:"https://www.novelupdates.com/extnu/2931153/",Synopsis:`Lin Xiao was addicted to reading Qidian novels. He always fantasized that he would have a day when he could transmigrate and then embrace beautiful women all over the whole world, becoming the strongest person in the mainland.\r
+\r
+After he really transmigrated, Lin Xiao stubbornly always believed that he was a protagonist until he met Ling Luo.\r
+\r
+Only after being killed by Ling Luo did he know that he was only a cannon fodder villain in a novel.\r
+\r
+When he restarted his life and hatefully wanted to oppose his fate at least once, he was ruthlessly crushed again.\r
+\r
+Okay then… since a protagonist was determined to be like this, he wouldn’t oppose a protagonist anymore…\r
+\r
+The two of them were similarly straight guys…\r
+\r
+When he restarted his life again, Ling Luo unexpectedly suffered a Love Herb’s poison…\r
+\r
+Lin Xiao internally cried as he looked at a certain person who tied him onto an obelisk in the back and thought, who could tell him what this was all about?`,IMG:116,PRIO:3},{BOOK_TITLE:"I Got Bitten After Transmigrating into A Pseudo-Beta",AUTHOR:"Lu Wei Mu 芦苇木",CHAPTERS:71,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://www.wattpad.com/story/258988004-i-got-bitten-after-transmigrating-into-a-pseudo",Synopsis:`Yue Fei transmigrates into a novel and becomes the cannon fodder beta male partner of the male lead in the book. His alpha boyfriend marks an omega because he is being led on by the pheromone…\r
+\r
+According to the original plot, Yue Fei should do everything possible to make things difficult for the omega. After all, he is the true boyfriend of the alpha, and they are true love if they fall in love without being controlled by the pheromone.\r
+\r
+However, Yue Fei, who transmigrated into the novel, yawned: I don’t bother to give these two people a glance.\r
+\r
+The family wanted Yue Fei to marry into the rich, because the other party’s first choice was beta. In the original work, Yue Fei, who should do everything possible to escape the marriage and vilify the other party, nodded after listening to the introduction of the middleman: Yes, I’ll get married.\r
+\r
+Big Shot Gu Wei: I like smart and tactful people.\r
+\r
+Yu Fei’s true thoughts: Marrying into a wealthy family, I don’t have to worry about money and just live my life lavishly forever, why not agree?\r
+\r
+After the marriage, one day he was being pressed against the wall and got bit on the back of his neck, Yue Fei was not calm. Why did no one tell him that he was actually an Omega in the original work???!!!`,IMG:117,PRIO:3},{BOOK_TITLE:"I Got Marked By My Shadow Guard After Pretending To Be An Alpha",AUTHOR:"Chi Ling 池翎",CHAPTERS:24,EXTRAS:1,GENRE:"A/B/O",TIMELINE:"Historical",Eng_TL:"https://dummynovels.com/novel/i-got-marked-by-my-shadow-guard-after-pretending-to-be-an-alpha/",Synopsis:`The second prince from the Yan State, Yu Yan, has pretended to be an alpha for many years, but after having an unexpected heat, he slept with his personal shadow guard.\r
+\r
+And what is more unfortunate is, due to Yu Yan using suppressant medicines long-term, damaging his constitution, his heat is no longer controllable.\r
+\r
+He can only ask his shadow guard to assist him regularly to deal with his heats, but good thing is that his shadow guard is very obedient and loyal, willing to do whatever he says, and doesn’t mind helping him.\r
+\r
+But the situation slowly becomes strange –\r
+\r
+Yu Yan, with a hoarse voice, cursing: Get out!\r
+\r
+The shadow guard restrains him in his embrace, with an innocent look in his eyes: Where does master want me to pull out from?\r
+\r
+Yu Yan: …QAQ\r
+\r
+And even later, the new Yan State emperor ascends the throne, the young monarch sits upright on his dragon throne, under the gaze of of many: vomits –\r
+\r
+The state officials suddenly realized that their emperor was pregnant.`,IMG:118,PRIO:2},{BOOK_TITLE:"I Got My Bad Side Awakened After Rebirth",AUTHOR:"Sighing At The Moon",CHAPTERS:187,EXTRAS:7,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`In the previous life, Ling Fan was a total loser and poor cannon folder who fell in love with a white lotus. After rebirth, he wanted to be a smart guy.\r
+\r
+As for the white lotus? Sorry, I would no longer have feelings for you! As for his rival in love, the man who could crush him like crushing an ant, he remembered him! When he was strong enough, he’d get even with him!\r
+\r
+See how a young man who got his bad side awakened after rebirth married his rival in love and climbed to the pinnacle of life!\r
+\r
+Oh, by the way, Ling Fan was the top!`,IMG:119,PRIO:2},{BOOK_TITLE:"I Have Amnesia, Don't Be Noisy!",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:119,EXTRAS:5,GENRE:"Amnesia",TIMELINE:"Modern",Carrd:"https://ihadbn.carrd.co/",Eng_TL:"https://dewandfrost.home.blog/bl-i-have-amnesia-dont-be-noisy/",Synopsis:`When Chu Qin found his amnesiac lover, the fake fiancee his lover’s family had arranged for was with him.\r
+Fake fiancée: I’m the person you love the most.\r
+Zhong Yibin: ….Liar, the person I love is obviously Chu Qin.\r
+Fake fiancée: Didn’t you lose your memory?\r
+Zhong Yibin: F*ck! I still remember Chu Qin!\r
+Chu Qin: “……”\r
+Except for you, I forgot the entire world…..\r
+Never forget Chu Qin.`,IMG:120,PRIO:2},{BOOK_TITLE:"I Have Paid Too Much For This Home",AUTHOR:"千峰一鹤",CHAPTERS:69,EXTRAS:2,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://whitemoonxblacksun.ca/2020/02/06/ipmh-chapter-1/",Synopsis:`Su Xingchen inherited a house where a rare spatial overlap occurred inside.\r
 \r
 The person who ‘cohabited’ with him was a young and handsome entrepreneurial elite. This president was very pitiful. Everyday, he didn’t eat well or sleep well, and even had nightmares at night.\r
 \r
@@ -2174,7 +1656,91 @@ For example, when eating glutinous rice with chicken for breakfast, he shared so
 \r
 One month later, Su Xingchen was pleased to discover that the president had been fattened up by him (don’t you think?)!\r
 \r
-However, what Su Xingchen thought was a mutually harmonious companionship, somehow turned him into the other person’s ‘white moonlight’ (unattainable love).`,IMG:121,PRIO:3},{BOOK_TITLE:"I Rely On Acting Well-behaved To Marry First, Then Fall In Love",AUTHOR:"花笙酿",CHAPTERS:69,EXTRAS:12,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://t.co/Gb3D9jY4G8",Eng_TL:"https://ckandawrites.online/i-rely-on-acting-well-behaved-to-marry-first-then-fall-in-love/",Synopsis:`On the second day after the enactment of the same-s*x marriage law, Yan Yan, a college student, bravely came out to his parents. From then on, he lived openly, drinking, going to bars, and flirting with men, all while working as a wild, inhibited anchor in the emotional zone.\r
+However, what Su Xingchen thought was a mutually harmonious companionship, somehow turned him into the other person’s ‘white moonlight’ (unattainable love).`,IMG:121,PRIO:3},{BOOK_TITLE:"I Just Want To Be in A Relationship",AUTHOR:"Lian Shuo 连朔",CHAPTERS:217,EXTRAS:4,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/iar/",Synopsis:`In the last life, Movie Emperor Yu listened to the company and listened to his manager in order not to expose his s*xual orientation. Until his death, he never had a relationship.\r
+\r
+Yu Qing Huan didn’t want to be a money making machine in his current life. He wanted to travel to the best place, see the best scenery, eat the best food and then find the best man to live a happy life together.\r
+\r
+Hou Qu is a genius savant who can easily learn chemical formulas just by glancing at them. One day, he gets lost in the busy streets and Yu Qing Huan helps him.\r
+\r
+Little does Yu Qing Huan know that his wish to stay out of the limelight may not ever be granted as he had unknowingly been locked on by a hungry wolf hidden in the shadows because of his single act of kindness…`,IMG:122,PRIO:3},{BOOK_TITLE:"I like your pheromones",AUTHOR:"Yǐnlù Xīng",CHAPTERS:72,EXTRAS:4,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://ilyp.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ilyp/",Synopsis:`As a good-looking Beta with a good family background, Duan Jiayan has lived a smooth sailing life for more than ten years, until he met Lu Xingci in high school.\r
+Lu Xingci’s family situation is better than his, he is taller than him and plays basketball better than him. Needless to say, his grades are a whole tier above Duan Jiayan’s. Even his friends can’t help but occasionally praise Lu Xingci.\r
+Most importantly, every girl that Duan Jiayan has set his sights on, all admitted that they have liked Lu Xingci for a few years already.\r
+Since then, Duan Jiayan has never thought well of Lu Xingci, till the day he received his new medical report. He is a late-blooming Omega, and because he became an Omega this late, it came with dire consequences. Now Alphas will feel the need to beat up other people whenever they come near Duan Jiayan. He himself is now allergic to every Alpha’s pheromone, except Lu Xingci’s.\r
+*\r
+One night during a self-study session, Duan Jiayan became extremely uncomfortable and ended up asking Lu Xingci to bite him and leave a temporary mark.\r
+After finishing the bite, Lu Xingci asked: “We Alphas have very bad tempers, now that I’ve bitten you, are there any rewards?”\r
+“Why don’t you…” Duan Jiayan tentatively asked: “Be a little more generous?”\r
+“Sure,” the other party kneeled slightly and tilted down his head, exposing his white neck: “Then you’ve to also bite back. Once you do, I won’t make a fuss anymore.”\r
+Duan Jiayan: “…”`,IMG:123,PRIO:3},{BOOK_TITLE:"I Managed to Ditch My SIngle Status in a Survival Game",AUTHOR:"一人路过",CHAPTERS:125,EXTRAS:1,GENRE:"Survival Game",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/20383/i-managed-to-ditch-my-single-status-in-a-survival-game",Synopsis:`Du Yixin, on the shelf since birth, twenty years now and counting, dreams of one day finding a cute girlfriend. Unfortunately for him, before he finds one, he is transported into an unfamiliar, abandoned high school.\r
+\r
+It’s late; dark. There doesn’t seem to be anybody around, but an announcement comes——\r
+[School is now over. Students, please do not loiter and immediately leave. The teacher on duty, begin your rounds immediately]\r
+\r
+What he did not expect, however, was that the scariest thing was not the game’s boss, but the man who chopped the boss up and then turned against the players.\r
+\r
+Du Yixin “And yet, he still submitted to my amazing character, and decided to become my lackey.”\r
+\r
+Ying Sheng, narrowing his eyes, “Lackey?”\r
+\r
+Du Yixin “… Boyfriend.”\r
+\r
+Ying Sheng “Hmph.”\r
+\r
+Du Yixin “Darling~”\r
+\r
+Ying Sheng, blushing “shut up!”`,IMG:124,PRIO:3},{BOOK_TITLE:"I Ran Away After I Was Forced Into A Love Polygon",AUTHOR:"一人路过",CHAPTERS:87,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/19550/i-ran-away-after-i-was-forced-into-a-love-polygon",Synopsis:`Du You transmigrated into a novel and finds himself turned into a bossy CEO character.\r
+\r
+He thought he would be able to have the time of his life from then on, but he is informed that this is merely one of the worlds in a QT novel.\r
+\r
+And he is a bossy CEO character who has already fallen for the Bottom.\r
+\r
+Now, it’s time for the final scene already –\r
+\r
+The Bottom is going to detach from the world by faking his death, so he would end up devastated and become a mere shell of his former self.\r
+\r
+Du You: What are we even waiting for? it’s showtime!\r
+\r
+He imagines he will be able to enjoy a CEO’s vivid and vibrant life once the Bottom leaves the world for good.\r
+\r
+Since the sole responsibility of the CEOs in these novels is to ‘sentence arbitrary companies to bankruptcies.’\r
+\r
+Yet, apparently, the plotline isn’t over yet.\r
+\r
+As a freshly secured love interest, he must follow the Bottom’s path.\r
+\r
+Alongside the Tops of other worlds, they will form a Love Polygon.\r
+\r
+In the end, the Bottom will discover that all the Tops are actually a split part of the same person, the protagonist Top.\r
+\r
+Then all the split parts will join together, and then have a happy ending with the Bottom.\r
+\r
+Du You: … F*ck this shit.\r
+\r
+Bye bye, he’s going to run away.`,IMG:125,PRIO:1},{BOOK_TITLE:"I Really Am A Slag Shou!",AUTHOR:"Your Glory 你的荣光",CHAPTERS:181,GENRE:"World Hopping",Eng_TL:"https://kktranslates.home.blog/2020/10/29/i-really-am-a-slag-shou-by-%E4%BD%A0%E7%9A%84%E8%8D%A3%E5%85%89/",Synopsis:`Chi Zhao binds with the slag shou system, and if he succeeds in his missions, he will be rewarded.\r
+\r
+But who said life is easy!\r
+\r
+A rich old man who was slagged by him: “I know you love me. Your past pains, I’ve already investigated them.”\r
+\r
+The star admiral who had been slagged by him: “Don’t be reluctant anymore! I’ve always known that you didn’t betray me.”\r
+\r
+The entertainment mogul who was slagged by him: “Don’t make any noise. Honey, will you come home with me?”\r
+\r
+The prince regent who was slagged by him said, “The mountains and rivers are yours, but you are mine.”\r
+\r
+The dark sentinel who was slagged by him: “Now, do you still want to say that it is not my child?”\r
+\r
+…\r
+\r
+Chi Zhao burst into tears: “Boss, believe me just this once. Let me get the reward, okay?”\r
+\r
+Thinking that the acting is very good, in fact, every day he’s spreading meng.`,IMG:126,PRIO:3},{BOOK_TITLE:"I Regard You as Enemies, Yet You’re All After My Heart!",AUTHOR:"糖心汤圆",CHAPTERS:85,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/i-regard-you-as-enemies-yet-youre-all-after-my-heart/",Synopsis:`Chu WuQing was a small-time evil boss in a web novel targeted at male audiences. His beauty was otherworldly, yet shadowed by his arrogance and malice. In the end, the male lead stole his fiance from him, and Chu Wuqing suffered a cruel death.\r
+\r
+After being reborn, he found out that he was just cannon fodder in a novel, fated to die… So he decided to give even less of a damn; bullying the weak, taking his revenge on his enemies, going wild and doing whatever the hell he wanted.\r
+\r
+But what was scary was… he had been reborn into a BL fanfiction! \r
+\r
+I regard you as my enemies, yet you all want to top me!`,IMG:127,PRIO:3},{BOOK_TITLE:"I Rely On Acting Well-behaved To Marry First, Then Fall In Love",AUTHOR:"花笙酿",CHAPTERS:69,EXTRAS:12,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://t.co/Gb3D9jY4G8",Eng_TL:"https://ckandawrites.online/i-rely-on-acting-well-behaved-to-marry-first-then-fall-in-love/",Synopsis:`On the second day after the enactment of the same-s*x marriage law, Yan Yan, a college student, bravely came out to his parents. From then on, he lived openly, drinking, going to bars, and flirting with men, all while working as a wild, inhibited anchor in the emotional zone.\r
 \r
 In live stream 237818 on the Cool Cat platform, Brother Yan’s voice was cold, his attitude arrogant, and his tongue was sharp. He confronted those involved fearlessly, triggering heated discussions. During broadcasts, he would tear apart scum, and after the broadcast, he would spend the whole night partying.\r
 \r
@@ -2212,181 +1778,25 @@ Despite his cool and arrogant facade during the live stream, he would softly cal
 \r
 Zhuang Yiyun was unable to resist… although the initially well-behaved boy revealed his true self, Zhuang Yiyun was unexpectedly drawn to him.\r
 \r
-Dr. Zhuang was experiencing love for the first time, stirring all his obsessions, and all he wanted was to hold him tightly and never let go.`,IMG:128,PRIO:1},{BOOK_TITLE:"Mint-Stained Shirt",AUTHOR:"初禾",CHAPTERS:82,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://bhcy.carrd.co/",Eng_TL:"https://www.78zaotl.com/bhcy/",Synopsis:`When he was young, Xiao Yu’an wore a white shirt and rescued a child from a tree.\r
-The child’s hands were sticky with sugar water from the melted peppermint popsicle he’d been eating, and he left a five-fingered imprint on the front of Xiao Yu’an’s shirt.\r
-“This is a stamp,” the child declared. “It means you’re my gege now.”\r
-When he was young, Ming Shu had to climb up and up and up in a tall tree in order to see the gege in the neighbors’ yard.\r
-He wanted to quickly grow big and tall, so he wouldn’t need to climb any more trees. So he would be able to turn around, at any time, and see the gege from the Xiao family.\r
-“You don’t need to wait for me,” he said. “Let me chase you. Let me make you my guiding light.”`,IMG:170,PRIO:1},{BOOK_TITLE:"More Than A Few Blessing",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:81,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://midnightrambles.in/2021/02/15/more-than-a-few-blessings/",Synopsis:`After being killed accidentally nine years after he graduated from college, Lu Chengyu was reborn to the year he graduated.\r
-\r
-In order to avoid the unfortunate fate of his last life, Lu Chengyu started to avoid his classmate who had feelings for him, began to select stocks, and work carefully; everything was in progress.\r
-\r
-He just didn’t think that an encounter would bring Yan Mu into his life. Lu Chengyu was no longer lonely.`,IMG:175,PRIO:1},{BOOK_TITLE:"Mr. Dior",AUTHOR:"Lv Ye Qian He",CHAPTERS:108,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://luyeqianhe.carrd.co/#daxs",Eng_TL:"https://www.novelupdates.com/series/mr-dior/?pg=6#myTable",Synopsis:`One day, Zhang Chenfei had a car accident. Fortunately, he didn’t suffer any serious physical injuries. However, due to the impact of the car crash, his brain’s perception of the real world had turned into that of the novel that he was reading prior to the accident. The thing that horrified his wife, Jiao Qi, was… the Smart Brain, Louis XIII downloaded a series of books which meant that his husband would turn into a different character each time!\r
-\r
-How will our adorable little wife deal with this kind of husband who seemed to suddenly suffer from multiple personalities?\r
-\r
-This novel’s plot focuses on Zhang Chenfei’s changing personality based from the characters in the books, and how his wife, Jiao Qi, deal with every character as he will have to act in sync with whoever his husband’s character is. This is per the advise of the private doctor since treatment of this special condition was still under research.\r
-\r
-As they act out their roles, they will gradually discover and learn more about each other, which they’ve never known in their seven years of living together.`,IMG:176,PRIO:1},{BOOK_TITLE:"Salad Days",AUTHOR:"静水边",CHAPTERS:60,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://jing-jiu.carrd.co/",Eng_TL:"locked",Synopsis:"This is the story between a young innocent ballet boy and a passionate, determined boxing boy. The two met at the children’s palace, and since then, they have grown up together supporting each other. May there be hardships, may there be obstacles, yet they never stopped pursuing their dreams. The beauty of the salad days is the sweat from the hard work and the bonding of friendship. Although they have completely different paths set up for them, what never changes is their beautiful friendship...",IMG:213,PRIO:1},{BOOK_TITLE:"Seduction Game",AUTHOR:"Alcohol and Tea Lover 嗜酒吃茶",EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",IMG:215,PRIO:3},{BOOK_TITLE:"Tattoo",AUTHOR:"Bu Wen San Jiu",CHAPTERS:48,EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://ciqing.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/tattoo/",Synopsis:`On the night of Xiao Ke’s thirtieth birthday, he shared a table while drinking. The person he shared the table with was a cool man who fit all of his aesthetic desires. It was practically love at first sight.\r
-He was thirty; he had reached that age where he was no longer the awkward twenty-something youth. He would pursue the one he liked without hesitation, no questions asked.\r
-“I want you to give me a tattoo. I want to spend the rest of my life with you.”`,IMG:229,PRIO:1},{BOOK_TITLE:"The Heart of a Smith",AUTHOR:"Máo Hòu 毛厚",CHAPTERS:57,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://heart-of-a-smith.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-heart-of-a-smith/?amp&__twitter_impression=true",Synopsis:`Lu Shang picked up a dirty teenager while discussing work at a bar. It was merely happenstance, but memories from ten years ago resurfaced when he saw the gunshot scars on the teenager’s back.\r
-Lu Shang asked him, “What is your name?”\r
-“Xiao Li… My surname is Li, so they all called me Xiao Li.”\r
-“You don’t have a name?”\r
-“I don’t remember.”\r
-Lu Shang said, “Then I will call you Li Sui. From now on, you will be with me.”\r
-From that day onward, a young “lover” was always by Lu Shang’s side.\r
-Years later, Dr. Leung teased Lu Shang, “You didn’t get his heart, instead your heart caved in; boss Lu, that doesn’t seem like a bargain.”`,IMG:244,PRIO:1},{BOOK_TITLE:"Waiting For You Online",AUTHOR:"Xi He Qing Ling 羲和清零",CHAPTERS:155,EXTRAS:6,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://wfyo.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/waiting-for-you-online/?pg=1#myTable",Synopsis:`At the age of 15, He Jin found himself a “husband” in an online game, their love was filled with loving affection and sweetness. However, because his study was being interfered with, his parent cut off the internet, he didn’t even have a chance to say goodbye and had to disappear from the game.\r
-8 years later, the online game in the past was about to come out with a revised edition and turned into a virtual reality game. He Jin decided to login again and unexpectedly discovered that his “husband” had become a powerful player and ranked number one in the whole server, moreover, he had not divorced him!\r
-However, the husband that was abandoned by He Jin for eight years, his initial impression of him was that of a pure boy, but now he seemed to somehow have become…….a little evil?`,IMG:282,PRIO:1},{BOOK_TITLE:"Wildfire",AUTHOR:"Bu Wen San Jiu",CHAPTERS:75,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://t.co/zTMSaRfEbe",Eng_TL:"https://ninetysevenkoi.wordpress.com/2022/09/30/w-1/",Synopsis:`Tao Xiaodong had a blind brother. Tang Suoyan, gentle and calm, was his brother’s favourite doctor, and Tao Xiaodong couldn’t help but like him for that.\r
-\r
-Oftentimes, people lose sight of that which was easily gained.\r
-\r
-Over the years, Tong Ning was so coddled by Tang Suoyan that he failed to appreciate how fetching this rare specimen was—dumping him without pause, and picking him up again when he had a change of heart.\r
-\r
-Except, this time, he was a step too late. Tao Xiaodong had long made his move.\r
-\r
-Tao Xiaodong looked at Tong Ning, telling him with a smile, “It doesn’t matter who Tang Suoyan used to be with. He’s mine now. As long as I don’t let go, you’ll never be able to take away what I hold onto.”`,IMG:289,PRIO:1},{BOOK_TITLE:"Your Distance",AUTHOR:"Gong Zi You 公子优",CHAPTERS:90,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://yourdistance.carrd.co/",Eng_TL:"https://foxaholic.com/novel/your-distance/",Synopsis:`Distance is a social platform that (just like other social platforms) can display the distance between parties. Ting Shuang had chosen someone that was 287 kilometres away from him, thinking that it was very safe. After all, when there’s more than two hundred kilometres between them, they wouldn’t awkwardly chance upon each other in real life, right!\r
-Unexpectedly… The next night, 287 kilometres suddenly became 4.8 kilometres???\r
-And even more unexpectedly… In the afternoon of the third day, 4.8 kilometres suddenly became 3 metres???\r
-3 metres?????\r
-Metres?????\r
-I’m having a fucking lesson right now, doesn’t 3 meters mean that the person I was flirting with is in the classroom right now?\r
-Strict, course failure rate above 90%, kind and gentle(?) professor x mediocre results, bad tempered student`,IMG:297,PRIO:1},{BOOK_TITLE:"A Guide to Raising Your Natural Enemy",AUTHOR:"Jué Jué 决绝",CHAPTERS:101,EXTRAS:29,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://ladasblmtl.blogspot.com/p/a-guide-to-1.html",Synopsis:`As long as hamster spirit Shu Shu can survive the lightning tribulation, then his cultivation will be able to turn him into a human. In the end, the lightning tribulation strikes him and he arrives in the… future? \r
-\r
-In order to avoid people and being mistaken for a monster, Shu Shu decides to dig a hole in the forest to hide and live, and as a result… a very big snake aaaahhhh! Please, don’t eat me! \r
-\r
-The crown prince of the beast empire is seriously injured and becomes a beast that could no longer change into human form. He lives alone in the forest. One day, he sees a cute sub beastman deep in the forest. The sub beastman also sees him. At once, the sub beastman’s eyes roll backwards and he faints…. Scared to death? \r
-\r
-Shu Shu: I have a unique technique of faking death.`,IMG:4,PRIO:2},{BOOK_TITLE:"After Being Turned Into a Dog, I Conned My Way Into Freeloading At My Rival’s Place",AUTHOR:"Zi Jin",CHAPTERS:51,EXTRAS:4,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://secondlifetranslations.com/novel/after-being-turned-into-a-dog-i-conned-my-way-into-freeloading-at-my-rivals-place/",Synopsis:`When celebrity singer Ning Yan suddenly found himself turned into a white puppy, he ran into his rival Lin Rong, who just happened to pass by while Ning Yan was at a loss for what to do. Based on the idea that if he had to suffer then Lin Rong must suffer with him, Ning Yan tried all the tricks in the book until he successfully enticed Lin Rong into taking him home. \r
-\r
-Just as he was dreaming about conning the man out of food and house, the apartment door opened…to reveal a wall filled with his posters and a body pillow in his image on the bed. \r
-\r
-The man hugged the body pillow, smiled at the puppy and said, “My beloved Yanyan is so pretty, right?” \r
-\r
-To which Ning Yan could only respond by calling Lin Rong a pe*vert. \r
-\r
-… \r
-\r
-The puppy Lin Rong picked up was a little dramatic. First, it bit down on his leg and refused to let go until Lin Rong took him home. That same night it pawed at the closed apartment door wanting to get out. A few good meals later, it flopped belly up in the dog bed and looked at him with thoughtful eyes. \r
-\r
-One night several days later, Lin Rong came home drunk. He dreamt of the white puppy turning into his beloved Yanyan, lying on top of him in flustered surprise. He also dreamt of Ning Yan touching him everywhere when he realized how drunk Lin Rong was. \r
-\r
-The next day, the white puppy was curled up peacefully in the dog bed. Lin Rong thought deeply for a second, went into his room, and found the security footage from the living room. \r
-\r
-He squinted thoughtfully when he finished reviewing the footage…`,IMG:17,PRIO:3},{BOOK_TITLE:"Bite Your Fingertips",AUTHOR:"Su Jingxian",CHAPTERS:88,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://t.co/Wx58xT4l9S",Eng_TL:"https://dummynovels.com/novel/bite-your-fingertips/",Synopsis:`Chu Yu was good-looking and had a good family background. Despite being male and an irredeemable slacker, he was still elected as Jianing Private School’s school flower by an overwhelming number of votes.\r
-\r
-The whole school knew that Chu Yu was on bad terms with the second year’s top student who’d won so many awards from various competitions that his hand had gone limp with exhaustion just from holding them. He was the cold, restrained, taciturn, and indifferent to anyone school grass, Lu Shi.\r
-\r
-That was until one certain day after school, when someone saw Chu Yu amongst the trees behind the school building, pulling on the sleeves of the study god’s white shirt while speaking pitifully, “Lu Shi, give me a bite, I’ll be gentle.”\r
-\r
-Lu Shi put his finger in Chu Yu’s mouth. “It doesn’t matter if it hurts a little.”\r
-\r
-——\r
-\r
-Chu Yu was frightened to discover that, overnight, he had awakened a strange bloodline that required him to suck a drop or two of blood everyday in order to survive. However, the blood of everyone was bitter and smelly, except…Lu Shi’s.\r
-\r
-#The Heavens must be pitting me#\r
-\r
-——\r
-\r
-*坑 (lit. Pit.) means a teammate that intentionally or unintentionally screws their teammate over.`,IMG:38,PRIO:1},{BOOK_TITLE:"Cute Beast Store No. 138",AUTHOR:"Dǎ JiāngShī",CHAPTERS:171,EXTRAS:6,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/cute-beast-store-no-138/",Synopsis:`Thousands of years ago, a small planet collided with Earth and destroyed the world. In five days, ninety percent of humans had been wiped out, leaving behind the last ten percent to earnestly struggle on death’s door.\r
-\r
-Jinyu was one of those people who survived. Due to a special heredity trait, he could understand beast language. After the apocalyptic disasters, Jinyu had been living for a month with the few small beast brothers that he’d subdued. Previously, Jinyu had thought that he would live like that until he died. Yet, inexplicably, one day he opened his eyes to find that he was in a monstrous, lawless world that was full of vitality and life.\r
-\r
-Jinyu’s transmigration into the future let him skip over almost one hundred thousand years. In the year 106825, beasts rule the galaxies and ‘pure’ humans are extinct. As the one and only ‘pure’ human left in the entire universe, Jinyu braves this new chaotic world to find a place for himself and thus begins to work at Beast Store number 138.`,IMG:50,PRIO:3},{BOOK_TITLE:"Devil's Political Marriage",AUTHOR:112,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/devils-political-marriage/",Synopsis:`egend had it there was a demon of nightmares, the enemy of mankind, who desired to dominate the universe.\r
-\r
-On the first day, he left the human fleet broken and in disorder.\r
-\r
-The next day, he wanted to eliminate the Galactic Federation.\r
-\r
-The third day he said–unless the soldier who had wounded him was married to him, he would destroy everything.\r
-\r
-The leaders of the Galactic Federation discussed and decided to send the soldier Wu Xingyun to become the male-wife of the devil.\r
-\r
-Wu Xingyun embarked on his mission…For the peace of the universe and the happiness of mankind.\r
-\r
-“Soldier, are you confident to complete this mission?!”\r
-\r
-“Yes Sir, will resolutely complete this task!”`,IMG:56,PRIO:3},{BOOK_TITLE:"Falling in Love in the Supernatural World",AUTHOR:"Jimo Yao",CHAPTERS:47,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/supernatural-world-chapter-1/",Synopsis:`Fang Chu, a little-known star, went to a luxury cruise party and met his ex-boyfriend, with whom he had broken up with two years ago. Only then did he find out that, while he thought he was an ordinary man’s ex-boyfriend, he was a super-rich man with a mysterious identity!\r
-\r
-If I didn’t break up, I guess I would’ve already married into a rich family by now?\r
-\r
-I feel like I’ve missed out on a hundred million.\r
-\r
-Just as Fang Chu was thinking about whether to get back together with him, he suddenly found himself involved in a strange homicide.\r
-\r
-But this was only the beginning.\r
-\r
-Fang Chu: Forget it. I just want to live a peaceful life. I don’t want this rich family.\r
-\r
-Yu Si’ze: It’s too late.`,IMG:75,PRIO:3},{BOOK_TITLE:"How to Feed an Abyss",AUTHOR:"Jiang Weiji",CHAPTERS:124,EXTRAS:12,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://moonlightnovel.com/how-to-feed-an-abyss/hfa-chapter-1-1/",Synopsis:`【if you stare into the abyss, the abyss stares back at you】\r
-\r
-The abyss, the most feared thing by the human race today. The animals infected by the abyss mutate into monsters, and humans are reduced to walking corpses.\r
-\r
-Lu Tinghan is an abyss watcher. He has been guarding the world’s most terrifying abyss for ten years.\r
-\r
-This abyss is not only scary, but also strange.\r
-\r
-Throw the garbage down, after a few days, the garbage will be buried safely next to the abyss – like someone took a shovel and tossed it all night to bury them.\r
-\r
-Throw hazardous waste down, after a few days, the waste will be thrown back with unbridled fury.\r
-\r
-Lu Tinghan: ?\r
-\r
-Ten years later, he left the post and became the youngest general in the Alliance.\r
-\r
-The next day, the abyss was also gone.\r
-\r
-——The whole thing disappeared and turned into flat land.\r
-\r
-The whole world was shocked.\r
-\r
-Until one day, there was a knock on Lu Tinghan’s door.\r
-\r
-A boy with little devil horns stood outside the door, with delicate features and bright eyes. Obviously, he was scared to death, but he still plucked up the courage to say: “Hello, I, I am Abyss, can you continue to stare at me? QAQ”\r
-\r
-He added: “I have helped you bury the garbage every day, oh!”\r
-\r
-During their long time together, Lu Tinghan learned two things:\r
-\r
-1. Staring at your abyss every day, the abyss will be happy\r
-\r
-2. When the abyss is happy, it will purr toward you`,IMG:110,PRIO:1},{BOOK_TITLE:"Opening A Shop In The Nightmare World",AUTHOR:"镜吉祥",CHAPTERS:162,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/opening-a-shop-in-the-nightmare-world/",Synopsis:`u Zimo got a store called ‘Ayuyuyu.’\r
-\r
-Selling the goods in the store can increase his remaining life, but Su Zimo has to first go to the nightmare world to collect goods!\r
-\r
-Senior cannon fodder: Newcomer over there, put down the vase, put down the paper towels, put down A-Piao’s shoes! Run!!\r
-\r
-Shop: It’s ‘An Yu Yi Yu,’ not ‘Ayuyuyu’`,IMG:193,PRIO:2},{BOOK_TITLE:"They All Say I've Met A Ghost",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:42,EXTRAS:5,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://met-a-ghost.carrd.co/",Eng_TL:"https://theysayivemetaghost.dreamwidth.org/",Synopsis:`Hello, everyone! My name is Shen Jianguo. I am a night school instructor teaching ideological development and Marxist philosophy, occasionally analyzing recent policies and measures for my students.\r
-All my classes are held in the middle of the night; I’ve never seen my coworkers or students during the day. The training institute’s classrooms are all in abandoned schools, hospitals, or residences. The license plate number of the bus that picks me up is 444; it always arrives at my house at precisely midnight and disappears at five in the morning.\r
-What? You’re saying I’ve met a ghost? Impossible! As a staunch scientific materialist, I absolutely don’t believe there’s any such thing as ghosts!\r
-I’ve only had one problem recently: couldn’t the training institute hold its classes a little earlier? Wouldn’t around 8 PM do? I fear neither heaven nor hell, but I do fear going bald.`,IMG:261,PRIO:1},{BOOK_TITLE:"To Be A Hearthrob in A Horror Movie",AUTHOR:"Jiang Zhi Yu 姜之鱼",CHAPTERS:156,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://tbahiahm.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/11/23/to-be-a-heartthrob-in-a-horror-movie-by-%e5%a7%9c%e4%b9%8b%e9%b1%bc/",Synopsis:`Holographic viewing technology allowed audience members to enter a movie and personally experience it for themselves. Naturally, romance movies were the most popular and well-received, while nobody was interested in horror movies.\r
-Su Min was the first of the viewers to experience a horror movie.\r
-Later–\r
-Malicious Spirit: I dare not scare nor frighten my sweetheart…\r
-Su Min: Actually, horror movies aren’t scary at all.\r
-Audience: No, no, no, you are playing in a romance movie! (Loudly)\r
-The audience suddenly discovered that the recent rerelease of the horror movie was much better than the original. Furthermore, to everyone’s surprise, the ghost was very sweet…`,IMG:269,PRIO:1},{BOOK_TITLE:"Tyrant Pampering Wife Diary",AUTHOR:"Yī rì zhī qiān 一日知千",CHAPTERS:79,EXTRAS:1,GENRE:"Supernatural",TIMELINE:"Historical",Carrd:"https://tpwd.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/tpwd/",Synopsis:`In his previous life, Song Song was a pitiful man. Someone killed him, took his identity and his child, and became the first male empress in history.\r
-Li Xiao in his previous life was even more pitiful. Driven insane by poison, he lost control and killed countless people and just happened to miss the only person who could have cured him in that lifetime.\r
-After rebirth, Song Song knew that he could be Li Xiao’s remedy. He also knew that Li Xiao could be his strongest supporter. In order to regain their baby who also died in their past life, he decided to take the initiative this time– Only to find that Li Xiao was even more enthusiastic!`,IMG:278,PRIO:1},{BOOK_TITLE:"I Managed to Ditch My SIngle Status in a Survival Game",AUTHOR:"一人路过",CHAPTERS:125,EXTRAS:1,GENRE:"Survival Game",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/20383/i-managed-to-ditch-my-single-status-in-a-survival-game",Synopsis:`Du Yixin, on the shelf since birth, twenty years now and counting, dreams of one day finding a cute girlfriend. Unfortunately for him, before he finds one, he is transported into an unfamiliar, abandoned high school.\r
-\r
-It’s late; dark. There doesn’t seem to be anybody around, but an announcement comes——\r
-[School is now over. Students, please do not loiter and immediately leave. The teacher on duty, begin your rounds immediately]\r
-\r
-What he did not expect, however, was that the scariest thing was not the game’s boss, but the man who chopped the boss up and then turned against the players.\r
-\r
-Du Yixin “And yet, he still submitted to my amazing character, and decided to become my lackey.”\r
-\r
-Ying Sheng, narrowing his eyes, “Lackey?”\r
-\r
-Du Yixin “… Boyfriend.”\r
-\r
-Ying Sheng “Hmph.”\r
-\r
-Du Yixin “Darling~”\r
-\r
-Ying Sheng, blushing “shut up!”`,IMG:124,PRIO:3},{BOOK_TITLE:"I Was Once A Legend",AUTHOR:"Kuang Zhu 狂渚",CHAPTERS:371,GENRE:"Survival Game",TIMELINE:"Modern",Eng_TL:"https://xixistranslations.com/i-was-once-a-legend-bl/",Synopsis:`Eight years ago, Cui Zuojing passed the final level set by the “Queen” and became the first person to have ever escaped from the Pure White Realm. But his time was frozen forever at the moment he left—the day of his sixteenth birthday.\r
+Dr. Zhuang was experiencing love for the first time, stirring all his obsessions, and all he wanted was to hold him tightly and never let go.`,IMG:128,PRIO:1},{BOOK_TITLE:"I Rely On Kisses to Clear Survival Games",AUTHOR:"啾咪啾咪兔",CHAPTERS:90,EXTRAS:9,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://ktcsg.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/09/03/i-rely-on-kisses-to-clear-survival-games-by-%e5%95%be%e5%92%aa%e5%95%be%e5%92%aa%e5%85%94/",Synopsis:`Cheng Zhi Chu was pulled into an infinite stream of horror games. If he didn’t clear them, he would die.\r
+But can someone tell him why others clear the games using violence and force but his method of clearing the game is by kissing the boss?!\r
+Cheng Zhi Chu: I am a straight man. Even if I kill myself or am killed by monsters, I will not kiss the boss!\r
+Boss: Be good. Kiss me and I’ll let you go.\r
+Bai Yi had been trapped in the game for many years.\r
+Rather than exploding in anger in the silence, he had turned crazy. And so…….he split himself. His soul was broken into many pieces and each of them became the boss in the games.\r
+But, regardless of how the soul was split, from the beginning to the end there was one thing that didn’t change —–He, likes Cheng Zhi Chu.\r
+Every fragment of his soul was utterly in love with him.\r
+It was also because of this that he and every fragment of his couldn’t stand seeing people other than himself getting close to Cheng Zhi Chu —- Even if the other party used to be a part of himself.\r
+Dark desire gradually surged inside him.\r
+Anyone who gets between him and Cheng Zhi Chu——even if it’s himself —– he would kill them all.\r
+“The person who you should really kiss……is me.”\r
+▶▶\r
+A possessive, crazy and suicidal demonic gong with multiple personalities X A timid but free-spirited steel straight heartthrob shou`,IMG:129,PRIO:1},{BOOK_TITLE:"I Ship My Adversary x Me",AUTHOR:"PEPA",CHAPTERS:47,EXTRAS:1,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://ismm-pepa.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/ismm/",Synopsis:`"A very sweet entertainment circle novel about a closeted gong x fudanshi shou.\r
+And get overloaded with sugar everyday!"\r
+∽\r
+Note: Ok I know the original description doesn't help at all lol. So here's a simple description by me:\r
+Both MC and ML were actors, but they stand on different level. ML's fans despise him and think of him as a vicious person who want to riding their idol's fame. Until one day things be different when he finds the world of shipping through internet. MC decides to became a shipper of himself and ML!\r
+There is a misunderstanding between the MC and ML but don't worry, it's a cute and hilarious misunderstanding and not the type of dramatic one, they are so dumb I love them lol. So much sugar but it did not turn out cringey at all.`,IMG:130,PRIO:1},{BOOK_TITLE:"I Think My Boyfriend is Sick",AUTHOR:"Yi Zhī Dàyàn 一只大雁",CHAPTERS:83,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://rbktrtranslations.wordpress.com/2019/03/02/itmbis-c1/",Synopsis:"I think my boyfriend is sick, the kind of sickness that’s too embarrassing to mention.",IMG:131,PRIO:3},{BOOK_TITLE:"I Was Once A Legend",AUTHOR:"Kuang Zhu 狂渚",CHAPTERS:371,GENRE:"Survival Game",TIMELINE:"Modern",Eng_TL:"https://xixistranslations.com/i-was-once-a-legend-bl/",Synopsis:`Eight years ago, Cui Zuojing passed the final level set by the “Queen” and became the first person to have ever escaped from the Pure White Realm. But his time was frozen forever at the moment he left—the day of his sixteenth birthday.\r
 \r
 Eight years later, he snuck back to that nightmare world and became a “prisoner” for novice player Dong Zheng.\r
 \r
@@ -2412,184 +1822,62 @@ Kiss me.\r
 \r
 Xiao Li: ????\r
 \r
-He was very confused and then refused.`,IMG:133,PRIO:3},{BOOK_TITLE:"Surprise! The Supposed Talent Show Was Actually..!",AUTHOR:"Yan Baibai 晏白白",CHAPTERS:225,EXTRAS:13,GENRE:"Survival Game",TIMELINE:"Modern",Carrd:"https://ststswa.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/surprise/",Synopsis:`Wu Jin, as a trainee from a certain entertainment company, had a peerless, stunning face. He was qualified to debut as a lead performer even if he just sat there and did nothing.\r
-After signing up for a certain talent show, the shining path to stardom beckoned to him––\r
-Wu Jin: Hold on, why is this show different from what we agreed on? Wasn’t it supposed to be about jumping around, dancing, and singing songs? Why do you have to send me out into the wilderness…\r
-Program Producer: You’re a once-in-a-century high appearance value competitor! We’re relying on you to save the program’s ratings!\r
-Wu Jin: … I seem to be on the wrong show. Wait a minute, this isn’t an idol show, it’s a fighting survival reality show ahhh!!\r
-Ten months later, the little cutie who had been thrown into the show––\r
-Turned into a human weapon.\r
-Powering up through various instances, slight entertainment circle elements.\r
-Extremely overpowered gong x little cutie who grows to become an overpowered shou.`,IMG:228,PRIO:1},{BOOK_TITLE:"A President's Out of Body Experience",AUTHOR:"Mu San Guan 木三观",CHAPTERS:92,EXTRAS:4,GENRE:"Time Travel",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/pobe/",Synopsis:"Our straight (?) bottom woke up ten years into the future and found himself on the bed of his childhood friend… At the start, the bottom was shocked to his very bones, but he soon quickly accepted this premise and found the whole situation to be rather amusing. Precisely then, the bottom once again went back to his timeline — back to when he and the top were just platonic childhood friends.",IMG:5,PRIO:3},{BOOK_TITLE:"A Real Man Isn't Afraid Of A Little Demon",AUTHOR:"Little Baldy",CHAPTERS:53,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/a-real-man-isnt-afraid-of-a-little-demon/",Synopsis:`Yu Chu was a powerful character in a novel who constantly stirred up trouble, but after transmigrating, he turned from a little demon that kept the masses under his spell into a pitiful little thing that everyone bullied. \r
-\r
-Drugging, power struggles, fratricidal rivalries… Yu Chu resolved everything one by one. He snickered and prepared to recuperate in this peaceful world. As for those noisy “flies” that disturbed him, they were slapped to death by his hand. \r
-\r
-Looking at those foolish “flies”, Yu Chu did not have the slightest ups and downs inside and slowly extended his hand of fate to the “flies” necks… \r
-\r
-Slap! \r
-\r
-The hand of fate was heavily slapped away. \r
-\r
-“What are you staring at people for? It’s just that you didn’t get the last two custard buns. Do you still want to kill and rob them for the buns?” Xie XingMu, with his serious handsome face, lectured him coldly. \r
-\r
-Yu Chu was very dissatisfied with this mysterious pseudo-‘former personal bodyguard’. \r
-\r
-Even though Xie XingMu was tall, handsome, and rich, and had saved him many times from life and death; even though this man, as a former bodyguard, gave him food, shelter, and money when he, a young man, was living on the street, he was not pleased. \r
-\r
-Xie XingMu controlled him to death in all aspects, not only checked his whereabouts at any time, but also installed a tracker on his cell phone, and was always buzzing around like an old mother. \r
-\r
-Yu Chu was living with this oppressive wife and touched the back of his hand, which was slapped red. He was fierce in his heart: Sooner or later, I will kill this biggest “fly” by holding it down. \r
-\r
-Later, he was held down, indeed, held down. \r
-\r
-He cried and was pressed beneath Xie XingMu and almost killed.`,IMG:6,PRIO:2},{BOOK_TITLE:"A Scumbag Always Gets What He Deserves",AUTHOR:"風流書呆 & 风流书呆",CHAPTERS:42,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://asagwhd.carrd.co/",Eng_TL:"https://www.foxaholic.com/novel/a-scumbag-always-gets-what-he-deserves/",Synopsis:`Rege, before they met: Damn, who the hell is Jian Qiao? If he dares to steal my girl, I’ll mess him up! \r
-\r
-Rege, after they met: Damn, Jian Qiao is really good-looking, we should be friends! \r
-\r
-Rege, after they were friends: No way! Jian Qiao is great! He should belong only to me! The first time I’ve bent for anyone! \r
-\r
-Jian Qiao: One hundred actions will have a reaction, and your retribution is me!`,IMG:7,PRIO:3},{BOOK_TITLE:"A Wave of Exes Came Looking for Me. What to Do?!",AUTHOR:"Long Qi 龍柒",CHAPTERS:64,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://whiteskytranslations.wordpress.com/2018/10/17/the-journey-begins/",Synopsis:`Bai Yue Sheng is a Transmigration System clerk, each of his tasks he completes to the 100%, for each one he has gotten the best scores, after he finally passed seven, eight, nine… okay, an unknown number of worlds, Lord God gave him an opportunity to be promoted; the requirement was only to live on an ordinary way for 20 years at his original world. \r
-\r
-The requirement was easy, Bai Yue Sheng accepted the task, but he could have never imagined that, just after he settled on planet Earth, his “exes” would actually break through time and space to chase him down! \r
-\r
-Bai Yue Sheng: As a 10/10 slag, how do I break away from the siege of this bunch of mental people… while also living 20 years of an ordinary life?`,IMG:10,PRIO:3},{BOOK_TITLE:"Accompanied by a Fool To Do Farming",AUTHOR:"锦绣云燃",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Historical",Eng_TL:"https://knoxt.space/accompanied-by-a-fool-to-do-farming/",Synopsis:`When he woke up, Zhong Ziqi found that he had transmigrated over! \r
-\r
-It’s okay that his family is very poor, but unexpectedly both of his parents are dead! \r
-\r
-Even if both of them are dead, he is actually a Ger! \r
-\r
-It doesn’t really matter that he was a Ger, but who could have thought that he was sold by his elder uncle’s family! \r
-\r
-Even if he was sold, he was sold to a fool! \r
-\r
-Zhong Ziqi was calm on the outside, but inside he was screaming: Could it be any worse? \r
-\r
-But since I can’t do anything to prevent it, I might as well sit back and enjoy it. \r
-\r
-However, having such a silly person to accompany him in this unfamiliar and strange world, it’s, actually…not bad too.`,IMG:14,PRIO:3},{BOOK_TITLE:"After Transmigrating I Made The Antagonist Cry",AUTHOR:"qiáo mù lǐ",CHAPTERS:75,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://storyseedling.com/series/20024/",Synopsis:`He transmigrated into this book with the mission to prevent the antagonist from ending up ‘blackened’ too early. \r
-\r
-And became a cannon fodder that is supposed to abandon the antagonist and prostrate himself at the Protagonist Bottom’s feet. \r
-\r
-To this, Liu Yu’an would like to say – To abandon a bossy CEO antagonist who likes him and is elegant and beautiful and can even shut down the world economy with one sentence, and go prostrate at the feet of the little idol, the Protagonist Bottom who doesn’t even like him? \r
-\r
-The original person must have had his brain bonked silly. \r
-\r
-Thank the gods he transmigrated instead. \r
-\r
-Later, Liu Yu’an realises – that the elegance and distance is merely a shell the bossy CEO has put about himself. The bossy CEO without the shell is sensitive, lacks confidence and especially lacks a sense of security. He’s also… a crybaby. \r
-\r
-— \r
-\r
-As a member of the Virtual Worlds Management Centre, Liu Yu’an has been through dozens of different worlds already. He has been the emperor, the evil court minister, the Lord of all Demons, the Demonic Cultivator Overlord, the Ruler of the Ascended Realm, a teacher, a student, a doctor, a CEO, a general… \r
-\r
-Though he never did expect to one day have to play the role of the characters he has been as an actor in another world. \r
-\r
-Looking at the Internet, with all sorts of, \r
-\r
-Commenter A: Aaaaah! Gege’s acting looks like the genuine Demon Lord himself. \r
-\r
-Commenter B: Holy shit! An-ge tell us in all honesty were you a high school homeroom teacher before you debuted?! \r
-\r
-Commenter C: I’m in love, seriously, is it too late for me to declare my fanhood allegiance now?! \r
-\r
-… \r
-\r
-Liu Yu’an is quite nonplussed, my, oh my, you all are too young, too young… \r
-\r
-Yet, not even the experienced transmigrator that he was expected that, one day, he would apply to be allowed taking a book character back out to the real world.`,IMG:27,PRIO:2},{BOOK_TITLE:"Creator's Internship Guide",AUTHOR:"Jiuyi 酒矣",CHAPTERS:35,EXTRAS:2,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/creators-internship-guide/",Synopsis:`iang Ci created a game called “Creator’s Internship Guide” and became the god. He first created the Celestials, then the dragons, Shadow Race, and last, humans. An accident makes him travel into the game world he created. He is told that the six races went to war 1,700 years ago over which race was his favorite.\r
-\r
-For the sake of world peace, Jiang Ci works diligently to calm down the tides of war, with his ultimate goal of choosing one of the six races administrators to become the new God so he may go back to his original world.`,IMG:48,PRIO:3},{BOOK_TITLE:"Delicious Food Got Me Famous Across the Galaxy",AUTHOR:"Wǎ Lún Dīng 瓦伦丁",CHAPTERS:28,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/delicious-food-got-me-famous-across-the-galaxy/",Synopsis:`Xie Yan was in an accident while acting. After crossing into a different world, he finds that he is thin and small. While setting up a strict weight and strength training plan for himself, he is very satisfied with his life cooking and playing with robots. He didn’t realize that it was an ABO world and that he was an omega.\r
-\r
-“My queen can’t be an omega.” Huo Nai, the prince of the Galactic Empire, made a high-profile claim that he would not indulge in his instincts and yield to pheromones. Who knew that someone would try to assassinate him on his way back from his expedition and that an accident would occur while trying to land on the planet Murdo. He was rescued by Xie Yan, and he became the other side’s …bodyguard and permanent worker.\r
-\r
-Huo Nai: “How can I like this strange Omega?!”`,IMG:53,PRIO:3},{BOOK_TITLE:"Demon Boss In The Human World",AUTHOR:"Tức Mặc Dao",CHAPTERS:96,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://hellitranslations.wordpress.com/projects/demon-boss-in-the-human-realm-entertainment-circle/",Synopsis:`The general of the demon world possessed the body of a third-rate small time celebrity. This was the story of him coming over, determined to make preparations for the demon world’s invasion of the human world, but accidentally got mixed in with the entertainment circle instead.\r
-\r
-From endless scandals to endless gossiping, and from a nobody to a hot topic, the third-rate star had become the most eye-catching male god in the entertainment industry with a leap.\r
-\r
-The reporters were tirelessly unearthing the ‘story’ behind him!\r
-\r
-The object of their gossip had expressed that he had a pair of very strong thighs, and anyone could feel free to hug them! Please, come and hug them!\r
-\r
-Gu Yan says: s*upid humans, what I want to conquer is the human world.\r
-\r
-Domineering and ruthless villain boss bottom x Cheating protagonist type beautiful and aloof dominant top.`,IMG:54,PRIO:3},{BOOK_TITLE:"Film Emperor's Adorable Wife From Ancient Times",AUTHOR:"精分柚子茶",CHAPTERS:68,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/feaw/",Synopsis:`Yang Anyu, he is the general’s personal bodyguard. In the end, his soul transmigrated into a second-generation young master from the modern world, and after that, he once again encountered his “General” Yi Chenyan.\r
-\r
-The great general he especially respected and revered, actually became an actor? (And is in fact, the popular Film Emperor)\r
-\r
-What made Yang Anyu more shocked——he was already “married” to Yi Chenyan.\r
-\r
-Several years later——\r
-\r
-Fan A: Our Little Yu’s face-quality is high, acting ability is good, can sing and dance, when filming action scenes he is even more handsome, handsome to the point of collapse! Completely is a capitalized Su word!\r
-\r
-Fan B: If I cannot sleep with Yang Anyu in this life is there still any meaning to it?\r
-\r
-Fan C: But I heard he’s already married, his wife must have saved the whole world in her last life ah!\r
-\r
-Yi Chenyan: ……\r
-\r
-Big Film Emperor Yi looked at a certain Yang Someone under his body, recently he’s been becoming more and more possessive towards him, what to do?`,IMG:81,PRIO:3},{BOOK_TITLE:"Game Loading",AUTHOR:"Long Qi 龙柒",CHAPTERS:304,EXTRAS:5,GENRE:"Transmigration",Carrd:"https://gameloading.carrd.co/",Eng_TL:"https://arkmachinetranslations.wordpress.com/gl-index/",Synopsis:`Xie Xi was someone with luck off the charts! The advantage was that any game could be easily cleared. The disadvantage was that all games were boring! Then one day, the words ‘Game loading’ appeared in front of his eyes and he began to clear real games!\r
-The emperor of luck ran into a bottleneck in the first game.\r
-Game Name: Love to the Left or Right\r
-The vampire prince has invited you to a meal. Will you go?\r
-Xie Xi: I won’t go.\r
-Arrow through the heart. The vampire prince says you can’t leave him and takes your life.\r
-After loading the file, Xie Xi changed the option: I will go.\r
-The housekeeper has cut off your head because of love and hatred.\r
-Xie Xi: ???`,IMG:87,PRIO:1},{BOOK_TITLE:"How Many Tomorrows There Are",AUTHOR:"吃肉能瘦",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/18965/how-many-tomorrows-there-are",Synopsis:`Deeply-closeted Xiaoming has downloaded a zipped file and opened one of the novels at random. He closed it immediately after two pages because he found it way too kinky for his tastes, and can only faintly recall the cannon fodder and the antagonist.\r
-\r
-Waking up later, he became that cannon fodder on his way to tomorrow’s killing gauntlet reality show. Failing to return even after reciting the core values a hundred times, he could only pick up his sword. As long as the tragic fate could be rewritten, it’s fine to become tainted or whatever.`,IMG:108,PRIO:3},{BOOK_TITLE:"How To Survive as A villain",AUTHOR:"Yi Yi Yi Yi 伊依以翼",CHAPTERS:210,EXTRAS:26,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://hsav.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/hsav/",Synopsis:`Xiao YuAn trasmigrated into a novel. As the homosexual young Emperor imprisoning the Male Lead of a Stallion novel. This is indeed miserable, and sad. Because of this, Xiao YuAn began to work hard to survive.\r
-But! To those cannon fodders, even if you want to badly treat the Male Lead, can you stop sending him to my bed? Xiao YuAn thinks that there’s nothing wrong in pampering the Male Lead, but that’s just because he wants to bathe in the glory of the Protagonist!\r
-Xiao YuAn: “Don’t abuse the Male Lead ever again!!! You guys aren’t afraid of death, but I wanna live!!!”\r
-A story that starts out with the Shou taking care of the Gong, and then, the Gong takes care of the Shou.\r
-\r
-`,IMG:111,PRIO:2},{BOOK_TITLE:"I am a Chef In The Modern Era",AUTHOR:"Táozi Sū 桃子苏",CHAPTERS:118,EXTRAS:7,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/i-am-a-chef-in-the-modern-era/",Synopsis:`Lin ShuYi was sentenced to death by the traitorous Emperor for a treasonous crime he didn’t commit. Before drinking the poisonous wine on the execution ground, he stared up at the snow falling from the sky and said to himself, “This is for the best, I will be a cook in my next life! I miss roast chicken…”\r
-\r
-Then he woke up inside a body of a teenager in an era completely different from his past life. After that, he meets a nice old man who owns a small restaurant. Completely lost in this new modern world, he found that the only thing that would never change, no matter where one lived, was cooking.\r
-\r
-Thus he picked up the promise he made to himself, to be a chef in this life.`,IMG:112,PRIO:3},{BOOK_TITLE:"I Got Bitten After Transmigrating into A Pseudo-Beta",AUTHOR:"Lu Wei Mu 芦苇木",CHAPTERS:71,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://www.wattpad.com/story/258988004-i-got-bitten-after-transmigrating-into-a-pseudo",Synopsis:`Yue Fei transmigrates into a novel and becomes the cannon fodder beta male partner of the male lead in the book. His alpha boyfriend marks an omega because he is being led on by the pheromone…\r
-\r
-According to the original plot, Yue Fei should do everything possible to make things difficult for the omega. After all, he is the true boyfriend of the alpha, and they are true love if they fall in love without being controlled by the pheromone.\r
-\r
-However, Yue Fei, who transmigrated into the novel, yawned: I don’t bother to give these two people a glance.\r
-\r
-The family wanted Yue Fei to marry into the rich, because the other party’s first choice was beta. In the original work, Yue Fei, who should do everything possible to escape the marriage and vilify the other party, nodded after listening to the introduction of the middleman: Yes, I’ll get married.\r
-\r
-Big Shot Gu Wei: I like smart and tactful people.\r
-\r
-Yu Fei’s true thoughts: Marrying into a wealthy family, I don’t have to worry about money and just live my life lavishly forever, why not agree?\r
-\r
-After the marriage, one day he was being pressed against the wall and got bit on the back of his neck, Yue Fei was not calm. Why did no one tell him that he was actually an Omega in the original work???!!!`,IMG:117,PRIO:3},{BOOK_TITLE:"I Ran Away After I Was Forced Into A Love Polygon",AUTHOR:"一人路过",CHAPTERS:87,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://travistranslations.com/novel/19550/i-ran-away-after-i-was-forced-into-a-love-polygon",Synopsis:`Du You transmigrated into a novel and finds himself turned into a bossy CEO character.\r
-\r
-He thought he would be able to have the time of his life from then on, but he is informed that this is merely one of the worlds in a QT novel.\r
-\r
-And he is a bossy CEO character who has already fallen for the Bottom.\r
-\r
-Now, it’s time for the final scene already –\r
-\r
-The Bottom is going to detach from the world by faking his death, so he would end up devastated and become a mere shell of his former self.\r
-\r
-Du You: What are we even waiting for? it’s showtime!\r
-\r
-He imagines he will be able to enjoy a CEO’s vivid and vibrant life once the Bottom leaves the world for good.\r
-\r
-Since the sole responsibility of the CEOs in these novels is to ‘sentence arbitrary companies to bankruptcies.’\r
-\r
-Yet, apparently, the plotline isn’t over yet.\r
-\r
-As a freshly secured love interest, he must follow the Bottom’s path.\r
-\r
-Alongside the Tops of other worlds, they will form a Love Polygon.\r
-\r
-In the end, the Bottom will discover that all the Tops are actually a split part of the same person, the protagonist Top.\r
-\r
-Then all the split parts will join together, and then have a happy ending with the Bottom.\r
-\r
-Du You: … F*ck this shit.\r
-\r
-Bye bye, he’s going to run away.`,IMG:125,PRIO:1},{BOOK_TITLE:"I'm Not Human",AUTHOR:"Jiuyi 酒矣",CHAPTERS:87,EXTRAS:8,GENRE:"Transmigration",TIMELINE:"Modern",Carrd:"https://imnothuman.carrd.co/",Eng_TL:"locked",Synopsis:`After suddenly dying while trying to meet a deadline, Gu Huai transmigrated and became a non-human race.\r
+He was very confused and then refused.`,IMG:133,PRIO:3},{BOOK_TITLE:"I'll Have My Seatmate Beat You",AUTHOR:"Kao Kao 靠靠",CHAPTERS:66,EXTRAS:2,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ihmsby.carrd.co/",Eng_TL:"https://thatlazypotato.wordpress.com/ill-have-my-seatmate-beat-you/",Synopsis:`Poor little top student was bullied by his school, so he transferred from an elite high school to an ordinary school.\r
+School tyrant · 1.9 meters · no one dare to provoke · Brother Zhan: I cover this little brother.\r
+Poor little · 1.7 meters · Gu Qinan: Zhan-ge is just a child. He’s poor, weak, helpless, kind and soft(hearted), I need to love him well.\r
+Everyone: ???\r
+Class teacher: Zhan Ming, what kind of score is this?!\r
+Zhan Ming: I’ll have my seatmate teach me.\r
+Former classmates: Gu Qinan, don’t think we won’t be able to find you just because you transferred.\r
+Gu Qinan: I’ll have my seatmate beat you.\r
+Translator’s Summary\r
+After being bullied at his old school, Gu Qinan transferred to a new school. He gets assigned to sit next to the school’s tyrant, Zhan Ming.\r
+This seatmate sleeps in class, rarely studies, and never does his homework. Even the teachers have given up on him.\r
+However, whenever Gu Qinan gets in trouble, his seatmate would save him each time. Whenever he’s upset, his seatmate would always pamper and spoil him.\r
+Zhan-ge! Zhan-ge! Why are you so nice to me Q^Q?\r
+A story about an innocent but proactive top student and a cold but loyal school bully. This is a journey of healing, growing up, and improving yourself.\r
+\r
+`,IMG:134,PRIO:1},{BOOK_TITLE:"I'm Not Human",AUTHOR:"Jiuyi 酒矣",CHAPTERS:87,EXTRAS:8,GENRE:"Transmigration",TIMELINE:"Modern",Carrd:"https://imnothuman.carrd.co/",Eng_TL:"locked",Synopsis:`After suddenly dying while trying to meet a deadline, Gu Huai transmigrated and became a non-human race.\r
 This race is cruel and cold, making them feared and shunned by everyone in the interstellar world.\r
-As the new king of the race and facing the group of parents who see him as a baby, Gu Huai said he was under a lot of pressure.`,IMG:135,PRIO:2},{BOOK_TITLE:"I’m Using the Interstellar Live Broadcast to Raise Cubs",AUTHOR:"Wèi Miāo Zuò Chāng 为喵作伥",CHAPTERS:103,EXTRAS:11,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/im-using-the-interstellar-live-broadcast-to-raise-cubs/",Synopsis:`Gu YuMian works as a zookeeper and lives a stable life. Until one day, when he transmigrates to the interstellar era which is different from what he imagined.\r
+As the new king of the race and facing the group of parents who see him as a baby, Gu Huai said he was under a lot of pressure.`,IMG:135,PRIO:2},{BOOK_TITLE:"I'm Not Shouldering This Blame",AUTHOR:"Tian Tang Fang Zhu Zhe 天堂放逐者",CHAPTERS:175,GENRE:"Adventure",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`One day, the stuntman found that acquaintances and unfamiliar people were looking for him through various channels. Even someone from a certain department of the country came—\r
+\r
+Team Leader of an abilities group: Comrade Jian Hua, on behalf of the nation, I want to tell you about a newly discovered world secret.\r
+\r
+Protagonist: What?\r
+\r
+Team Leader of an abilities group: In fact, our world is a book.\r
+\r
+Protagonist: WTF?\r
+\r
+Team Leader of an abilities group: And you will be the last villain of the seven volume novel series.\r
+\r
+Protagonist: …\r
+\r
+See title for the protagonist’s mood.\r
+\r
+Book Character A: You and I are good childhood friends. Shouldn’t I be the white moonlight in your heart?\r
+\r
+Protagonist: …\r
+\r
+Book Character B: I treated you kindly, so shouldn’t you trust me completely?\r
+\r
+Protagonist: …\r
+\r
+Book Character C: I’m so considerate while busy. As good friends, shouldn’t we be rolling around on first base?\r
+\r
+Protagonist: …\r
+\r
+See title for the protagonist’s mood.`,IMG:136,PRIO:2},{BOOK_TITLE:"I'm Really Just An Ordinary Person",AUTHOR:"Lifting The Curtain Lights 帷幕灯火",CHAPTERS:111,EXTRAS:4,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/im-really-just-an-ordinary-person/",Synopsis:`Shen Si was an ordinary person, living an ordinary life, until one day, the unlimited flow world collapses and all the Survivors returned to reality, setting off a ripple.\r
+\r
+His gentle neighbor, Bai JunYi, was the God of Light in the other world, with the strength of faith that could shake the world’s rules.\r
+\r
+His affectionate ex-boyfriend, Jian Nian, was the God of Killing that even ghosts and gods fear, and the rumors are more frightening than each other.\r
+\r
+His distant cousin, Xi Luo, whom he has never met, was the unlimited flow world dark boss, leading countless ghosts and monsters.\r
+\r
+Ordinary person Shen Si: ????\r
+\r
+Onlooker crowd: So many big brothers have relations with him, he must be the hidden most powerful person!`,IMG:137,PRIO:2},{BOOK_TITLE:"I’m Using the Interstellar Live Broadcast to Raise Cubs",AUTHOR:"Wèi Miāo Zuò Chāng 为喵作伥",CHAPTERS:103,EXTRAS:11,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/im-using-the-interstellar-live-broadcast-to-raise-cubs/",Synopsis:`Gu YuMian works as a zookeeper and lives a stable life. Until one day, when he transmigrates to the interstellar era which is different from what he imagined.\r
 \r
 Hot microblog search: #Humans have been officially listed as an endangered species.#\r
 \r
@@ -2601,7 +1889,17 @@ Ten million a year? Coincidentally, he was a professional zookeeper.\r
 \r
 Other anchors focus on things popular, fans and intrigue. Gu YuMian focuses on making cat meals, combing ErHa’s hair and little fox’s tail and feeding the panda cub. His live broadcast became more and more popular.\r
 \r
-Later, Gu YuMian found out that the snow leopard he picked up was the Emperor of the Empire, the panda was a famous star, little fox was the chief of the biggest science institute and Erha was the hottest novelist in the whole world?!`,IMG:138,PRIO:2},{BOOK_TITLE:"Interstellar Rare Species",AUTHOR:"Hanmen Yatou 寒门丫头",CHAPTERS:76,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/interstellar-rare-species/",Synopsis:`When Gu Yu woke up, he found himself transmigrated to a werebeast planet and becoming an ‘artificial female’ given to the imperial marshal.\r
+Later, Gu YuMian found out that the snow leopard he picked up was the Emperor of the Empire, the panda was a famous star, little fox was the chief of the biggest science institute and Erha was the hottest novelist in the whole world?!`,IMG:138,PRIO:2},{BOOK_TITLE:"If You Don't Fall In Love, You'll Die",AUTHOR:"Long Qi 龙柒",CHAPTERS:91,EXTRAS:14,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/iydfilyd/",Synopsis:`Among people in the entertainment industry, the most insufferable person for Ye Chen was that hypocrite, Ren Jing. He looked polite and amiable, but was actually an absolute hypocrite that Ye Chen couldn’t listen to half a sentence he said.\r
+\r
+Then one night, Ye Chen got badly drunk. When he woke up, there was a naked Great Movie King Ren beside him.\r
+\r
+Ye Chen, “Son of a bitch, I’ve been nibbled by a dog!”\r
+\r
+Just when Ye Chen thought of shrugging this matter off, a voice popped out in his head. “Daily mission: Kiss Ren Jing. The reward upon completion: one survival point.”\r
+\r
+“Friendly reminder: If the survival point drops to zero, your life will be taken back.”\r
+\r
+Ye Chen: !!!`,IMG:139,PRIO:2},{BOOK_TITLE:"Interstellar Rare Species",AUTHOR:"Hanmen Yatou 寒门丫头",CHAPTERS:76,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/interstellar-rare-species/",Synopsis:`When Gu Yu woke up, he found himself transmigrated to a werebeast planet and becoming an ‘artificial female’ given to the imperial marshal.\r
 \r
 Shudder.\r
 \r
@@ -2631,452 +1929,23 @@ Xiào Mu’s daily routine after work: Sorry, the appointment for spiritual trea
 \r
 The assistant glanced at the terminal: Boss, quickly come to your senses! The appointment for treatment has already reached 2 years later.\r
 \r
-Leo’s daily life after falling in love: You want to pursue Xiào Mu? I’ll see you at the challenge arena!`,IMG:141,PRIO:3},{BOOK_TITLE:"Lord of End of World",AUTHOR:"Feng Liu Shu Dai 風流書呆",CHAPTERS:172,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/lew/",Synopsis:`The young master of the underground palace who was raised as a cauldron after killing his master and dying himself found himself reborn in the body of a weak young boy in modern times. After enjoying prosperous days, the end of the world came. Being an ordinary person with no dimensional space and no power, the young master will utilise his martial arts in order to survive.\r
+Leo’s daily life after falling in love: You want to pursue Xiào Mu? I’ll see you at the challenge arena!`,IMG:141,PRIO:3},{BOOK_TITLE:"It Seems There Is Light",AUTHOR:"Xu Qingrang",CHAPTERS:48,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/it-seems-there-is-light-chapter-1/",Synopsis:`What is a small southern town with warm mountains and gentle water suitable for? Fall in love.\r
 \r
-————————————————\r
-This is a story about Gong Lixin, who was the young master of an ancient underground palace in ancient times. He was raised by his master and was forced to partake in sexual activities with numerous people to cultivate his Yin Body. His master, who had a Yang Body was going to absorb him after he had reached a certain level so that he would become stronger. The MC refused to accept his fate, and so he killed his master but then died shortly after. He transmigrated to the modern world, and he had thought that he would enjoy a peaceful life, but then the apocalypse arrived.\r
+Yan Liang: The name is in the shape of loving you. ¹\r
 \r
-Being someone with no special powers except for his martial arts, see how he use his martial arts to dominate the times and find his loved ones.\r
+Shi An: …Afraid of the sun.²\r
 \r
-Warnings: Non Con (only in description), Dub Con (threesome), cannibalism\r
-This is a HE but it is not a 1-1 relationship`,IMG:159,PRIO:3},{BOOK_TITLE:"Married Thrice to Salted Fish",AUTHOR:"Bikabi",CHAPTERS:119,EXTRAS:28,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://mtsf.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/mtsf/",Synopsis:`Lin Qingyu aspired only to follow in his father's footsteps and become an Imperial Physician. For more than ten years, he worked day and night to achieve this goal.\r
-However, just before he could finally take the Imperial Medical Office's examination, he was forced to marry the ill son of the Nan'an Hou Mansion, Lu Wancheng, thus destroying his dreams and future.\r
-On the eve of their wedding, Lu Wancheng lay lazily on the bed and said, “Beauty, to be honest, I really don’t want to engage in domestic struggles. I just want to drift along, eat and wait to die. I want to be a Salted Fish.”\r
-First bitter and distant, Lin Qingyu soon enough realizes that Lu Wancheng may be more than just a frivolous sick man, and gradually, while he must face the difficulties being a male wife entails and try to understand who his husband really is, hate and indifference give way to new feelings…`,IMG:169,PRIO:1},{BOOK_TITLE:"My Husband is Suffering From Terminal Illness",AUTHOR:"Can’t Play Chess 不会下棋",CHAPTERS:171,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Xie Yang struggled in the post-apocalyptic world for many years until he was too tired to go on. Then he transmigrated into a young adult entertainment circle novel where the protagonists have easy, sweet, and satisfying lives.\r
+I think.\r
 \r
-The male protagonist of the novel is not just handsome and smart, he’s also reborn. The female protagonist of the novel is not only beautiful and works hard towards her dreams, she also has a cheat in her hands.\r
+You’ve probably learned the magic of warming hearts .\r
 \r
-There’s a lot of male and female supporting roles, each having pretty face, nice figures and someone strong behind them. Get into any one of their bodies, and he could close his eyes and just enjoy life. But he didn’t. Instead he transmigrated into a young idol secretly married to the biggest villain of all — the male protagonist’s maternal uncle.\r
-\r
-His title is husband but it’s more like a nurse. Because this novel’s biggest villain is a terminally ill patient who is gloomy and sick in the head (actually sick). Their marriage was to counter the bad luck (illness).\r
-\r
-Xie Yang: Who cares if you’re the male lead, female lead, male supporting, female supporting, villain or protagonist. Get in the way of my comfortable life and you’ll die (:\r
-\r
-Also titled: [Daily life of husbands trading blows] – [If you love me, let’s divorce] – [Crazy gong: I’ll never divorce]`,IMG:184,PRIO:2},{BOOK_TITLE:"Number One Lazy Merchant of the Beast World",AUTHOR:"Metasequoia 水杉",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`After transmigrating into a beast world, Rong Mingshi discovered that the people of this world experienced widespread mania. For example, when their emotions were abnormally agitated, they would become destructive beasts. If their emotions were abnormally low, they would shrink into their young beast form.\r
-\r
-There is a type of energy stone that can cure this but it must be hand-carved into the animal form corresponding to the beastman. The more realistic the shape, the better the healing effect and the higher the repeated utilization rate.\r
-\r
-In his previous life, Rong Mingshi’s ancestors started as craftsmen who grew their business and became wealthy.\r
-\r
-Then a small store suddenly popped up on the Star Network, selling several small sculptures made with superb skill. The effect of the energy stone to soothe emotions could be felt through the screen and stirred up a sensation in the entire empire. However, this store owner was super lazy…`,IMG:191,PRIO:2},{BOOK_TITLE:"Picked up by the Protagonist of a Tormented!MC Novel",AUTHOR:"藏姝",CHAPTERS:87,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://imjustheretoreadbl.wordpress.com/table-of-contents-picked-up-by-the-protagonist-of-a-tormented-mc-novel/",Synopsis:`A suffering MC novel—the main character must be forced to suffer, be oppressed until they’re hovering between life and death, dying and living here and there. They can have a golden finger, but before getting it they must pay the price. They can also have beautiful women, but all are snake and scorpion beauties, able to look at but not eat.\r
-\r
-“Curse” is just that type of suffering MC novel. The main character Xi Wei, after being forced to experience numerous sufferings, had, at last, become the most powerful, at the same time linking together with the world’s qi and fate. After he was oppressed too miserably, he committed su*cide and buried the entire world with him.\r
-\r
-Zeno transmigrated, in the end arriving at “Curse of sh*t motherf*cker”.\r
-\r
-Zeno was adopted by the MC, finally becoming the number one person/wife.\r
-\r
-Zeno: Help, I don’t want to be destined to be raised by this perverse person!\r
-\r
-All living things (wipe away tears): You must rescue this world, ah.\r
-\r
-Xi Wei: Come over here.`,IMG:198,PRIO:3},{BOOK_TITLE:"Reborn into A Slash Game",AUTHOR:"Long Qi 龙柒",CHAPTERS:80,EXTRAS:1,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/rsg/",Synopsis:`Suo Fei: Hey, hey, hey, can you delete these files and let me restart? What the hell did Laozi transmigrate into!\r
-\r
-Statement: The protagonist is a shou. This novel is 1v1, always gong x always shou, ending is HE, the course of events is very wretched, and the author has no moral integrity.`,IMG:207,PRIO:3},{BOOK_TITLE:"The Disabled Tyrant's Pet Palm Fish",AUTHOR:"Xuěshān féi hú 雪山肥狐",CHAPTERS:156,GENRE:"Transmigration",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dtppf/",Synopsis:`One day, Li Yu transmigrated into a fish. Furthermore, this fish even had a master. This master was the sinister and terrifying, mute tyrant from a novel. The system gave Li Yu a task. If he wanted to change back into a human, he had to obtain the tyrant’s heart.\r
-\r
-Li Yu full of tears: System, please wake up. I’m only a fish. He can’t even speak. How can we interact?\r
-\r
-System: Stop jabbering. To take down the tyrant, you must attack his heart.\r
-\r
-Li Yu: Can I ask, does the tyrant have a heart–\r
-\r
-Li Yu did his best to blow bubbles at the tyrant, but ended up being captured by the tyrant and raised carefully in a huge, ginormous…… fish tank. The life of a fish was filled with all sorts of blessings.\r
-\r
-Everyday, Mu Tianchi watched the little carp swim around happily, pondering when this fish would finally transform into a human.\r
-\r
-The little carp didn’t know. It’s not that the tyrant had no heart, it’s just that he already gave it away to the little carp that accidentally saved his life.`,IMG:236,PRIO:1},{BOOK_TITLE:"The villain Just Wants To Be A Salted Fish",AUTHOR:"夕朝南歌",CHAPTERS:134,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Synopsis:`Ye Zexi transmigrated as the big villain in a danmei novel, who shares the same name as him. Then, he found out that everyone regards him as an imaginary enemy.\r
-\r
-In this regard, he adheres to only one principle: Don’t want to fight, take everything you want.\r
-\r
-In the boy group’s audition show:\r
-The team member wanted to take the C [Center] position from Ye Zexi.\r
-Ye Zexi took the initiative to withdraw for the sake of being lazy.\r
-The team member was complacent and thought that Ye Zexi had stage fright and the team member was determined to win.\r
-After the performance, Ye Zexi took first place.\r
-Team member: ?\r
-\r
-The instructor asked everyone about their purpose to join the competition.\r
-Other contestants: Dreams, because we love the stage!\r
-Ye Zexi: In order to go home and inherit the family property.\r
-Other contestants: ???\r
-\r
-Unexpectedly, not only did Ye Zexi fail to be lazy, he also became more popular.`,IMG:257,PRIO:3},{BOOK_TITLE:"Transmigrated Into a Big Boss to Snatch Away the Cannon Fodder",AUTHOR:"Xī wǒ yǒu mèng 昔我有梦",CHAPTERS:155,EXTRAS:19,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Rong Qing transmigrated into the role of a big boss inside a book. Passionate, rich, and extremely good looking.\r
-\r
-Yet this kind of big boss character, there were a total of six in the original book. All were embraced and hugged left and right by the original book’s main character Xiao Ziqi.\r
-\r
-How can this be in accordance with the values of an upright modern society?\r
-\r
-Rong Qing immediately sharpened his (metaphoric) sword and prepared to battle against the other big bosses. He will let them learn that although love was precious, making money was even sweeter!\r
-\r
-During this process, he also accidentally picked up a little wolf pup cannon fodder from the original book and started his sweet, yet hilarious new life…`,IMG:273,PRIO:2},{BOOK_TITLE:"Transmigration of Mian [Reluctantly] Becomes His Man [Wife]",AUTHOR:"怜惜凝眸",CHAPTERS:222,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://tmrbhmw.carrd.co/",Eng_TL:"https://www.foxaholic.com/novel/transmigration-of-mian-reluctantly-becomes-his-man-wife/",Synopsis:`Qin Mian opened his eyes and found himself lying in a leaky thatched room. The problem was that he was still in his family’s villa beforehand! What’s more, another man was lying next to his leg in the quilt!\r
-\r
-“You, you, who are you?”\r
-\r
-The man sat up quietly, his upper body exposed as looked at Qin Mian for a moment before he carried a worn-out bowl with a cracked corner from the low table at the head of the bed. The man said in a muffled voice, “Wife, drink water.”\r
-\r
-Qin Mian’s eyes rolled backward and he passed out.`,IMG:276,PRIO:3},{BOOK_TITLE:"After an Infinite Flow Player Retires",AUTHOR:"Sang Wo",CHAPTERS:98,EXTRAS:9,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://kktranslates.home.blog/2021/04/18/after-an-infinite-flow-player-retires-by/",Synopsis:`As a renowned fierce god in the infinite flow world, Ye Jia deliberately hid his strength after clearing it and found an idle job in the Logistics Department of the Paranormal Investigation and Management Bureau.\r
-\r
-He originally thought that he would be able to return to his salted fish life and live comfortably.\r
-\r
-But what Ye Jia didn’t expect was……\r
-\r
-One day, he opened the fridge and was met with an evil spirit’s vicious head, “Boss, boss. Did you miss me…..”\r
-\r
-Ye Jia: “………”\r
-\r
-He slammed the door shut and fell into deep thought.\r
-\r
-Wasn’t there something wrong with this world?\r
-\r
-The TV behind him was broadcasting news:\r
-\r
-Recently there has been a surge in paranormal events and the number of missing persons has sharply increased. It is currently under investigation…..\r
-\r
-*\r
-\r
-With the infinite flow escape game unexpectedly crashing, countless demons and ghosts trapped in it were released, bringing disaster to the world.\r
-\r
-Only Ye Jia who cleared the game knew the truth.\r
-\r
-All of these……..were old acquaintances………\r
-\r
-Ye Jia: My life is too difficult.\r
-\r
-#I clearly just want to be an ordinary corporate s*ave#\r
-\r
-Finally, one day, he saw an unexpected monster.\r
-\r
-After two seconds of silence, Ye Jia greeted dryly: “…….You came out too. What a coincidence.”\r
-\r
-The man before him smiled and slowly approached him, “My boyfriend ran away from home. Of course, I should come out to catch him and bring him back.”\r
-\r
-Ye Jia: “……..”\r
-\r
-Who would have thought that, along with the global sensation of ghost doors opening in the mortal world, there was also…..\r
-\r
-His peach blossom debt.\r
-\r
-It can’t be, sir. This is also okay?`,IMG:16,PRIO:1},{BOOK_TITLE:"I am The Lucky Cat of An MMORPG",AUTHOR:"Black Wings 黑色的羽翼",CHAPTERS:89,EXTRAS:7,GENRE:"Video Game",TIMELINE:"Modern",Eng_TL:"https://shibbsden.com/lucky-cat/",Synopsis:`Bai XiaoYu, a student who had become an otaku due to being forced into living a life of seclusion after a tragic event in real life, met a magical lucky pet cat when he took to secluding himself in a game.\r
-\r
-Not only did the cat beckon fortune, it also beckoned a sugar daddy and enemies.\r
-\r
-Can it beckon ultimate happiness?`,IMG:113,PRIO:3},{BOOK_TITLE:"The Antelope and Night Wolf",AUTHOR:"Yi Xiu Luo 易修罗",CHAPTERS:87,EXTRAS:2,GENRE:"Video Game",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/tanw/",Synopsis:`LingYang spent 500RMB to buy a ladyboy account, and it came with a husband?\r
-\r
-Just after logging into the game he was informed that the account was in debt, and he had no choice but to sell himself and act as a couple with his ‘husband’.\r
-\r
-LingYang: I only bought an account, why must you force a husband on me?\r
-\r
-YeLang: You can also choose not to take the husband but the debt instead.\r
-\r
-LingYang: Dear, can I not have the free gift?\r
-\r
-YeLang: Sorry, it’s a bundle, no returns allowed.\r
-\r
-At first glance, it’s a story about how a little antelope accidentally entered the embrace of a big-tailed wolf after escaping from a tiger’s den.\r
-\r
-But it’s actually an inspirational story about how an innocent straight man was actively turned gay by a little bottom with a boots fetish, then went through a series of complex mentality changes, finally becoming a cold-blooded, black-bellied S top!`,IMG:231,PRIO:1},{BOOK_TITLE:"A White Lotus Host Who Does Not Want To Be a White Moonlight Is Not a Good Host",AUTHOR:"mù sháo qī",CHAPTERS:89,GENRE:"World Hopping",Eng_TL:"https://storyseedling.com/series/19303/",Synopsis:`Bai Lianhua looks just like his namesake, a white lotus. \r
-\r
-So it’s probably inevitable that a system came for him. \r
-\r
-System: come, my dear host Bai Lianhua, please live up to your name, and with your white lotus aura that is dazzlingly divine, save those antagonists who have led tragic lives and who are to stand against the world in the future. \r
-\r
-Bai Lianhua: …Wait, it isn’t my fault my name is like that. \r
-\r
-Before, Bai Lianhua thought this would have been the most excruciating thing to happen to his life, until all his missions were completed, and he’s happy and excited to go home. His system which had always been acting cute wipes his face handsomely, and then gives him a mystifying smile, “in fact, my real name is Return System of White Moonlight.” \r
-\r
-＃Apparently, white lotus and white moonlight are great as a combo＃ \r
-\r
-So, this was actually an all-in-one service featuring white lotus + white moonlight? The missions he thought he had completed were just the preludes to his missions to follow? \r
-\r
-And so, after having acted as a white lotus waving brilliantly in the wind, Bai Lianhua will have to return to his previous worlds, as that white moonlight that never went away in each of the antagonists’ minds, and resave the world from their clutches. \r
-\r
-Bai Lianhua: Wait! System, come back! Explain to me why all my missions failed after I left, and why all those guys who I had painstakingly dragged back into the righteous path still went awry! \r
-\r
-Mr. Antagonist: Hm? What’s the problem? I’m really happy with this——Now I finally have the power to take this white lotus from the pond, and nurture it well within a vase [takes a fresh white●lotus in his hand, playing with it gently] \r
-\r
-Bai Lianhua: …! [Like the small white lotus, shaking pitifully in the wind]_(:з」∠)_ \r
-\r
-If the system lied to you, don’t despair, don’t cry, please stay as quiet as a flower, and be a stretch of pure white moonlight.`,IMG:11,PRIO:2},{BOOK_TITLE:"As the Minor Gay Rival in Het Novels",AUTHOR:"XiXiLi 夕夕里",CHAPTERS:106,EXTRAS:11,GENRE:"World Hopping",Eng_TL:"https://www.ainushi.com/projects/chinese/as-the-minor-gay-love-rival-in-hetero-novels/",Synopsis:`There are always four kinds of people in the traditional Mary Sue world. The Male Lead, the Mary Sue female lead, the woman who never wanted to see the female protagonist live a good life, and the infatuated man willing to destroy heaven and earth to get the female lead. \r
-\r
-However, with the rapid expansion of the army of rotten women, there is also a growing type of character, and that is a man who is also infatuated with the male lead… This character is referred to as the gay guy. They share the same infatuation as the second man, also has a tragic end and works together in hindering the male and female protagonist’s love. \r
-\r
-Fan Yuan has walked in every time and space playing as the gay man. He had always enjoyed it, until one day, with superb acting, he made the male lead bent… o (╯-╰) o \r
-\r
-Fan Yuan (affectionate confession): “I do not want to be your brother, in fact, I have always loved you.” \r
-\r
-Someone (fondly looking back): “Me too.” \r
-\r
-Fan Yuan (⊙_⊙): “…” \r
-\r
-You’ve got the wrong line, bro!`,IMG:31,PRIO:3},{BOOK_TITLE:"Beloved Husband",AUTHOR:"Jué Jué 决绝",CHAPTERS:257,GENRE:"World Hopping",Eng_TL:"https://awanderingpotato.com/beloved-husband-quick-wear/",Synopsis:`Yan Jing Ze encountered an accident while escaping with his lover, was accidentally parasitized, and was involved in reincarnations.\r
-\r
-He was lost in reincarnation and almost couldn’t wake up, but if he doesn’t wake up again, his dear will be doomed!\r
-\r
-So at certain critical moments, the phoenix man who squeezed the bamboo horse, the scumbag who framed the learning God… they all became sober, no, they were “pierced”.\r
-\r
-Various scum gong began to spoil their beloved shou crazily.\r
-\r
-Story of the amnesiac gong, Yan Jing Ze, transmigrating into multiple worlds as the scum gong of his beloved wife.`,IMG:37,PRIO:2},{BOOK_TITLE:"Born to Be Rebellious",AUTHOR:"Sang Wo",CHAPTERS:213,EXTRAS:1,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://bambootriangle.wordpress.com/2021/09/15/born-to-be-rebellious-quick-transmigration-%E5%A4%A9%E7%94%9F%E5%8F%8D%E9%AA%A8%E5%BF%AB%E7%A9%BF/",Synopsis:`Ge Xiu is a nefarious star criminal. After being arrested, according to the Interstellar Supreme Law, he will face two choices: either serve a sentence of 1156 years in black prison or enter countless virtual worlds and become a miserable person who is tortured and abused all his life. How much he suffers is how much his sentence can be reduced. Ge Xiu chose the second one without hesitation.\r
-\r
-So… The trial surveillance system stared dumbfounded at the Former•Interstellar Most•Wanted•Criminal•Currently•Weak•Poor Ge Xiu in the virtual world, punching the empire, kicking the Federation, overthrowing oppression and building a new world. Then he turned his head to the camera and cried: “I’ve had a miserable life, really.”\r
-\r
-“…” The surveillance system that was about to explode of anger: “Like hell I’d believe you!”`,IMG:39,PRIO:1},{BOOK_TITLE:"BOSS Transmigrates as a Little Cutie",AUTHOR:"光明在案",CHAPTERS:154,EXTRAS:5,GENRE:"World Hopping",Eng_TL:"https://www.foxaholic.com/novel/boss-transmigrates-as-a-little-cutie/",Synopsis:`Qing Yun was probably the only villain who had suffered this much.\r
-\r
-For hundreds of years, a protagonist had always been barking at him and attempting to harm him, but just couldn’t kill him.\r
-\r
-When he spent his days bedridden like a dying man, his life was no better than that of the dead.\r
-\r
-People respected him, feared him, secretly cursed at him, but he just wouldn’t die!\r
-\r
-But he, the ultimate BOSS, has become an insignificant cannon fodder only to be manipulated and destroyed?\r
-\r
-That’ll never happen.\r
-\r
-A certain green-eyed man: Cutie, come into my arms.\r
-\r
-Qing Yun: Heh heh, Lao Zi will teach you how to behave.\r
-\r
-*Ding* the world’s most ferocious little cutie has come online~`,IMG:40,PRIO:3},{BOOK_TITLE:"Cannon Fodder Cheat System",AUTHOR:"júzi zhōu",CHAPTERS:228,GENRE:"World Hopping",Eng_TL:"https://auroranovels.wordpress.com/cannon-fodder-cheat-system/",Synopsis:`At first, when he learned that he was forced to go to many different routine worlds and be reborn into all kinds of cannon fodder, he was against it.\r
-\r
-Because while villains usually all only have a moment of satisfaction, the endings of cannon fodder are also frequently quite miserable.\r
-\r
-But the man who gave him the system told him that this system not only has all types of powerful functions, but he can also break the routine lives of the cannon fodder. If he achieves this satisfactorily for each world, he can even become a god.\r
-\r
-He’s already experienced over a thousand reincarnations, but hasn’t yet been a god. Since it sounds pretty great, why not just try it out.\r
-\r
-From that moment on, he began the irreversible path of tyrannically oppressing people, while conveniently tearing open those white moonlights and so-called righteous people’s hypocritical masks.\r
-\r
-His goal: wearing the villain’s role to walk other people’s righteous paths, leaving them no path to follow.`,IMG:43,PRIO:3},{BOOK_TITLE:"Don’t Pick Up Boyfriends From the Trash Bin",AUTHOR:"Riding a Whale South",CHAPTERS:270,EXTRAS:14,GENRE:"World Hopping",TIMELINE:"Modern",Carrd:"https://dpubfttb.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dpubftb/",Synopsis:`Chi Xiaochi: fourth-rate citizen at birth, three-time award-winning film emperor, second-rate temper, first-class looks. He crawled his way out of hell on hard mode to become a winner at life.\r
-\r
-Then, he was smashed into a vegetative state by a chandelier.\r
-\r
-061: Hello, here’s a brief rundown on the scum gong reconditioning system. This system measures the regret level of the scum gong. Every time their regret level reaches one hundred points, you will be able to leave the current world. A friendly tip, usually, through dedication and self-sacrifice, our employees slowly foster a sense of dependency in the scum gongs, gradually making it so the scum gongs can’t live without them…\r
-\r
-Chi Xiaochi: How many regret points is a complete loss of reputation and standing worth? How about a fall from grace? Or wanting something but never being able to obtain it?\r
-\r
-061: ……`,IMG:60,PRIO:1},{BOOK_TITLE:"Everyone Knows I'm A Good Person",AUTHOR:"Tang Wei Shuai 糖尾帅",CHAPTERS:176,EXTRAS:1,GENRE:"World Hopping",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ekigp/",Synopsis:`Shi Qing’s task was to be a protector.\r
-\r
-It was only after transmigrating to various worlds and eagerly counterattacking the villains there that he realized he was the biggest villain out of everyone.\r
-\r
-– A king that liked to conquer other worlds\r
-\r
-– A Film Emperor that had a malicious personality\r
-\r
-– A Blackened Young Master with deviant intentions\r
-\r
-– A Schoolyard Bully that was overbearing to others\r
-\r
-Afterwards the gong that initially despised Shi Qing discovered:\r
-\r
-– The Machine King that seemed like an invader was really a million-year-old baby\r
-\r
-– The Film Emperor that seemed malicious was secretly helping upcoming actors\r
-\r
-– The Young Master that seemed to harbor deviant intentions was a pure-hearted young boy\r
-\r
-– The Schoolyard Bully that seemed overbearing was secretly in love\r
-\r
-In the end….\r
-\r
-The entire world: He’s such a good person!`,IMG:69,PRIO:2},{BOOK_TITLE:"Heroic Death System",AUTHOR:"Xue Yuan Specter 雪原幽灵",CHAPTERS:271,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://snowycodex.com/translations/novels/hds/",Synopsis:`“I curse you to never die in peace!”\r
-\r
-Thus, Shang Ke started a never-ending cycle of constantly throwing away his miserable life.\r
-\r
-He would always show himself as a martyr while letting others cry over his death.\r
-\r
-It was because of a woman’s curse that Shang Ke was hit by a car and turned into a human vegetable. This led to him becoming bound by an unlucky system in which he was cursed to die. The most unfortunate part was that he never cheated on anyone’s feelings. The reason for why he was cursed by a woman was because of a guy named Qi Chen. Qi Chen was a ladies man, and he would always use Shang Ke as an excuse to break up with any woman that he was with. As a result, Shang Ke was always blamed for the breakups. Since then, the main character could only be forced to cross into different worlds. He would thus experience for himself, the hero’s “thrill”.`,IMG:103,PRIO:3},{BOOK_TITLE:"I Really Am A Slag Shou!",AUTHOR:"Your Glory 你的荣光",CHAPTERS:181,GENRE:"World Hopping",Eng_TL:"https://kktranslates.home.blog/2020/10/29/i-really-am-a-slag-shou-by-%E4%BD%A0%E7%9A%84%E8%8D%A3%E5%85%89/",Synopsis:`Chi Zhao binds with the slag shou system, and if he succeeds in his missions, he will be rewarded.\r
-\r
-But who said life is easy!\r
-\r
-A rich old man who was slagged by him: “I know you love me. Your past pains, I’ve already investigated them.”\r
-\r
-The star admiral who had been slagged by him: “Don’t be reluctant anymore! I’ve always known that you didn’t betray me.”\r
-\r
-The entertainment mogul who was slagged by him: “Don’t make any noise. Honey, will you come home with me?”\r
-\r
-The prince regent who was slagged by him said, “The mountains and rivers are yours, but you are mine.”\r
-\r
-The dark sentinel who was slagged by him: “Now, do you still want to say that it is not my child?”\r
-\r
-…\r
-\r
-Chi Zhao burst into tears: “Boss, believe me just this once. Let me get the reward, okay?”\r
-\r
-Thinking that the acting is very good, in fact, every day he’s spreading meng.`,IMG:126,PRIO:3},{BOOK_TITLE:"It's Actually Not Easy Wanting to be a Supporting Male Lead",AUTHOR:"mijia",CHAPTERS:200,EXTRAS:5,GENRE:"World Hopping",Eng_TL:"locked",Synopsis:`n this period where countless supporting lead actors always attempt to counterattack, turn over a new leaf or simply refuse to take up the role, his purpose of existing is to fill the role of a good supporting male lead and uphold his duty to the best of his ability. To add the needed lustre to storylines and this world. Only, it’s a pity that even those unafraid of god-like enemies will be afraid of pig-like teammates.\r
+Notes:\r
+1. ….是爱你的形状 (… is in the shape of loving you) is a meme. It’s basically Yan Liang confessing his love for Shi An\r
+2. This is a word play on his name. Yan Liang’s Yan consists of 日 on top of 安, and Shi An’s An is also (安). Basically, Shi An adds 日 on his 安 so he feels very hot because the sun is on top of him, so that’s why he says he’s afraid of the sun.`,IMG:142,PRIO:1},{BOOK_TITLE:"It's Actually Not Easy Wanting to be a Supporting Male Lead",AUTHOR:"mijia",CHAPTERS:200,EXTRAS:5,GENRE:"World Hopping",Eng_TL:"locked",Synopsis:`n this period where countless supporting lead actors always attempt to counterattack, turn over a new leaf or simply refuse to take up the role, his purpose of existing is to fill the role of a good supporting male lead and uphold his duty to the best of his ability. To add the needed lustre to storylines and this world. Only, it’s a pity that even those unafraid of god-like enemies will be afraid of pig-like teammates.\r
 \r
 Bitterly, he realises that for some unfathomable reason, he is being bothered time and again by a bastard who refuses to follow the script…\r
 \r
-In order to walk the path of a good supporting male lead, he engages in a battle of wits and courage with that person. Loving each other and killing each other, one ultimately cannot escape fate’s teasing– why is it so difficult wanting to be a responsible and diligent supporting male lead?! QAQ`,IMG:143,PRIO:3},{BOOK_TITLE:"Misplacement Game",AUTHOR:"Teng Yuan Xin 藤原欣",CHAPTERS:139,EXTRAS:1,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://kktranslates.home.blog/2020/03/29/new-project-misplacement-game-by-%E8%97%A4%E5%8E%9F%E6%AC%A3/",Synopsis:`The protagonist is a face-con – he likes good-looking people, can’t say no to a pretty visage and is filled with thoughts of love. One day he bonded with a target-capture system where he can travel from world to world and experience love with the most handsome (key point!) target!\r
-\r
-The number of players in each game is not set. The protagonist has only one target – the most handsome one. As he falls in love, he realizes… the other players perhaps, maybe, probably… have Horror? Survival? Escape-type games?`,IMG:171,PRIO:1},{BOOK_TITLE:"Quickly Wear the Face of the Devil",AUTHOR:"風流書呆",CHAPTERS:177,EXTRAS:4,GENRE:"World Hopping",TIMELINE:"Modern",Carrd:"https://qwtfotd.carrd.co/",Eng_TL:"https://whiteskytranslations.wordpress.com/quickly-wear-the-face-of-the-devil-extra-3-the-fox-demon-and-the-regent/",Synopsis:`A top hacker was chosen by the Lord God to be reborn into countless worlds, always as an expendable villain.\r
-With no free will, every world became a dead end. Each of his lives ended tragically.\r
-Finally, after wrestling control of the Villain System, this ace hacker decided to enact revenge. Even if his very bones were rotten, he’d choose to occupy the very heights of morality, if only on the surface.\r
-Thus, he would change his fate as an abused slag`,IMG:202,PRIO:2},{BOOK_TITLE:"Strategy to Capture That Scum Gong",AUTHOR:"Tức Mặc Dao 即墨遥",CHAPTERS:211,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/scsg/",Synopsis:`As a true over-bearing president scum gong, when Xie He for the Nth time rejected his admirer, he heard a sentence in his head: “Congratulations on achieving the “rejects 100 hosts” accomplishment; as an award you will soon bind to the “Scum Gong and Cheap Shou” system, entering other worlds to complete capture missions.\r
-\r
-As a scum gong, Xie He expresses that it is very easy to hide one’s true colors, but…… “I Heard My Boyfriend’s Brother Secretly Loves Me,” “Teacher Love Me One More Time,” “Raising Rich Youth Manual,” “Your Majesty, This Servant Obeys,” “The Tyrant Lord’s Substitute Lover,” “Captive of the Empire,” “Disciple’s Cultivation Furnace” ……\r
-\r
-Xie He: Wait a minute. These words sound really strange……. and why is my role the ‘cheap shou’?\r
-\r
-System: Fighting poison with poison. Using scum to overcome scum. I’ll be relying on you to abuse the scum gong! Remember to not OOC~\r
-\r
-Xie He: He he.\r
-\r
-Later……\r
-\r
-Xie He: Hm? You say all the scum gong love me? Sorry, I only love myself.`,IMG:226,PRIO:2},{BOOK_TITLE:"The People Who’re Supposed To Kill Me Fell For Me Instead",AUTHOR:"Jiuyi 酒矣",CHAPTERS:123,GENRE:"World Hopping",Eng_TL:"https://dummynovels.com/novel/the-people-whore-suppose-to-kill-me-all-fell-for-me-instead/",Synopsis:`What does it feel like to be a cannon fodder in your own novel?\r
-\r
-After ruining countless of his novels with sh*t endings,\r
-\r
-Gu Yan who finally received his retribution understood.\r
-\r
-Heaven spared no one.\r
-\r
-In order to protect his small life, Gu Yan has been sent to diligently clean up his own mess.\r
-\r
-However, never did he expect that his ‘clean up’ would be too thorough.\r
-\r
-Seeing that the man who was suppose to have killed him kneel down on one knee and take out a ring while saying to him, “Marry me.”\r
-\r
-Gu Yan: “…”`,IMG:249,PRIO:3},{BOOK_TITLE:"The Perfect Destiny",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:157,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pd/",Synopsis:`When he first crossed over, Chen Liguo did not want to accept it.\r
-\r
-But he quickly discovered, after he crossed, he found that all the men he met had perfect figures and eight-packs. Furthermore, these men liked him.\r
-\r
-As a gay man, Chen Liguo was so excited he shed tears of joy.\r
-\r
-However, the world obviously wouldn’t have such good things.\r
-\r
-Because, just as he was drooling and about to pounce, a system appeared and told him: Buddy, sorry to let you down, but you can’t be with these people.\r
-\r
-Chen Liguo: What if I insist?\r
-\r
-System: Hehe\r
-\r
-……\r
-\r
-Chen Liguo: You trash system! Destroying my youth! Ruining my sex life!`,IMG:250,PRIO:3},{BOOK_TITLE:`Dongfang Bubai’s Reborn Yang Lianting\r
-`,AUTHOR:"Clever And Witty",CHAPTERS:66,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://invincibleeast.carrd.co/",Eng_TL:"https://docs.google.com/document/d/1qQhcjTkNrc9Pko69rTcGp8_KiYz7ejoLOTiYrZ3AcrU/edit#heading=h.pvz2ic4l61sp",Synopsis:`From beginning to end, the only one Dongfang Bubai loved was Yang Lianting.\r
-In their past life, even though Yang Lianting coveted power and position, even though he never held him in his heart–\r
-But Dongfang Bubai’s love, isn’t it just like this?\r
-Falling in love with such a person means not only accepting his good, but also tolerating his evil.\r
-Reborn Yang Lianting returned to a time when everything had yet to happen, which gives him the chance to relfect upon himself, the chance to treat Dongfang well and to return him a lifetime filled with happiness.\r
-\r
-`,IMG:63,PRIO:2},{BOOK_TITLE:"Everyday I get Up to See The villain Stealing The Show",AUTHOR:"Zhong Xiaosheng 钟晓生",CHAPTERS:110,GENRE:"Wuxia",TIMELINE:"Historical",Eng_TL:"https://betwixtedbutterfly.com/translations/evss/",Synopsis:`The wrong way to act as a villain no.1: Get rid of the protagonist while he still hasn’t become powerful.\r
-\r
-The wrong way to act as a villain no.2: Take the limelight from the protagonist at the key moment.\r
-\r
-The wrong way to act as a villain no.3: Make the protagonist fall in love with you, thus making him incapable of completing the final step – eliminating the major villain.\r
-\r
-Han Changsheng, Head of the Demonic Cult, is the major villain who’s employed all three incorrect methods.\r
-\r
-—————\r
-\r
-As the leader of the first Demonic Cult in the underground world of martial arts and cultivation, Tianning Cult, Han Changsheng carried on the long-standing tradition of an unstable mind and a refusal to seek any treatment.\r
-\r
-Originally, his life should have passed by quickly and simply, but one day he kicked a descended Immortal Lord off a cliff. In order to make up for this mistake, he must aid the Immortal Lord in ascending back to his position… but why does this mistake keep growing? Hey, Lao zi doesn’t need you as a younger brother, you should look for An Yuan! Don’t chase after Lao zi, you’re destined to be An Yuan’s wife! Don’t worship Lao zi as a martial arts lord, lao zi is the genuine leader of the Demonic Cult! Hey, Hey Lao zi is obviously the major villain! What the hell are you doing?!`,IMG:67,PRIO:3},{BOOK_TITLE:"Faraway Wanderers",AUTHOR:"Priest",CHAPTERS:77,EXTRAS:4,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://tian-ya-ke.carrd.co/",Eng_TL:"https://sparklingwatertrans.wordpress.com/projects/faraway-wanderers/",Synopsis:`A story about the former leader of a special organization served under royalty, now leaving his past life behind and unwittingly getting involved with the martial world.\r
-Zhou Zhishu is the leader of the emperor's special organization, Tian Chuang. After three years of bloodshed, he leaves the organization and travels the Jianghu Mountains to lead a peaceful and leisurely life.\r
-However, with virtuous intentions in mind, he engages in a war in jianghu, where he meets Wen Kexing, a valley master who likes "beautiful people". Wen Kexing follows Zhou Zhishu closely and the two eventually reunite during their journey through jianghu.`,IMG:79,PRIO:1},{BOOK_TITLE:"Lord Seventh",AUTHOR:"priest",CHAPTERS:76,EXTRAS:3,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://qiye.carrd.co/",Eng_TL:"https://sparklingwatertrans.wordpress.com/projects/lord-seventh/",Synopsis:"Waking up again in his seventh reincarnation, prince Jing Beiyuan found himself back in time, when everything had yet to be set in motion. Having been given a second chance, Beiyuan had to survive court and decide whether it was finally time for him to let go of his feelings; all while trying to handle the youthful, innocent force of nature who had suddenly barged into his already complicated life.",IMG:160,PRIO:2},{BOOK_TITLE:"Peerless",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:187,EXTRAS:4,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://wu-shuang.carrd.co/",Eng_TL:"https://dustbunnytranslations.wordpress.com/wushuang-4/",Synopsis:`On the Third-Year of Kaihuang, as the Great Sui unfolds its curtains to welcome the glorious Tang Dynasty in succession to the Northern Dynasty, Yang Jian established a secret agency, the Jiejian Bureau in preparation to unify the world.\r
-In a stormy night filled with snow, a convoy of tribute sent by the Kingdom of Khotan was ambushed and massacred with not a living soul left behind. The Second Commander of the Jiejian Bureau, Feng Xiao came forth to investigate the case under Imperial Orders.\r
-A gathering of storms would soon take place in a little city which sat on the frontier, called the City of Six Crafts, where all the top martial powers across the lands would meet.\r
-The ever successful Second Commander Feng meets a dead end when he ran into a Master Daoist with ailing health.\r
-All would be unknown if they had never crossed paths, but once their paths crossed, Second Commander Feng realized this ailing man had more secrets than himself.\r
-A crime and mystery novel that takes place in ancient Chinese historical settings. A story that reaches to as high as the loftiness of the Imperial Court and as far as the edge of the Jianghu. Whatever you want, it’s included.\r
-CP: Shou with ailing health who might die at any time and judges people by their looks X Theratical and dramatic germaphobe gong with unparalleled martial prowess.\r
-\r
-`,IMG:196,PRIO:1},{BOOK_TITLE:"Record of the Missing Sect Master",AUTHOR:"一世华裳",CHAPTERS:115,EXTRAS:5,GENRE:"Wuxia",TIMELINE:"Modern",Carrd:"https://missingsectmaster.carrd.co/",Eng_TL:"https://shrimpchips.home.blog/record-of-the-missing-sect-master/",Synopsis:`A major event happened recently to the demonic sect – their powerful sect master suddenly went missing.\r
-Everyone comforted each other: “Don’t worry, the sect master must be out pursuing fun, and so on.”\r
-“Well, that makes sense.”\r
-They waited.\r
-Waited and waited.\r
-Waited and waited.\r
-Waited and… Everyone slammed the table: “We’ve waited so long! The sect master must have met with a mishap! Look for him!!” Numerous disciples therefore ran rumbling down the mountain.\r
-On a certain day of the month, a certain sect master opened his eyes and thought in confusion: Hey, who am I?`,IMG:209,PRIO:3},{BOOK_TITLE:"The Wrong Way to a Demon Sect Leader",AUTHOR:"Yi Zhī Dàyàn 一只大雁",CHAPTERS:82,EXTRAS:47,GENRE:"Wuxia",TIMELINE:"Historical",Eng_TL:"https://chichilations.home.blog/2021/06/12/sc-1-10/",Synopsis:"The number one swordsman Zhao Jiangui is the martial world’s best hope for peace: All he has to do is seduce the Demon Sect Leader.",IMG:260,PRIO:1},{BOOK_TITLE:"Thousand Autumns",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:128,EXTRAS:3,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://qianqiu.carrd.co/",Eng_TL:"locked",Synopsis:`"Yan Wushi had walked a path full of blood and corpses.\r
-He did not believe in the good nature of humanity. Even more so, he did not believe that there could be someone with great kindness and sense of justice, who would be so considerate of others without asking anything in return.\r
-One day, Shen Qiao, who was the sect leader of Mount Xuandu, the number one Daoist sect under the heavens, was challenged to a duel but somehow fell off the cliff.\r
-Yan Wushi happened to pass by down there.\r
-Seeing Shen Qiao who was seriously injured to the point of dying, he suddenly came up with a perfect idea…\r
-After thousands of autumns, who could stay eternal?"`,IMG:266,PRIO:1},{BOOK_TITLE:"Where is Our Agreement to be Each Other’s Arch-Rivals?",AUTHOR:"Poplar Breeze 輕風白楊",CHAPTERS:120,EXTRAS:2,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://archrivals.carrd.co/",Eng_TL:"https://peachblossomcodex.com/novel/wioatbeosar/",Synopsis:`The web celebrity, Chen Suyang, transmigrated into a film adaptation he’d just finished rolling the death scene. Now he has to play the villain—the Evil Sect’s young master, Su Yang.\r
-\r
-To return to his own world, he faithfully acted according to the script and solemnly recited his lines—waiting for the day he’d die under the protagonist’s sword.\r
-\r
-But… why were the scenes getting farther and farther from the script?`,IMG:286,PRIO:3},{BOOK_TITLE:"Carrying a Hoe to Cultivate",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:69,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/carrying-a-hoe-to-cultivate-transmigration-into-a-book/",Synopsis:`Xia Yi had transmigrated, with a cultivation system into a farming novel. Orz\r
-\r
-Mission: Becoming an apprentice in the Qi Shan Sect to obtain a mythical beast.\r
-\r
-With his hoe on his shoulder, Xia Yi gazed at the large area of farmland in front of him, he almost blacked out: How am I going to complete cultivation missions in a farming novel?\r
-\r
-System: It’s fine. There is always a fix to a problem…\r
-\r
-And so, Xia Yi was forced to go between the two worlds, farmed a bit here, cultivated a bit there.\r
-\r
-Although the rubbish missions were torturing him to death, there was always a loyal doggie beside him…\r
-\r
-Xia Yi: Cultivating is so hard.\r
-\r
-Gu Wen Zhu: I’ll teach you.\r
-\r
-Xia Yi: Farming is so exhausting.\r
-\r
-Gu Wen Zhu: I’ll help.\r
-\r
-Xia Yi: I don’t want to have a child.\r
-\r
-Gu Wen Zhu: Yes, you want to.\r
-\r
-As the worlds mixed up, the characters in the cultivation novel frequently appeared beside him.\r
-\r
-The whole thing was a mess, traveling between two worlds. Claiming to be relatives with people, arranging a marriage, becoming sworn brothers with others…\r
-\r
-Why not let his dog at home join the party too!`,IMG:44,PRIO:3},{BOOK_TITLE:"Dao of The Salted Fish",AUTHOR:"bafflinghaze",CHAPTERS:126,EXTRAS:13,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dsf/",Synopsis:`Wen Zhihao is tired of life. When he dies…meh. That’s life.\r
-\r
-But when he gets transmigrated into the body of a young cultivator of the prestigious Golden Sun Sect, full of possibilities…no thanks! He has no effort/energy to work hard on cultivation! He just wants to be a salted fish!\r
-\r
-…it turns out sleeping = meditation and absently watching beautiful scenery = meditation.\r
-\r
-And meditation = cultivation…\r
-\r
-This is not the Dao of Indifference. This is the Dao of the Salted Fish!! With calm emotions, Wen Zhihao accidentally cultivates strongly!\r
-\r
-…but he’s still a salted fish, bah. Don’t make him fight!\r
-\r
-Feat: slow build / slice of life~ [subtitle: Salted Fish Cultivator~]`,IMG:52,PRIO:3},{BOOK_TITLE:"Devil Venerable Also Wants to Know",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:80,EXTRAS:2,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://devilvenerable.carrd.co/",Eng_TL:"https://mourningcrow.wordpress.com/2021/03/27/devil-venerable-also-wants-to-know-%e9%ad%94%e5%b0%8a%e4%b9%9f%e6%83%b3%e7%9f%a5%e9%81%93/",Synopsis:`In a Mary-Sue novel, the readers all liked the Devil Venerable, the second male lead who devoted himself whole-heartedly to the female lead. However, the female lead only loved the male lead who abused her physically and mentally.\r
-Readers: Why doesn’t the female lead like the Devil Venerable?!\r
-Devil Venerable: This Venerable also wants to know. But what I really want to know is why I even like the female lead at all.\r
-In order to understand why the female lead wasn’t attracted to him, the self-conscious Devil Venerable brutally interrogated the entire cast of characters from the novel.\r
-Background characters: I have so many things I want to say but I don’t dare to say it to his face!\r
-–\r
-After obtaining the book, the Devil Venerable discovered that the book described the world he lived in. This book said that after he sacrificed himself for the female lead, the fourth male lead, his silent and loyal subordinate Yin Hanjiang, blackened and attempted to kill her as a sacrificial offering for his lord.\r
-Devil Venerable Wenren E: Yin Hanjiang, this Venerable wants to know why you wanted to kill the female lead.\r
-Yin Hanjiang was silent.\r
-Wenren E: If you refuse to speak, this Venerable will cut out your tongue and drink it with alcohol!\r
-Yin Hanjiang: …\r
-Wenren E: What the hell are you blushing for?!`,IMG:55,PRIO:1},{BOOK_TITLE:"Everyday The Protagonist Wants To Capture Me",AUTHOR:"Qing Duan 青端",CHAPTERS:80,EXTRAS:8,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://epwcm.carrd.co/",Eng_TL:"http://bcnovels.com/table-contents-every-day-protagonist-wants-capture/",Synopsis:`Transmigrated into the body of a cannon fodder villain, Chu Yu has three major worries:\r
-1. How can he help the protagonist turn into a real harem master?\r
-2. How can he develop a good relationship with the protagonist?\r
-3. How can he live properly without holding on to the protagonist’s thigh?\r
-The protagonist has three major worries:\r
-1. Eldest disciple brother has changed\r
-2. Eldest disciple brother has really changed\r
-3. How can he marry eldest disciple brother?\r
-System: Congratulations! Sprinkle Flowers Grow Old Together Happily!\r
-Chu Yu: … Wait, what about the harem novel?`,IMG:68,PRIO:1},{BOOK_TITLE:"Grandmaster Of Demonic Cultivation",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:113,EXTRAS:13,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://stanwangxian.carrd.co/",Eng_TL:"locked",Synopsis:`"As the grandmaster who founded the Demonic Sect, Wei WuXian roamed the world in his wanton ways, hated by millions for the chaos he created. In the end, he was backstabbed by his dearest shidi and killed by powerful clans that combined to overpower him. He incarnates into the body of a lunatic who was abandoned by his clan and is later, unwillingly, taken away by a famous cultivator among the clans—Lan WangJi, his archenemy.\r
-This marks the start of a thrilling yet hilarious journey of attacking monsters, solving mysteries, and raising children. From the mutual flirtation along the way, Wei WuXian slowly realizes that Lan WangJi, a seemingly haughty and indifferent poker-face, holds more feelings for Wei WuXian than he is letting on."`,IMG:92,PRIO:1},{BOOK_TITLE:"Heaven's Official Blessing",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:244,EXTRAS:8,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://tgcfmxtx.carrd.co/",Eng_TL:"locked",Synopsis:`For you, I'll become invincible!\r
-"Ah! That Scrap-Collecting Official from the Heavens is having an affair with the Head Honcho of the Ghost Realm!"\r
-Eight hundred years ago, Xie Lian was the noble and gracious Crown Prince of Xianle, the glorious Darling of the Heavens. Yet who knew the once Martial God, who had ascended after enlightenment, worshipped by millions, had fallen so abruptly, disgraced and dishonored, hitting as rock bottom as it got.\r
-Eight hundred years after that, Xie Lian ascended again with an uproar. This time, he had neither devotees nor merits. One day, on the way home from collecting scraps he picked up a young man. This young man was actually that Ghost King of countless faces much talked of in the three realms—Hua Cheng.`,IMG:102,PRIO:1},{BOOK_TITLE:"Holding Onto My Man",AUTHOR:"Hong Yao Yao 红妖妖",CHAPTERS:109,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/homm/",Synopsis:`After an accidental death, in order to continue to live, Gu Bai had to choose to go through various wonderful books to complete tasks.\r
-\r
-Every time he became a variety of small cannon fodder inside the story, Gu Bai’s code of conduct when completing task is – by all means, don’t be inferior, don’t be shameless, don’t be upright… hold on to a golden thigh.\r
-\r
-… N times after transmigrating\r
-\r
-Cannon fodder: (angry contempt) … You’re already so powerful, why are you still shamelessly holding on to a golden thigh to deal with us!?\r
-\r
-Gu Bai: (deadpan) That… holding and holding… got used to it…`,IMG:106,PRIO:2},{BOOK_TITLE:"I Regard You as Enemies, Yet You’re All After My Heart!",AUTHOR:"糖心汤圆",CHAPTERS:85,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/i-regard-you-as-enemies-yet-youre-all-after-my-heart/",Synopsis:`Chu WuQing was a small-time evil boss in a web novel targeted at male audiences. His beauty was otherworldly, yet shadowed by his arrogance and malice. In the end, the male lead stole his fiance from him, and Chu Wuqing suffered a cruel death.\r
-\r
-After being reborn, he found out that he was just cannon fodder in a novel, fated to die… So he decided to give even less of a damn; bullying the weak, taking his revenge on his enemies, going wild and doing whatever the hell he wanted.\r
-\r
-But what was scary was… he had been reborn into a BL fanfiction! \r
-\r
-I regard you as my enemies, yet you all want to top me!`,IMG:127,PRIO:3},{BOOK_TITLE:"It's Not Easy Being A Master",AUTHOR:"Jin Xi Gu Nian 今夕故年",CHAPTERS:79,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://xixistranslations.com/its-not-easy-being-a-master-bl/",Synopsis:`Shen Zhixian transmigrated into a book as a cannon fodder master who hatefully severed his disciple’s spirit root. This disciple fell into the devil’s path and returned to make mincemeat out of him.\r
+In order to walk the path of a good supporting male lead, he engages in a battle of wits and courage with that person. Loving each other and killing each other, one ultimately cannot escape fate’s teasing– why is it so difficult wanting to be a responsible and diligent supporting male lead?! QAQ`,IMG:143,PRIO:3},{BOOK_TITLE:"It's Not Easy Being A Master",AUTHOR:"Jin Xi Gu Nian 今夕故年",CHAPTERS:79,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://xixistranslations.com/its-not-easy-being-a-master-bl/",Synopsis:`Shen Zhixian transmigrated into a book as a cannon fodder master who hatefully severed his disciple’s spirit root. This disciple fell into the devil’s path and returned to make mincemeat out of him.\r
 \r
 Shen Zhixian just happened to transmigrate into the last moment of the master’s captivity, and then he was reborn again.\r
 \r
@@ -3086,9 +1955,55 @@ Even worse, the disciple still retained the memory of his life before rebirth.\r
 \r
 Shen Zhixian: …Disturbed.\r
 \r
-Afterward, he realized one truth: Being a master is a high-risk occupation. Not trivial at all!`,IMG:144,PRIO:3},{BOOK_TITLE:"Jin Se",AUTHOR:"Priest",CHAPTERS:79,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://jinse.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/js/",Synopsis:`A dog-blood cultivation story about a human and a yao… alright fine it’s yao gong x human shou, hypocritical shou vs paranoid gong.\r
+Afterward, he realized one truth: Being a master is a high-risk occupation. Not trivial at all!`,IMG:144,PRIO:3},{BOOK_TITLE:"It's Not Easy Being Your Love Rival's Big Brother",AUTHOR:"精分柚子茶",CHAPTERS:58,EXTRAS:2,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`The 27-year-old Wei Han is a slightly fat, slightly chicken-livered, and slightly foolish, pure-hearted and besotted top, and his sweetheart who had been together with him for seven years, in the end, was stolen away by Qi ZhiFan one morning.\r
+\r
+Deeply broken-hearted and in despair, he went overboard with binge eating, and ended up pathetically choking to death…\r
+\r
+Luckily, he received a second chance, yet his timing, position, and destiny all got warped, and the him who returned to being twenty followed his remarried mother into the Qi family, turning into Qi ZhiFan’s non-blood-related older brother.\r
+\r
+Well, Wei Han swore that this time, he must alter his dumped-as-cannon-fodder fate, and since he’s become his love rival’s big bro, he can definitely torment this scumbag little brother to death, restoring his position as the rightful top and quickly carry his bottom home!\r
+\r
+However, why is the development of the plot spiraling further and further out of his control?\r
+\r
+Why is Qi ZhiFan looking at him with a scorching, burning gaze, acting more and more questionable ( ⊙ o ⊙ ) eh?!\r
+\r
+Thus, Wei Han was pushed down into an official bottom…??`,IMG:145,PRIO:3},{BOOK_TITLE:"Itinerant Doctor",AUTHOR:"Priest",CHAPTERS:60,EXTRAS:3,GENRE:"Psychological",TIMELINE:"Modern",Carrd:"https://youyi.carrd.co/",Eng_TL:"https://edanglarstranslations.com/yy",Synopsis:`n the year 2041, a miraculous instrument emerges, known to professional insiders as the Projector.\r
+It can link to a human's thoughts, project the complex thoughts into a bizarre actual space. This space can be stable or unstable. All laws of physics are meaningless; all weird things can happen.\r
+Accordingly, a whole new type of psychologist appears. Using the altered space, they put themselves into the thought projection space, going in depth into the origins of patient's illness amid dangers.\r
+Accordingly...this is a cheerful adventure story.\r
+`,IMG:146,PRIO:1},{BOOK_TITLE:"Jin Se",AUTHOR:"Priest",CHAPTERS:79,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://jinse.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/js/",Synopsis:`A dog-blood cultivation story about a human and a yao… alright fine it’s yao gong x human shou, hypocritical shou vs paranoid gong.\r
 Let’s revolt, everyone!\r
-1v1 HE for real`,IMG:147,PRIO:3},{BOOK_TITLE:"Let Me Tease You",AUTHOR:"Qing Duan 青端",CHAPTERS:59,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://thisisbananatl.com/index-for-%E5%85%88%E6%92%A9%E4%B8%BA%E6%95%AC-let-me-tease-you-bl/",Synopsis:`JiYuan woke up to find that he has turned into a big beauty.\r
+1v1 HE for real`,IMG:147,PRIO:3},{BOOK_TITLE:"Kaleidoscope of Death",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:139,EXTRAS:9,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://k-o-d.carrd.co/",Eng_TL:"https://taidatranslations.wordpress.com/kaleidoscope-of-death/",Synopsis:`It started off peculiarly; first, his domestic cat refused to let him cuddle it.\r
+Lin Qiushi soon found that a sense of disharmony and incongruity began to pervade everything around him.\r
+Then, one odd day, he pushed open a door, and he discovered that the hallway he was familiar with turned into a boundless corridor.\r
+At both ends of this corridor were twelve, identical iron gates.\r
+Thus, the story began.\r
+Ruan Nanzhu said to Lin Qiushi, “When you gaze into the abyss, the abyss gazes back.”\r
+Upon hearing this, Lin Qiushi sank into deep contemplation. He then pulled down the zipper of his trousers and aimed at the abyss…\r
+Ruan Nanzhu: “…Put your pants on properly!”\r
+Super shameless, ill, pampered gong X Shameless, calm shou; a combination of double [or extreme] shamelessness.`,IMG:148,PRIO:1},{BOOK_TITLE:"Later, He Became A Royal Healer",AUTHOR:"Yan Gui Kang 艳归康",CHAPTERS:137,EXTRAS:3,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://lhbarh.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/later-he-became-a-royal-healer/",Synopsis:`You Liangxing would never open the speech function in game. That was because his voice was… Particularly! Kittenish!\r
+But there was one day, he queued up with a teammate who had so much to say that they may as well explode. Vexed to the point of no return, he contributed a voice that was capable of splitting heaven and earth, “Don’t BB.”\r
+The other party who was being scolded stilled. In the ensuing silence, he suddenly let out a long, relishing… moan.\r
+Later —\r
+He realised that the person was a great god,\r
+Much later,\r
+Without him realising,\r
+He became the great god’s royal healer.\r
+…. And also his boyfriend.`,IMG:149,PRIO:2},{BOOK_TITLE:"Lemon Lightning",AUTHOR:"Dr. Solo",CHAPTERS:65,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://thatlazypotato.wordpress.com/2021/04/29/chapter-1/",Synopsis:`n Ning is a poor law student at A University. He’s nice, hardworking and has a huge sense of justice. His time is spent on studying and working to provide for himself.\r
+\r
+Qin Weihang is a handsome law student who is blunt and closed-off. He rarely attends classes and doesn’t put effort in his studies. Most of his time is spent outside of school doing the one thing he loves—rock climbing.\r
+\r
+Two people with different personalities became roommates at the start of the school year.\r
+\r
+This is a slow journey of a blossoming relationship between the top student and the school’s grass of the Faculty of Law.`,IMG:150,PRIO:1},{BOOK_TITLE:"Lessons on Raising A Partner",AUTHOR:"Ācí Gūniáng 阿辞姑娘",CHAPTERS:126,EXTRAS:11,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/lessons-on-raising-a-partner/",Synopsis:`Residing within the dense forest in Nore are the beautiful elves of Elune Forest. After the young elves began to be hunted by the humans to become s*aves, the Queen of Elune decided that young elves could not leave the forest until after their adult ceremony at fifty years old. When Hai’an’s ceremony finally arrived, he was excited to be able to finally travel away from his home and see everything the world had to offer. However, he got more than he bargained for.\r
+\r
+What was supposed to be a simple ceremony turned into Hai’an transmigating to the body of… a plant?!\r
+\r
+Stuck as a small sapling called Shaking Grass, Hai’an was bought and given as a birthday gift to a retired Starfleet Marshal named Auguste.\r
+\r
+After retiring due to political conflict, Auguste spends his time trying to find more of his missing race, the ancient dragons. Unexpectedly receiving Hai’an, Auguste believes him to be nothing more than a rare, exotic plant. To his surprise, he finds that this little plant is intelligent and learns more and more every day.\r
+\r
+How will this stoic, unfeeling dragon fall in love with the little transmigrated elf who lost his body?`,IMG:151,PRIO:3},{BOOK_TITLE:"Let Me Tease You",AUTHOR:"Qing Duan 青端",CHAPTERS:59,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://thisisbananatl.com/index-for-%E5%85%88%E6%92%A9%E4%B8%BA%E6%95%AC-let-me-tease-you-bl/",Synopsis:`JiYuan woke up to find that he has turned into a big beauty.\r
 \r
 System : Our goal is to….\r
 \r
@@ -3108,99 +2023,96 @@ This shidi told him that this world was actually a novel. And he, Wen Xuan, woul
 \r
 “After dinner for leisure, many people would use a mocking tone of disdain to discuss your disastrous life. But no one knew how you survived through all those years. No one saw how you struggled to hold on to your principles in your lonesome. No one cared about the suffering you experienced and your perseverance. But I saw it. I know. I care.”\r
 \r
-“That’s why I came to this world. To become your support.”`,IMG:153,PRIO:2},{BOOK_TITLE:"Liu Yao",AUTHOR:"priest",CHAPTERS:109,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://readliuyao.carrd.co/",Eng_TL:"https://www.blobtranslations.com/liu-yao-the-revitalization-of-fuyao-sect/",Synopsis:`What does it mean to seek immortality? Those who have ascended were human once, but do they ever stop yearning for the world they once roamed?\r
-In the age of immortals and would be immortals, ten year old Cheng Qian leaves his family to apprentice under the Sect Leader of the obscure Fuyao Mountain Sect. What follows next is a hundred year long tale of blood and sweat, tears and heartbreak, but also love and laughter, joy and triumph, and most importantly, a journey of finding that sometimes, a home isn’t always a place, but the beloved family that you make for yourself along the way.`,IMG:156,PRIO:1},{BOOK_TITLE:"Mistakenly Saving the Villain",AUTHOR:"Feng Yu Nie",CHAPTERS:120,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://misvil.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/misvil/",Synopsis:`Professor System has issued a mission: to rescue the gentle, kind and tragic protagonist shou of the novel “The Exceptional Furnace”.\r
-Song ‘Scholar-Tyrant’ Qingshi: “Don’t worry, Professor! I can definitely ensure the patient’s recovery!”\r
-In the Immortal Realm:\r
-Song Qingshi praised from the bottom of his heart: “My patient is the kindest and most beautiful little angel in the world.”\r
-Yue Wuhuan quietly washed the blood from his hands and smiled softly: “En.”\r
-Song Qingshi swore from the bottom of his heart: “As a doctor, I will never covet nor take advantage of my beautiful patient!”\r
-Yue Wuhuan took full and complete advantage of the doctor and smiled softly: “En.”\r
-Song Qingshi affirmed from the bottom of his heart: “Under my loving care, the patient will never be blackened!”\r
-Yue Wuhuan secretly hid his monstrously evil thoughts and smiled softly: “En.”\r
-At that inextinguishable summit, upon thousand and thousands of soul lamps, he sat on the god’s throne of white bone, guarding that piece of stone.\r
-“You are the only one in this world who treats me tenderly.”\r
-“And so, you are the only one I treat tenderly.”\r
-Scholar-tyrant Song was absolutely delighted: “Professor! Can I get full marks?”\r
-Professor System exploded: “You fool! You saved the wrong person!”`,IMG:173,PRIO:1},{BOOK_TITLE:"My Junior Still Hasn't Killed Me",AUTHOR:"Zi lu 子鹿",CHAPTERS:29,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://mjshkm.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/my-junior-still-hasnt-killed-me/",Synopsis:`Transmigration into a XianXia book. Male lead(top) is younger than the main character. Beware: There is slight imprisonment involved in the latter part.\r
-The twenty-year-old Zhong Yan ended up transmigrating. Moreover, he was burdened with the mission of leading the villain down the right path.\r
-The moment he set foot onto the world, he witnessed the villain murdering someone.\r
-Zhong Yan, “… Seriously, I saw nothing…”\r
-With a smile as refreshing as a spring breeze, Gu XuanYan replied, “Of course I believe you, Senior Brother.”\r
-Zhong Yan, “…” Help !\r
-Scheming villain top x bottom who loves to diss internally.`,IMG:185,PRIO:1},{BOOK_TITLE:"Nan Chan",AUTHOR:"Tang Jiuqing 唐酒卿",CHAPTERS:129,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://fishnovel.carrd.co/",Eng_TL:"https://jade-rabbit.net/category/bl/nanchan/",Synopsis:`Jing Lin, titled as Lord Lin Song, used to be powerful and well-known deity until one day, he murdered the Supreme Father (Emperor of Heaven) in front of everyone's eyes. Annhiliated as punishment for his heinous act, Jing Lin has been believed to be dead for hundreds of years now.\r
-Unbeknownst to most of heaven, Jing Lin survived and spends his days recovering on top of a snowy mountain with only a brocade carp by his side. The carp, Cang Ji, has been observing Jing Lin ever since it can remember and, even after managing to turn human, desires to devour Jing Lin.\r
-During an incident, Jing Lin loses his copper bell so he and Cang Ji leave the mountain in order to retrieve it. On their journey they get caught up in a series of strange events and encounter the Eight Sufferings (birth, old age, sickness, death, parting, encounter with hated ones, unfulfillment of desires and inability to let go). They gradually unravel the mysteries, as well as their own past.`,IMG:189,PRIO:1},{BOOK_TITLE:"Peerless Immortal Surrounded by Demonic Disciples",AUTHOR:"Dao Xuan 道玄",CHAPTERS:85,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://pisdd.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pisdd/",Synopsis:`My disciples are always bullying me!\r
+“That’s why I came to this world. To become your support.”`,IMG:153,PRIO:2},{BOOK_TITLE:"Life-Saving Days by the Husky’s Side",AUTHOR:"月半丁",CHAPTERS:32,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://lsdhs.carrd.co/",Eng_TL:"https://cwastranslations.wordpress.com/life-saving-days-by-the-huskys-side/",Synopsis:`Zhou Li had transmigrated into a tooth-rottingly sweet novel.\r
+The sweet novel tells the story of a tragic male protagonist who was turned into a dog, abused by a gangster, rescued by the heroine, before finally marrying the heroine.\r
+Zhou Li’s fate was pitiful, and he transmigrated into the animal-abusing gangster.\r
+When he transmigrated, he found his foot stepping down on a dog’s head.\r
+Looking at the dying dog, then thinking about the male lead’s character, he realised that his life was held in this little puppy’s paws.`,IMG:154,PRIO:1},{BOOK_TITLE:"Little Mushroom",AUTHOR:"Yi Shi Si Zhou 一十四洲",CHAPTERS:84,EXTRAS:5,GENRE:"Dystopian",TIMELINE:"Modern",Carrd:"https://littlemushroom.carrd.co/",Eng_TL:"locked",Synopsis:`In the year 2020, Earth's magnetic poles disappeared and humankind was nearly wiped out by cosmic radiation. Within the span of a hundred years, living creatures began to mutate and devour each other while the remaining humans, numbering in the tens of thousands, struggled bitterly in their man-made bases.\r
+In the Abyss, home to the mutated xenogenics, there lived a sentient little mushroom. Because it had been nourished by the blood and flesh of the deceased human An Ze, not only did it take on a similar-looking human form, but a similar name as well: An Zhe.\r
+An Zhe is determined to go to the human base to search for his spore, which had been harvested by humans. Once there, however, he faces the omnipresent risk of discovery and certain death as he tries to keep his non-human nature hidden from the Judges, whose responsibility is to inspect for and eliminate xenogenics like himself. And of all the Judges, Colonel Lu Feng is the most perceptive and merciless―as soon as he determines that someone is a xenogenic, he will execute that person on the spot.\r
+But An Zhe's mutation goes undetected by Lu Feng's eyes, and so a tale of humans and xenogenics unfolds…`,IMG:155,PRIO:1},{BOOK_TITLE:"Liu Yao",AUTHOR:"priest",CHAPTERS:109,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://readliuyao.carrd.co/",Eng_TL:"https://www.blobtranslations.com/liu-yao-the-revitalization-of-fuyao-sect/",Synopsis:`What does it mean to seek immortality? Those who have ascended were human once, but do they ever stop yearning for the world they once roamed?\r
+In the age of immortals and would be immortals, ten year old Cheng Qian leaves his family to apprentice under the Sect Leader of the obscure Fuyao Mountain Sect. What follows next is a hundred year long tale of blood and sweat, tears and heartbreak, but also love and laughter, joy and triumph, and most importantly, a journey of finding that sometimes, a home isn’t always a place, but the beloved family that you make for yourself along the way.`,IMG:156,PRIO:1},{BOOK_TITLE:"Live Broadcasting Raising Dragons in the Interstellar",AUTHOR:"Yú Zhī Shuǐ 鱼之水",CHAPTERS:111,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://shallotnoodle.wordpress.com/blog/chinese-novels/lbrdi/",Synopsis:`Shen Mian, who had powerful wood and spatial abilities, was kicked out by his family for being an omega, became homeless and had zero deposits. The original owner was still a childcare teacher and was assigned to the most marginal planet and served as the dean of the childcare centre.\r
 \r
-Xuan Wei Immortal Jiang Yinghe was the number one sword cultivator in the cultivation world. He has only three disciples, each more talented and tragic than the last. Jiang Yinghe gave his all to raise them into good and righteous cultivators until one day when he realized-\r
+The childcare centre was small and broken. As the dean, Shen Mian has to live broadcast to generate income in addition to raising cubs.\r
 \r
-The warm and friendly first disciple was the Xuehe Demon Lord, not even blinking as he massacred others, not even stopping to season their remains before moving on.\r
+So one day, on the largest interstellar live broadcasting platform, appeared a large scale meng selling scene, also known as Awei Crematorium, the audiences passed on word of mouth- in live room 1551, the dragons have gathered!\r
 \r
-The quick-witted and calculating second disciple was the Spirit Patriarch with tremendous power and tens of millions of ghouls under his command.\r
+The cubs are a hundred pounds, they will breathe fire, can fight and will also sell meng, the centre’s dean Shen Mian is better than an alpha. The popularity of the live broadcast room was so great that the small centre became the best childcare centre in the interstellar.\r
 \r
-The obedient and cute third disciple was the Ancient Archdevil, able to go wherever he pleased under the heavens. Even the Devil Barons prostrate themselves at his feet.\r
+Shen Mian diligently raised the cubs, but he did not want the imperial prince that was among the cubs he raised.\r
 \r
-Jiang Yinghe: “……”\r
+Shen Mian: I, the dean, raise dragons.\r
 \r
-Jiang Yinghe thought that the reason these people got close to him was to eliminate the only one who could stand in their way. He was able to think this until his disciple kissed him on the lips and whispered to him in a husky voice, “Won’t Shizun become my cultivation partner?”\r
+Crown Prince: Raise, raise nine, raising an adult, is it enough?\r
 \r
-…..Is Shizun another word for cultivation partner to demonic cultivators?\r
+Shen Mian: See if a slap is enough.\r
 \r
-1v1 HE`,IMG:197,PRIO:3},{BOOK_TITLE:"Rebirth of the Supreme Celestial Being",AUTHOR:"Bing Tang Lian Zi Geng 冰糖莲子羹",CHAPTERS:774,EXTRAS:12,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/rscb/",Synopsis:`The genius cultivator Lin Xuanzhi didn’t let down the world in his past life, yet he only betrayed a single Yan Tianhen.\r
+Crown Prince: Enough, it’s enough, thank you, wife.`,IMG:157,PRIO:2},{BOOK_TITLE:"Living Next to Male God",AUTHOR:"爱看天",CHAPTERS:170,EXTRAS:10,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://whitecherrybl.wordpress.com/2021/02/06/lntmg-1/",Synopsis:`One day, when Xiao Tang read a semi-autobiographical book that smeared his male god’s name, Xiao Tang angrily threw the book and ended up passing through.\r
 \r
-It was only when he had been backstabbed and killed by his closest friends, teacher, and fellow disciples that he knew what kind of unforgivable crimes he had committed.\r
+A book separates the two worlds, on one side is the 5G era, and on the other side is inside the book named “Thank you, for your love in 1999.”\r
 \r
-After he gained the huge opportunity for rebirth, the Lin Xuanzhi who had climbed back up from hell swore to cherish the person that he had betrayed in his past life.`,IMG:206,PRIO:2},{BOOK_TITLE:"Remnants of Filth",AUTHOR:"Meatbun Doesn't Eat Meat 肉包不吃肉",CHAPTERS:196,EXTRAS:18,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://remnantsoffilth.carrd.co/",Eng_TL:"locked",Synopsis:`The traitorous general Gu Mang was returning to his homeland. Everyone wanted to see him dead, and it was said that the one who hated him most was his former best friend —\r
-the cold and ascetic Young Master Mo.\r
-The rumours said: Young Master Mo prepared three hundred and sixty-five methods of torture to interrogate him with, just waiting to try them out on Gu Mang. They were so varied it was more than enough to toy with him for a year without repetition.\r
-Except these rumours were very quickly forbidden by Young Master Mo. The reason given was that they described him as a lunatic, and were severely inconsistent with reality.\r
-So what was the truth?\r
-The truth was even more unspeakable —\r
-Mo Xi’s identity: the most abstinent commander of the empire.\r
-His relationship with the traitor Gu Mang: they’d slept together before.`,IMG:210,PRIO:1},{BOOK_TITLE:"The Daily Task of Preventing My Disciple from Turning to the Dark Side",AUTHOR:"Hēi Māo Nì Nì 黑猫睨睨",CHAPTERS:112,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://secondlifetranslations.com/novel/dtpdtds/",Synopsis:`As the number one pill alchemist of the immortal world, Mu Chen had always believed that it was because he had single-mindedly focused on concocting pills that led to him to neglect disciplining his disciple. Which in turn, caused his disciple to be led astray by the seduction of devil cultivation, leading to the three realms to fall to disaster.\r
+Tang Jinyu, a 17-year-old high school student, has shrunk to a small toddler. He tries to step on a small stepping stool to see the world outside his front door, but he ends up seeing his male god carrying a schoolbag passing by…\r
 \r
-After his rebirth, Mu Chen resolved to properly teach his disciple, give him the very best resources, earnestly love him, carry him close to his heart, teach him by way of example, and didn’t let him grow corrupt.\r
+He lives next door to his male god =口=! !`,IMG:158,PRIO:3},{BOOK_TITLE:"Lord of End of World",AUTHOR:"Feng Liu Shu Dai 風流書呆",CHAPTERS:172,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/lew/",Synopsis:`The young master of the underground palace who was raised as a cauldron after killing his master and dying himself found himself reborn in the body of a weak young boy in modern times. After enjoying prosperous days, the end of the world came. Being an ordinary person with no dimensional space and no power, the young master will utilise his martial arts in order to survive.\r
 \r
-Sure enough, his disciple became more and more “intimate”. Every day his disciple even crawled into his bed, rubbing against his chest and clinging to his thigh. It was just that his expression isn’t exactly quite right……`,IMG:234,PRIO:3},{BOOK_TITLE:"The Two-Tailed Little Fox Demon and His Taoist Priest",AUTHOR:"榴莲巧克力",CHAPTERS:56,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",IMG:255,PRIO:3},{BOOK_TITLE:"The Wife Is First",AUTHOR:"绿野千鹤",GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://qi-weishang.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/twf/",Synopsis:`A life dedicated to protecting his country and with a stellar record in his efforts in war, but was abandoned after he gave his all. He favoured his concubines and wronged his good wife, but in the end, the person who stayed at his side without giving up on him, is the male wife he has neglected for more than a decade.\r
-He gets one chance at a do-over, and Jing Shao decides to turn over a new leaf but...\r
-As he hugs his pillow and stands outside the door to his room, he looks up at the sky with his fists clenched — This prince must assert his position as husband!\r
-And so he knocks on the door and says, "Jun Qing, I have realized my mistake, please let me in!"`,IMG:259,PRIO:1},{BOOK_TITLE:"Transmigrating into a Mob Character to Rehabilitate the Villain Plan",AUTHOR:"Sha Xiao Wan 杀小丸",CHAPTERS:92,EXTRAS:14,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://tmcrvp.carrd.co/",Eng_TL:"https://wintertranslates.wordpress.com/villain-rehab-plan/",Synopsis:`In short, this is the tragic tale of a saint-like man who transmigrated into a web novel as a mob character and wanted to rehabilitate the villain, only to realize in the end, he became more and more villainous.\r
-The ludicrous story:\r
-Unable to bear hurting the villain he helped raise, but when it came to compensating with his own body, the unfortunate, straight male reader figured he’d better escape… …\r
-Many years later, the same unfortunate saint rubbed his neck, asking, “This is a dog collar you put on me, isn’t it?”\r
-The handsome villainous boss gave a glance with his elegant, almond-shaped eyes, and then replied with a devious, charming smile, “That’s to prevent you from running away again.”\r
-“If I stay put, will you refrain from destroying the world?”`,IMG:275,PRIO:3},{BOOK_TITLE:"Who Touched My Tail!",AUTHOR:"Xiao Xuan 筱玄",CHAPTERS:206,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wtmt/",Synopsis:`Xue Ling is a nine tailed fox who has been cultivating for thousands of years but lost all his tails in a moment of capriciousness.\r
+————————————————\r
+This is a story about Gong Lixin, who was the young master of an ancient underground palace in ancient times. He was raised by his master and was forced to partake in sexual activities with numerous people to cultivate his Yin Body. His master, who had a Yang Body was going to absorb him after he had reached a certain level so that he would become stronger. The MC refused to accept his fate, and so he killed his master but then died shortly after. He transmigrated to the modern world, and he had thought that he would enjoy a peaceful life, but then the apocalypse arrived.\r
 \r
-Tails are easy to self destruct, but not easy to recover. In order to restore his human figure, he must struggle to destroy the plot, forcibly change the protagonist’s fate, and be the cannon fodder in the first line of attack.\r
+Being someone with no special powers except for his martial arts, see how he use his martial arts to dominate the times and find his loved ones.\r
 \r
-But why are these plots more and more irrational? The setup is getting more and more weird, and what is with this person that is showing up in every single world?\r
+Warnings: Non Con (only in description), Dub Con (threesome), cannibalism\r
+This is a HE but it is not a 1-1 relationship`,IMG:159,PRIO:3},{BOOK_TITLE:"Lord Seventh",AUTHOR:"priest",CHAPTERS:76,EXTRAS:3,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://qiye.carrd.co/",Eng_TL:"https://sparklingwatertrans.wordpress.com/projects/lord-seventh/",Synopsis:"Waking up again in his seventh reincarnation, prince Jing Beiyuan found himself back in time, when everything had yet to be set in motion. Having been given a second chance, Beiyuan had to survive court and decide whether it was finally time for him to let go of his feelings; all while trying to handle the youthful, innocent force of nature who had suddenly barged into his already complicated life.",IMG:160,PRIO:2},{BOOK_TITLE:"Love Delusion",AUTHOR:"KLBB",CHAPTERS:53,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://xixistranslations.com/love-delusion-bl/",Synopsis:`Lin Anran, an artist with long hair, is an introvert who doesn’t like to leave his house. After his abusive mother left him, she left him an apartment so he began to live alone against what his aunt recommended. Then he met someone. Someone who truly understood him.\r
 \r
-It seems that before going through all these worlds, he has forgotten some very important affairs?\r
+The psychiatrist that Lin Anran saw, “In short, that ‘person’ is only a figment of your mental delusion called erotomania. You feel that the other person is secretly conveying love, and is even secretly showing you love in a TV interview, but in fact, you both have no contact at all in reality. Everything is just your imagination.”\r
 \r
-Su Xuanyan: Yes, you’ve forgotten me.\r
+The man in suit and tie that Lin Anran saw when he got home, “Ranran, you’re finally back.”\r
 \r
-Xue Ling: Get lost! (▼皿▼#) Clearly every time you are the one that doesn’t remember anything!\r
+“Erotomania is a rare mental illness in which the patient falls into the delusion that another person (usually someone with a higher social status) is in love with him.” (From Baidu Encyclopedia)`,IMG:161,PRIO:2},{BOOK_TITLE:"Love Rival Romance System",AUTHOR:"顾之君",CHAPTERS:76,EXTRAS:3,GENRE:"Enemies to Lovers",TIMELINE:"Modern",Carrd:"https://loverival.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/06/20/new-project-love-rival-romance-system-by-%e9%a1%be%e4%b9%8b%e5%90%9b/",Synopsis:`Jiang Yang and Qin Xu both dislike each other. Every time they meet they become filled with hatred. Both have feelings for the school idol but they didn’t expect that the other party was actually a cross-dressing man. In an instant, their world views were shattered.\r
+“Bound to the system. I shall assist with building the friendship between you and Qin Xu. Tasks will be released randomly and punishments will be enforced if it is not completed on time.”\r
+Jiang Yang scoffed coldly: “What a joke! I’m not doing it!”\r
+Later….\r
+The system exploded: “I wanted you to become friends but you became lovers instead?! You are the worst hosts I’ve ever had!”\r
+Eventually the system transferred departments —– To the Matchmaking Department.`,IMG:162,PRIO:3},{BOOK_TITLE:"Love Stops Rumors",AUTHOR:"Xiao Chen 萧辰",CHAPTERS:30,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/lsr/",Synopsis:`On the first day of school, Wei Ru Song accidentally fell in front of Xiao Nian’s dick. With his girlfriend witnessing this incident and thinking that he was giving another man a bl**job, this led to a series of misunderstandings.\r
 \r
-Su Xuanyan: Oh, this is purely an accident.`,IMG:287,PRIO:2},{BOOK_TITLE:"Wu Chang Jie",AUTHOR:"Shui Qiancheng",CHAPTERS:280,EXTRAS:6,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://t.co/yOJl8PpV6i",Eng_TL:"https://reddit.com/r/u_Corgi__booty/comments/12j0l4r/preparing_to_open_up_wu_chang_jie_jia_mo_and/",Synopsis:`An immortal story based based on black and white impermanence. The story has two timelines: one in the past, one in the present. The present life is narrated with flashbacks of the past life of the two main male leads, their love-hate entanglement, and the intrigues around them.\r
-Unofficial summary:\r
-Xie Bian, Wuchang, General of the Netherworld, and disciple of the legendary Zhong Tianshi, is elegant, gentle, and easygoing. Although he enjoys his mission to collect souls and bring them back to the netherworld, he has always wished for a shidi.\r
-When Zhong Kui brings the young and talented Fan Wushe to the netherworld on a drunken whim, Xie Bian finally gets the shidi he wished for.\r
-But why does this new shidi look at Xie Bian with complicated eyes? Why does he know secret techniques that he should not?\r
-With the grudges from their past life that only he remembers, Fan Wushe can’t help but stay close to his shixiong.\r
-“You are mine. You will be mine after all.”`,IMG:292,PRIO:3},{BOOK_TITLE:"Cherry Blossoms Upon A Wintry Sword",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:92,EXTRAS:7,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://cbuaws.carrd.co/",Eng_TL:"https://acupofhalfmoon.wordpress.com/2021/07/08/cherry-blossoms-upon-a-wintry-sword/",Synopsis:`Lin Rufei was the youngest son of the head of the Kunlun Sect.\r
-The disciples of Kunlun had been the sharpest among those in Jianghu, and were revered as legends among men.\r
-But Lin Rufei had a problem. If he so much as tripped, he would need to lay in bed for three days.\r
-As Lin Rufei thought about whether he could salvage something from his ill health or not, he realized that a mysterious … phenomenon had happened to his body.`,IMG:45,PRIO:1},{BOOK_TITLE:"Fox Demon Cultivation Manual",AUTHOR:"Feng Ge Qie Xing 风歌且行",CHAPTERS:101,EXTRAS:1,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://fdcm.carrd.co/",Eng_TL:"https://jade-rabbit.net/category/bl/yaohu/",Synopsis:`By some freak coincidence, Song Ci mistakenly consumed the blood of the Demon King, causing himself to become a demon too. A weak scholar…… forced to suffer in silence.\r
-What was even more tragic was that no matter where he went, demons would attack him from all directions braying for his blood, or they would squeeze his neck while interrogating him about his relationship with the Demon King.\r
-As such, Song Ci became an anti-fan of the Demon King. Regardless of who praised the Demon King, he would be the first to stand out and refute them.\r
-Song Ci fled for his life as he searched for the gate leading to the Demon Realm. Along the way, he clung on to the thigh of an influential man, and went to great pains to persuade him to slay the Demon King together with him and restore peace to the human world.\r
-Song Ci, “Sooner or later, I will skin the Demon King, rip the tendons off him, and drink his blood!”\r
-Rong Bai (smiling), “I admire the way you think.”\r
-Who knew that, after entering the demon realm —\r
-Tens of thousands of monsters bowed their heads and kowtowed to this thigh beside him and shouted “Long live the Demon King!”\r
-Song Ci was stunned.\r
-Rong Bai (smiling), “What did you say you were going to do when you came to the Demon Realm?”\r
-Song Ci, “It, it’s all a misunderstanding……”`,IMG:86,PRIO:2},{BOOK_TITLE:"Love You Till Death",AUTHOR:"静舟小妖",CHAPTERS:86,GENRE:"Xuanhuan",Eng_TL:"https://xhunnetranslations.weebly.com/love-you-till-death.html",Synopsis:`The demon is born!\r
+WRS: I’m not gay, I’m not gay, I’m not gay!\r
+\r
+XN: Neither am I.\r
+\r
+WRS: It seems like we need to come up with a scheme to clear our names now.\r
+\r
+XN: OK.\r
+\r
+So…\r
+\r
+Counsellor: I saw you and that junior doing it in the grass, *cough*, kiddo, please take note on not being a bad influence.\r
+\r
+WRS: No, we just fell accidentally…\r
+\r
+Neighbour: Wei Ru Song can you be quieter in bed? We couldn’t sleep the entire night.\r
+\r
+WRS: No, that was just Xiao Nian giving me a massage ah…\r
+\r
+Gym Teacher: You guys know what you did in the equipment room, go clean the mats!\r
+\r
+WRS: Noooooooo!!! That was just the milk I spilt!!!\r
+\r
+Finally…\r
+\r
+XN: Senior.\r
+\r
+WRS: Yeah?\r
+\r
+XN: Since they already think we’re gay, why don’t we just let this work itself out.\r
+\r
+WRS: … Just what I was thinking.`,IMG:163,PRIO:3},{BOOK_TITLE:"Love You 59 Second",AUTHOR:"Yun Guo Shi Fei 云过是非",CHAPTERS:69,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://59seconds.carrd.co/",Eng_TL:"https://www.wattpad.com/story/94128413-love-you-59-seconds",Synopsis:`Wu Han Ying does not know why a bunch of people were following him around shouting sister-in-law.\r
+Xia Chen does not know why he begins to like the existence of this obedient Little Wudang, who is sometimes a bit silly as well.\r
+Being followed and being called Sister-in-law, Little Wudang could not stand it anymore and retorted, “I’m a man.”\r
+—\r
+Lao Da (Boss) confessed, Sister-in-law (Sao Zi) ran away, so Lao Da is going crazy.\r
+Guild Member 1: Sister-in-law, please come back, Lao Da doesn’t mind that you’re a ladyboy! (ladyboy – a male that plays a female character in game; this happens often in RPG ^^)\r
+Guild Member 2: Pei Pei Pei, ladyboy your ass! Dare to call my sister-in-law as ladyboy, come to Yan Nan* (A place’s name, where players use for PVP)\r
+Guild Members: …\r
+Little Wudang thought to himself, you can’t blame me for disappearing, it’s because the school internet got disconnected.`,IMG:164,PRIO:3},{BOOK_TITLE:"Love You Till Death",AUTHOR:"静舟小妖",CHAPTERS:86,GENRE:"Xuanhuan",Eng_TL:"https://xhunnetranslations.weebly.com/love-you-till-death.html",Synopsis:`The demon is born!\r
 \r
 The three realms are in chaos!\r
 \r
@@ -3236,30 +2148,1001 @@ JiHao later held Ruan MingChi’s hand and said, “Love is always mutual. If yo
 \r
 Ruan Mingchi asked him, “Do you still have mu*derous thoughts?”\r
 \r
-JiHao laughed, “Dare not.”`,IMG:165,PRIO:3},{BOOK_TITLE:"Pulling Together a Villain Reformation Strategy",AUTHOR:"醉又何妨",CHAPTERS:96,EXTRAS:10,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://ptavrs.carrd.co/",Eng_TL:"https://cheeriotranslation.wordpress.com/blog-2/",Synopsis:`Jiang Xunyi had transmigrated into a book many years ago, and always tirelessly maintained the requisite accomplishments for a villain.\r
+JiHao laughed, “Dare not.”`,IMG:165,PRIO:3},{BOOK_TITLE:"Lovely Allergen",AUTHOR:"Zhìchǔ 稚楚",CHAPTERS:102,EXTRAS:7,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://lovelyallergen.carrd.co/",Eng_TL:"https://amytranslations929.wordpress.com/lovely-allergen/",Synopsis:`Song Yu has three requirements for Yue Zhishi:\r
+– You cannot call me gege in public.\r
+– We won’t do anything together in public.\r
+– You cannot let other people know you live with me.\r
+Yue Zhishi has always been obediently following these rules. They were practically strangers at school. At the opening ceremony, he suddenly collapsed due to an allergy-related asthma attack, sending everything into chaos. At this moment, the student representative Song Yu suddenly stopped speaking…….\r
+That night, a hot post appeared on the school forum.\r
+【Shock!! Our junior high school department male idol and our senior high school department male idol are actually ‘brothers’!】\r
+—————-\r
+Ever since his father brought back a mixed-race baby when he was six years old, Song Yu’s life has been completely entangled by this clingy little guy who couldn’t speak Chinese well.\r
+Le Le who was in kindergarten: Xiao Yu gege, my classmate said today that he has a beautiful sister-in-law. What is a sister-in-law?\r
+Song Yu: His older brother’s wife.\r
+Le Le: No! I don’t want a sister-in-law!\r
+Song Yu: ……..\r
+Le Le: I’ll be your sister-in-law! (Something isn’t quite right…….)\r
+Song Yu: Please study up on Chinese familial relationships.\r
+Le Le: Wait, wait. I’ll be my sister-in-law!\r
+Song Yu: ……\r
+Mouth says one thing but body does the other, cat-like gong x mixed-race, obedient and straight forward puppy-like shou.`,IMG:166,PRIO:1},{BOOK_TITLE:"Madness of the Heart",AUTHOR:"初禾",CHAPTERS:186,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://xinkuang.carrd.co/",Eng_TL:"https://www.78zaotl.com/xk/",Synopsis:`Upon completing a year-long training program with a special operations team at the Ministry of Public Security, Ming Shu returns to Dongye City to discover that he has a new boss.\r
+Many people said to him, “Ming-ge, the new boss is such an enigma. Don’t let him harass you.”\r
+To which Ming Shu replied, “…that guy has been harassing me for years. You guys just don’t know it.”\r
+Ever since Ming Shu returned to the bustling metropolis of Dongye City, strange murders have been cropping up one after another. An unemployed man suddenly goes berserk in a cafe. A mysterious incident occurs at a long-abandoned playground in the middle of the night. Underneath the body of a man who met a tragic end, a second corpse is discovered to be buried.\r
+Captain of the Serious Crimes Division, Ming Shu, and Deputy Director of the Criminal Investigation Bureau, Xiao Yu’an, join forces to investigate and solve all these bizarre cases and more.\r
+Note: The main plot is a criminal investigation drama. Part of the same series as ‘Poisoned Heart’.`,IMG:167,PRIO:1},{BOOK_TITLE:"Male God is Chasing My Brother",AUTHOR:"百户千灯",CHAPTERS:112,EXTRAS:4,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://shanghaifantasy.com/novel/male-god-is-chasing-my-brother/",Synopsis:`From a very young age, An XuMo thought that Zhou JinChen was good looking. He went through so many hardships to sign into the company that Zhou JinChen was working for. He thought that their relationship would be the same as usual: detachment. Never would he thought that he will embark on the other’s peach blossom path.\r
+\r
+A cutie would shield the peach blossoms for his favorite person. In the end, he couldn’t believe that he had created an immortal’s story.`,IMG:168,PRIO:3},{BOOK_TITLE:"Married Thrice to Salted Fish",AUTHOR:"Bikabi",CHAPTERS:119,EXTRAS:28,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://mtsf.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/mtsf/",Synopsis:`Lin Qingyu aspired only to follow in his father's footsteps and become an Imperial Physician. For more than ten years, he worked day and night to achieve this goal.\r
+However, just before he could finally take the Imperial Medical Office's examination, he was forced to marry the ill son of the Nan'an Hou Mansion, Lu Wancheng, thus destroying his dreams and future.\r
+On the eve of their wedding, Lu Wancheng lay lazily on the bed and said, “Beauty, to be honest, I really don’t want to engage in domestic struggles. I just want to drift along, eat and wait to die. I want to be a Salted Fish.”\r
+First bitter and distant, Lin Qingyu soon enough realizes that Lu Wancheng may be more than just a frivolous sick man, and gradually, while he must face the difficulties being a male wife entails and try to understand who his husband really is, hate and indifference give way to new feelings…`,IMG:169,PRIO:1},{BOOK_TITLE:"Mint-Stained Shirt",AUTHOR:"初禾",CHAPTERS:82,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://bhcy.carrd.co/",Eng_TL:"https://www.78zaotl.com/bhcy/",Synopsis:`When he was young, Xiao Yu’an wore a white shirt and rescued a child from a tree.\r
+The child’s hands were sticky with sugar water from the melted peppermint popsicle he’d been eating, and he left a five-fingered imprint on the front of Xiao Yu’an’s shirt.\r
+“This is a stamp,” the child declared. “It means you’re my gege now.”\r
+When he was young, Ming Shu had to climb up and up and up in a tall tree in order to see the gege in the neighbors’ yard.\r
+He wanted to quickly grow big and tall, so he wouldn’t need to climb any more trees. So he would be able to turn around, at any time, and see the gege from the Xiao family.\r
+“You don’t need to wait for me,” he said. “Let me chase you. Let me make you my guiding light.”`,IMG:170,PRIO:1},{BOOK_TITLE:"Misplacement Game",AUTHOR:"Teng Yuan Xin 藤原欣",CHAPTERS:139,EXTRAS:1,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://kktranslates.home.blog/2020/03/29/new-project-misplacement-game-by-%E8%97%A4%E5%8E%9F%E6%AC%A3/",Synopsis:`The protagonist is a face-con – he likes good-looking people, can’t say no to a pretty visage and is filled with thoughts of love. One day he bonded with a target-capture system where he can travel from world to world and experience love with the most handsome (key point!) target!\r
+\r
+The number of players in each game is not set. The protagonist has only one target – the most handsome one. As he falls in love, he realizes… the other players perhaps, maybe, probably… have Horror? Survival? Escape-type games?`,IMG:171,PRIO:1},{BOOK_TITLE:"Mist",AUTHOR:"Wei Feng Ji Xu 微风几许)",CHAPTERS:103,EXTRAS:3,GENRE:"Science-Fiction",TIMELINE:"Modern",Carrd:"https://mistunlimited.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2020/11/16/mist-unlimited/",Synopsis:`Hyperthymesia. Those with this condition can remember every detail of their lives from something as significant as the world’s turning point to something as small and as insignificant as a minor fleeting thought. They cannot forget and their thirst for knowledge allow them to be considered as a genius in some senses.\r
+Legend has it that Ji Yushi was this kind of genius.\r
+In addition, it was said that he was gay, and very beautiful.\r
+As soon as the news that he was going to support Tianqiong’s seventh squad broke out, it sent everyone buzzing.\r
+Everyone knew that the captain of the seventh squad, Song Qinglan, was a hoodlum and deeply homophobic.\r
+He not only relied on his super powerful abilities to become the dark horse on the battlefield in less than two years, he also hates it when those at the top forces a flower vase into his squad.\r
+Sure enough, Song Qinglan announced in front of everyone, “Useful? Us brothers are going out there working ourselves to the bone, we don’t need a little genius who can only speedread quantum waves!”\r
+Later.\r
+The squad was forced into a dire situation during their mission.\r
+That beautiful little genius calmly continued on, every gunfire hitting the mark, his fighting power peaking.\r
+Song Qinglan begged in front of everyone, “Adviser Ji, stay.”\r
+At the end, he added, “I’ll work myself to the bone for you.”\r
+*****\r
+Ji Yushi had a secret.\r
+He would often be awake at night, suffering from memory overload and recurring nightmares.\r
+There was only one thing that could let him fall asleep peacefully.\r
+And that was Song Qinglan.`,IMG:172,PRIO:1},{BOOK_TITLE:"Mistakenly Saving the Villain",AUTHOR:"Feng Yu Nie",CHAPTERS:120,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://misvil.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/misvil/",Synopsis:`Professor System has issued a mission: to rescue the gentle, kind and tragic protagonist shou of the novel “The Exceptional Furnace”.\r
+Song ‘Scholar-Tyrant’ Qingshi: “Don’t worry, Professor! I can definitely ensure the patient’s recovery!”\r
+In the Immortal Realm:\r
+Song Qingshi praised from the bottom of his heart: “My patient is the kindest and most beautiful little angel in the world.”\r
+Yue Wuhuan quietly washed the blood from his hands and smiled softly: “En.”\r
+Song Qingshi swore from the bottom of his heart: “As a doctor, I will never covet nor take advantage of my beautiful patient!”\r
+Yue Wuhuan took full and complete advantage of the doctor and smiled softly: “En.”\r
+Song Qingshi affirmed from the bottom of his heart: “Under my loving care, the patient will never be blackened!”\r
+Yue Wuhuan secretly hid his monstrously evil thoughts and smiled softly: “En.”\r
+At that inextinguishable summit, upon thousand and thousands of soul lamps, he sat on the god’s throne of white bone, guarding that piece of stone.\r
+“You are the only one in this world who treats me tenderly.”\r
+“And so, you are the only one I treat tenderly.”\r
+Scholar-tyrant Song was absolutely delighted: “Professor! Can I get full marks?”\r
+Professor System exploded: “You fool! You saved the wrong person!”`,IMG:173,PRIO:1},{BOOK_TITLE:"Monster",AUTHOR:"Little Devil",CHAPTERS:33,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://dummynovels.com/novel/monster/chapter-1/",Synopsis:`He was born without eyes, nose or mouth, just a piece of rotting flesh, a cruel and terrible monster.\r
+\r
+He had eyes for only one person, his creator, Feng Yeran: a terminally ill, ambitious scientist.\r
+\r
+He had only one wish, to get him. That included getting his love, his everything, to be with him forever―\r
+\r
+For that he would give everything; anyone who dared to lay their hands on Feng Yeran would be doomed.\r
+\r
+Younger Yandere Monster Top X Weak Researcher Bottom\r
+\r
+Preface:\r
+\r
+There were four pieces of playdough on the table, of different sizes. Little Feng Hua was puzzled.\r
+\r
+—Feng Hua: Ye’er, how do we make a small house out of these four pieces of playdough?\r
+\r
+—Feng Yeran: Squeeze them into the shape you want. This one is the roof, the biggest one is the walls, this one is the doors and windows, and the last small one is the chimney.\r
+\r
+—Feng Hua: There are so many coloured pencils and pastels here!\r
+\r
+—Feng Yeran: When we finish the house, let’s paint the background of the house, the earth, the green grass, the blue sky and the white clouds.\r
+\r
+—Feng Hua: And paint the two of us!\r
+\r
+—Feng Yeran: Yes, one adult and one child!\r
+\r
+—Feng Hua: We’ll be together forever!`,IMG:174,PRIO:1},{BOOK_TITLE:"More Than A Few Blessing",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:81,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://midnightrambles.in/2021/02/15/more-than-a-few-blessings/",Synopsis:`After being killed accidentally nine years after he graduated from college, Lu Chengyu was reborn to the year he graduated.\r
+\r
+In order to avoid the unfortunate fate of his last life, Lu Chengyu started to avoid his classmate who had feelings for him, began to select stocks, and work carefully; everything was in progress.\r
+\r
+He just didn’t think that an encounter would bring Yan Mu into his life. Lu Chengyu was no longer lonely.`,IMG:175,PRIO:1},{BOOK_TITLE:"Mr. Dior",AUTHOR:"Lv Ye Qian He",CHAPTERS:108,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://luyeqianhe.carrd.co/#daxs",Eng_TL:"https://www.novelupdates.com/series/mr-dior/?pg=6#myTable",Synopsis:`One day, Zhang Chenfei had a car accident. Fortunately, he didn’t suffer any serious physical injuries. However, due to the impact of the car crash, his brain’s perception of the real world had turned into that of the novel that he was reading prior to the accident. The thing that horrified his wife, Jiao Qi, was… the Smart Brain, Louis XIII downloaded a series of books which meant that his husband would turn into a different character each time!\r
+\r
+How will our adorable little wife deal with this kind of husband who seemed to suddenly suffer from multiple personalities?\r
+\r
+This novel’s plot focuses on Zhang Chenfei’s changing personality based from the characters in the books, and how his wife, Jiao Qi, deal with every character as he will have to act in sync with whoever his husband’s character is. This is per the advise of the private doctor since treatment of this special condition was still under research.\r
+\r
+As they act out their roles, they will gradually discover and learn more about each other, which they’ve never known in their seven years of living together.`,IMG:176,PRIO:1},{BOOK_TITLE:"Mr. Fashionable",AUTHOR:"Yu Xiao Lanshan",CHAPTERS:98,EXTRAS:11,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/mr-f-chapter-1/",Synopsis:`As a male fashion model, Su Nuo didn’t like others calling him feminine. But against all of his hopes, his beautiful appearance really betrayed him.\r
+\r
+This was the saddest tragedy of all time!\r
+\r
+Dear god, Su Nuo finally couldn’t stop himself from exploding, “I am actually very manly, ok!”\r
+\r
+“Are you sure? Come here, let me check whether you have abs or not.” The black bellied (black-hearted) director pushed him down on to a bed and took off his pajamas in high spirits.\r
+\r
+Two minutes later.\r
+\r
+“Your sister! Abs don’t form there!” The model Su struggled in tears.\r
+\r
+How would he live through this day?`,IMG:177,PRIO:3},{BOOK_TITLE:"Mr. Melancholy Wants To Live A Peaceful Life",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:122,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://youyu-eng.carrd.co/",Eng_TL:"https://edanglarstranslations.com/youyu",Synopsis:`A hilarious and well-written novel about an "ordinary" guy and his similarly "ordinary" husband. Having lived a lonely life for way too long, Yu Hua seals his powers and resolves to live a normal life and find love. He marries his cute little husband, You Zhengping, and they live a perfectly ordinary life.\r
+Until his powers start to unseal, and the world becomes chaotic again. In the process, Yu Hua and You Zhengping discover they've been hiding secrets from each other. You Zhengping learns that his crazily OCD perfect, gentle husband is actually petty, vindictive, and takes pleasure in others' suffering. At the same time, Yu Hua learns to trust You Zhengping beyond affection, understanding that it's okay to show weakness and imperfection.`,IMG:178,PRIO:1},{BOOK_TITLE:"Mr. Rong's Lovelorn Diary",AUTHOR:"桃白百",CHAPTERS:73,EXTRAS:12,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://mrrong.carrd.co/",Eng_TL:"https://m.flying-lines.com/novel/mr-rong-s-lovelorn-diary",Synopsis:`When he was categorised as an Omega at the age of 13, Rong Yi made a tiny little wish. In the future, he wanted to fall in love with a tall, handsome and elegant Alpha whom he could share a romantic love with, then build a blissful family with him and give birth to many cute babies together.\r
+A few years later, he grew into a tall, handsome and elegant Omega and was passionately pursued by countless admirers of the same gender, while all Alphas backed away from him in face of his superiority.`,IMG:179,PRIO:1},{BOOK_TITLE:"Mutated pheromones",AUTHOR:"A Lifetime of Beautiful Clothes",CHAPTERS:68,GENRE:"ABO",TIMELINE:"Modern",Carrd:"https://mutatedpheromones.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/mp/",Synopsis:`ABO + Online Gaming\r
+\r
+A sweet dessert~\r
+\r
+As an omega, Yue Ran has mutated pheromones.`,IMG:180,PRIO:1},{BOOK_TITLE:"My Artist is Reborn",AUTHOR:"薄荷貓",CHAPTERS:184,EXTRAS:4,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://ontimestory.eu/index.php/completed/my-artist-is-reborn/",Synopsis:`Shen Huai was abandoned by all his artists and took over the one no one was optimistic about, the unpopular newcomer Ye Cang.\r
+\r
+Ye Cang caught fire all over the country. Everyone thought it was due to Shen Huai’s influence. Only Shen Huai knew that his artist was a reborn rockstar.\r
+\r
+Later, Shen Huai also signed the reborn “Legendary Film Queen,” the unsurpassed “Golden Supporting Role,” the “Queen of All Love Songs,” and the “Greatest Superstar in the Past Hundred Years.” Thus, he breathed a sigh of relief; he didn’t have to return to inherit billions of dollars.`,IMG:181,PRIO:2},{BOOK_TITLE:"My Boyfriend Is A Dragon",AUTHOR:"Chubby Strawberry Sauce",CHAPTERS:272,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.webnovel.com/rssbook/11806027505538905/32882388887465700",Synopsis:"A young boy named Bai Wu was saved and adopted by a thirty-something police sergeant named Xu Lan. It was love at first sight for Bai Wu, and once he started getting older, his heart yearned for a taste of the forbidden fruit – the romantic love of his adoptive father. The question is, will Xu Lan ever reciprocate? With deranged serial killers, parallel dimensions, time warps, dragons, and a bit of ancient black magic, Bai Wu and Xu Lan are caught in a series of crazy adventures while discovering what they truly mean to each other. This is a story of lust and madness!",IMG:182,PRIO:3},{BOOK_TITLE:"My Home is Not a Magical Creature Farm",AUTHOR:"Lips Are Lost 0 唇亡齿寒0",CHAPTERS:43,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/my-home-is-not-a-magical-creature-farm/",Synopsis:"Magician Augusta receives a strange letter and package from his friend one early morning. The box turns out to be a young (and very naked) werewolf! This starts the humorous tale of these two men falling in love with the comedic undertones from a sassy 400-year-old vampire, a germaphobe unicorn, and other magical creatures.",IMG:183,PRIO:2},{BOOK_TITLE:"My Husband is Suffering From Terminal Illness",AUTHOR:"Can’t Play Chess 不会下棋",CHAPTERS:171,EXTRAS:4,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Xie Yang struggled in the post-apocalyptic world for many years until he was too tired to go on. Then he transmigrated into a young adult entertainment circle novel where the protagonists have easy, sweet, and satisfying lives.\r
+\r
+The male protagonist of the novel is not just handsome and smart, he’s also reborn. The female protagonist of the novel is not only beautiful and works hard towards her dreams, she also has a cheat in her hands.\r
+\r
+There’s a lot of male and female supporting roles, each having pretty face, nice figures and someone strong behind them. Get into any one of their bodies, and he could close his eyes and just enjoy life. But he didn’t. Instead he transmigrated into a young idol secretly married to the biggest villain of all — the male protagonist’s maternal uncle.\r
+\r
+His title is husband but it’s more like a nurse. Because this novel’s biggest villain is a terminally ill patient who is gloomy and sick in the head (actually sick). Their marriage was to counter the bad luck (illness).\r
+\r
+Xie Yang: Who cares if you’re the male lead, female lead, male supporting, female supporting, villain or protagonist. Get in the way of my comfortable life and you’ll die (:\r
+\r
+Also titled: [Daily life of husbands trading blows] – [If you love me, let’s divorce] – [Crazy gong: I’ll never divorce]`,IMG:184,PRIO:2},{BOOK_TITLE:"My Junior Still Hasn't Killed Me",AUTHOR:"Zi lu 子鹿",CHAPTERS:29,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://mjshkm.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/my-junior-still-hasnt-killed-me/",Synopsis:`Transmigration into a XianXia book. Male lead(top) is younger than the main character. Beware: There is slight imprisonment involved in the latter part.\r
+The twenty-year-old Zhong Yan ended up transmigrating. Moreover, he was burdened with the mission of leading the villain down the right path.\r
+The moment he set foot onto the world, he witnessed the villain murdering someone.\r
+Zhong Yan, “… Seriously, I saw nothing…”\r
+With a smile as refreshing as a spring breeze, Gu XuanYan replied, “Of course I believe you, Senior Brother.”\r
+Zhong Yan, “…” Help !\r
+Scheming villain top x bottom who loves to diss internally.`,IMG:185,PRIO:1},{BOOK_TITLE:"My Roommate Probably Is Not an Omega",AUTHOR:"Ablfish",CHAPTERS:25,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://thisisbananatl.com/bl-%E6%88%91%E7%9A%84%E5%AE%A4%E5%8F%8B%E5%8F%AF%E8%83%BD%E4%B8%8D%E6%98%AFomega-my-roommate-probably-is-not-an-omega/",Synopsis:`ABO / AxB / little sweet cookie\r
+This article is a short story ~ little sweet cookie ~ will end very soon~~\r
+\r
+I closed my eyes and slept until the next morning. Climbing up from my bed in a daze, I saw that my roommate’s bed is still neat and tidy, like no one has slept on it before. I first checked that no one is in the bedroom, then carefully locked the door before I pounced on his bed and took a big breath.\r
+\r
+… really the same smell from last time! A very light aroma, pheromones will not lie! My roommate is an Omega, that’s right! Just that he is a little bit bigger and taller. I vaguely estimated his height by comparing the gap between his head and the door last night.\r
+\r
+Me : “……………………………”\r
+\r
+…what did this Omega ate to grow so tall?! He’s like half a head taller than me!! Not talking about those Alphas who have crazy growth spurts, my height itself is already very tall amongst the Betas! This Omega is even ten centimeters taller than me…\r
+\r
+My self-esteem has suffered a hard blow…`,IMG:186,PRIO:3},{BOOK_TITLE:"My Underachieving Seatmate Doesn’t Need Any Comforting",AUTHOR:"Long Qi 龙柒",CHAPTERS:113,EXTRAS:9,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://musdnc.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/musdnc/",Synopsis:`Qiao Shao, who worked hard to stay up all night and study, was first in class — if you count from the bottom.\r
+He Shen, who was able to get a perfect score even when he slept all day, in a rare display of kindness, bought a bottle of drink to comfort his s*upid seatmate.\r
+Then he saw the messages popping up on Qiao Shao’s phone—\r
+Dad: Don’t panic, it’s okay if you didn’t do well in the exam. Dad just ordered a new sports car for you.\r
+Granddad: Grandson, there’s no need to hurry. It’s alright even if you didn’t do well in your exam. Granddad bought a new yacht for you, come and take a break.\r
+Grandpa: Grandson, don’t cry, it’s okay if you didn’t do well in the exam. Grandpa’s billions-worth of properties are all yours.\r
+With a blank expression, He Shen threw his 2.5 Yuan worth bottle of drink into the tr@sh.`,IMG:187,PRIO:1},{BOOK_TITLE:"My Vegetative Partner Opened His Eyes in Anger After I Ran Away",AUTHOR:"Hēi Māo Nì Nì 黑猫睨睨",CHAPTERS:55,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/vpohe/",Synopsis:`Pet shop owner Tang Wan was accidentally reborn into an interstellar world. When he opened his eyes, he found himself automatically married to a vegetable via the StarNetwork. A social status worth ten billion yuan; but with an unconscious husband, he was unable to withdraw any money. Tang Wan held the empty position of the First Gentleman, but was, in fact, a poor man.\r
+\r
+In order to secure his future livelihood, Tang Wan was bound to the “Earth Pet System” and returned to his old business, with the goal of saving money, getting a divorce, and looking for a second spring!\r
+\r
+After thousands of years of evolution, Earth’s energy depletion had long been abandoned to the distant corners of the Milky Way. All of the animals in the galaxy had evolved tremendously, and little furry cute ones only lived in textbooks. When Tang Wan and his cute little ones appeared, they became the treasures of the whole universe! The pet shop soon became famous in the interstellar world, and the whole universe lined up to be cat slaves~\r
+\r
+Finally surviving past the compulsory marriage period, Tang Wan happily took off the diamond ring worth billions: he can finally sell it for money!\r
+\r
+However, Tang Wan could never have imagined that when he sat down at the dining table on a blind date with some fresh meat, the vegetative partner that he had come to an agreement with would suddenly open his eyes.\r
+\r
+Gong: I heard you sold your wedding ring for one billion yuan?\r
+\r
+Tang Wan reached out and pushed him down on the bed: Open what eyes, quickly close them [begging for your cooperation.jpg]\r
+\r
+Alternate names:\r
+\r
+#There are 10 billion people worshipping cats in my online store#\r
+\r
+#I conquered the whole galaxy with fluff#\r
+\r
+#All the great ancestors of Mao Zedong call me dad#\r
+\r
+Food guidelines: Sweet and warm cookies, more fuzzy plushes, interstellar overhead. Please do not compare with the new legal system of socialist civilization. The cat had its own mirror, with a 100% rebound against attacks. It is measured when attacked and sprayed ^_^`,IMG:188,PRIO:3},{BOOK_TITLE:"Nan Chan",AUTHOR:"Tang Jiuqing 唐酒卿",CHAPTERS:129,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://fishnovel.carrd.co/",Eng_TL:"https://jade-rabbit.net/category/bl/nanchan/",Synopsis:`Jing Lin, titled as Lord Lin Song, used to be powerful and well-known deity until one day, he murdered the Supreme Father (Emperor of Heaven) in front of everyone's eyes. Annhiliated as punishment for his heinous act, Jing Lin has been believed to be dead for hundreds of years now.\r
+Unbeknownst to most of heaven, Jing Lin survived and spends his days recovering on top of a snowy mountain with only a brocade carp by his side. The carp, Cang Ji, has been observing Jing Lin ever since it can remember and, even after managing to turn human, desires to devour Jing Lin.\r
+During an incident, Jing Lin loses his copper bell so he and Cang Ji leave the mountain in order to retrieve it. On their journey they get caught up in a series of strange events and encounter the Eight Sufferings (birth, old age, sickness, death, parting, encounter with hated ones, unfulfillment of desires and inability to let go). They gradually unravel the mysteries, as well as their own past.`,IMG:189,PRIO:1},{BOOK_TITLE:"New Times, New Hell",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:134,EXTRAS:10,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://ntnh.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ntnh/",Synopsis:`Yu Zhengdu joined a small start-up company that claimed to offer “life management services”……as a programmer.\r
+On his first day in office, he received a phone call from a stranger: “Hello, I received a text message from your company that informed me of my reincarnation tomorrow……”\r
+Yu Zhengdu: “……??”\r
+Shang Que, the beautiful little boss, said, “New employee, welcome to the Hell organisation in the human world. A thousand years ago, I was known to the human world as the Ghost King of Luofeng Mountain.”\r
+Yu Zhengdu: “……??” From then on, he was incredibly distressed about the development of Hell.`,IMG:190,PRIO:1},{BOOK_TITLE:"Number One Lazy Merchant of the Beast World",AUTHOR:"Metasequoia 水杉",CHAPTERS:90,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`After transmigrating into a beast world, Rong Mingshi discovered that the people of this world experienced widespread mania. For example, when their emotions were abnormally agitated, they would become destructive beasts. If their emotions were abnormally low, they would shrink into their young beast form.\r
+\r
+There is a type of energy stone that can cure this but it must be hand-carved into the animal form corresponding to the beastman. The more realistic the shape, the better the healing effect and the higher the repeated utilization rate.\r
+\r
+In his previous life, Rong Mingshi’s ancestors started as craftsmen who grew their business and became wealthy.\r
+\r
+Then a small store suddenly popped up on the Star Network, selling several small sculptures made with superb skill. The effect of the energy stone to soothe emotions could be felt through the screen and stirred up a sensation in the entire empire. However, this store owner was super lazy…`,IMG:191,PRIO:2},{BOOK_TITLE:"One Useless Rebirth",AUTHOR:"Can’t Play Chess 不会下棋",CHAPTERS:113,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`He Bai won the lottery, became rich, and reached the pinnacle of life. Then, he inadvertently took a picture of the Film Emperor Di Qiuhe being killed. And after reporting this case to the police, he was reborn in a midst of confusion.\r
+\r
+He Bai: I don’t have any horrible relatives to abuse. Why was I reborn?\r
+\r
+Di Qiuhe: But I do.\r
+\r
+He Bai: I also haven’t been betrayed or harmed by anyone. Why was I reborn?\r
+\r
+Di Qiuhe: But I have.\r
+\r
+He Bai: I just want to have some money to live freely and eat well. I already achieved that goal, so why was I reborn?\r
+\r
+Di Qiuhe: I have money, but don’t live freely or well.\r
+\r
+He Bai angrily flips the table: So what’s the use of my rebirth! Just to make me suffer again?!\r
+\r
+Di Qiuhe (Holding and Touching He Bai): Be my lover, you’re only responsible for eating “lollipops,” you won’t eat any bitterness.\r
+\r
+He Bai: Leave!`,IMG:192,PRIO:3},{BOOK_TITLE:"Opening A Shop In The Nightmare World",AUTHOR:"镜吉祥",CHAPTERS:162,GENRE:"Supernatural",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/opening-a-shop-in-the-nightmare-world/",Synopsis:`u Zimo got a store called ‘Ayuyuyu.’\r
+\r
+Selling the goods in the store can increase his remaining life, but Su Zimo has to first go to the nightmare world to collect goods!\r
+\r
+Senior cannon fodder: Newcomer over there, put down the vase, put down the paper towels, put down A-Piao’s shoes! Run!!\r
+\r
+Shop: It’s ‘An Yu Yi Yu,’ not ‘Ayuyuyu’`,IMG:193,PRIO:2},{BOOK_TITLE:"Outside The Law",AUTHOR:"Ka Bi Qiu 卡比丘",CHAPTERS:13,EXTRAS:2,GENRE:"Psychological",TIMELINE:"Modern",Carrd:"https://otl.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/otl/",Synopsis:"Made up background, fake dog blood gangster, real “dumb white sweet”. Luo Yu x Ruan Zheng",IMG:194,PRIO:1},{BOOK_TITLE:"Paper Lover",AUTHOR:"楚寒衣青",CHAPTERS:119,EXTRAS:6,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://paper-lover.carrd.co/",Eng_TL:"https://dummynovels.com/novel/paper-lover/",Synopsis:`Li Shuoxing, the god author of the male channel, got a love nurturing app out of thin air in his phone.\r
+The rules of the game required him to interact with the virtual character “Su Mingqian” to increase his love value and unlock more functions.\r
+Li Shuoxing soon experienced the true reality of Krypton Gold players.\r
+Stage One: “tr*sh game, don’t try to cheat Krypton.”\r
+Stage Two: “I can’t be fooled to buy a dollar gift bag.”\r
+Stage Three: “One more Krypton and I’ll stop.”\r
+Stage Four: “Don’t stop me. For my cub, I’m willing to Krypton the whole world!”\r
+…\r
+Stage N: “For every additional 10,000 votes, I’ll add 10,000 words; monthly votes can be lost, but the King of Fire must be won!”`,IMG:195,PRIO:1},{BOOK_TITLE:"Peerless",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:187,EXTRAS:4,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://wu-shuang.carrd.co/",Eng_TL:"https://dustbunnytranslations.wordpress.com/wushuang-4/",Synopsis:`On the Third-Year of Kaihuang, as the Great Sui unfolds its curtains to welcome the glorious Tang Dynasty in succession to the Northern Dynasty, Yang Jian established a secret agency, the Jiejian Bureau in preparation to unify the world.\r
+In a stormy night filled with snow, a convoy of tribute sent by the Kingdom of Khotan was ambushed and massacred with not a living soul left behind. The Second Commander of the Jiejian Bureau, Feng Xiao came forth to investigate the case under Imperial Orders.\r
+A gathering of storms would soon take place in a little city which sat on the frontier, called the City of Six Crafts, where all the top martial powers across the lands would meet.\r
+The ever successful Second Commander Feng meets a dead end when he ran into a Master Daoist with ailing health.\r
+All would be unknown if they had never crossed paths, but once their paths crossed, Second Commander Feng realized this ailing man had more secrets than himself.\r
+A crime and mystery novel that takes place in ancient Chinese historical settings. A story that reaches to as high as the loftiness of the Imperial Court and as far as the edge of the Jianghu. Whatever you want, it’s included.\r
+CP: Shou with ailing health who might die at any time and judges people by their looks X Theratical and dramatic germaphobe gong with unparalleled martial prowess.\r
+\r
+`,IMG:196,PRIO:1},{BOOK_TITLE:"Peerless Immortal Surrounded by Demonic Disciples",AUTHOR:"Dao Xuan 道玄",CHAPTERS:85,EXTRAS:1,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://pisdd.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pisdd/",Synopsis:`My disciples are always bullying me!\r
+\r
+Xuan Wei Immortal Jiang Yinghe was the number one sword cultivator in the cultivation world. He has only three disciples, each more talented and tragic than the last. Jiang Yinghe gave his all to raise them into good and righteous cultivators until one day when he realized-\r
+\r
+The warm and friendly first disciple was the Xuehe Demon Lord, not even blinking as he massacred others, not even stopping to season their remains before moving on.\r
+\r
+The quick-witted and calculating second disciple was the Spirit Patriarch with tremendous power and tens of millions of ghouls under his command.\r
+\r
+The obedient and cute third disciple was the Ancient Archdevil, able to go wherever he pleased under the heavens. Even the Devil Barons prostrate themselves at his feet.\r
+\r
+Jiang Yinghe: “……”\r
+\r
+Jiang Yinghe thought that the reason these people got close to him was to eliminate the only one who could stand in their way. He was able to think this until his disciple kissed him on the lips and whispered to him in a husky voice, “Won’t Shizun become my cultivation partner?”\r
+\r
+…..Is Shizun another word for cultivation partner to demonic cultivators?\r
+\r
+1v1 HE`,IMG:197,PRIO:3},{BOOK_TITLE:"Picked up by the Protagonist of a Tormented!MC Novel",AUTHOR:"藏姝",CHAPTERS:87,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://imjustheretoreadbl.wordpress.com/table-of-contents-picked-up-by-the-protagonist-of-a-tormented-mc-novel/",Synopsis:`A suffering MC novel—the main character must be forced to suffer, be oppressed until they’re hovering between life and death, dying and living here and there. They can have a golden finger, but before getting it they must pay the price. They can also have beautiful women, but all are snake and scorpion beauties, able to look at but not eat.\r
+\r
+“Curse” is just that type of suffering MC novel. The main character Xi Wei, after being forced to experience numerous sufferings, had, at last, become the most powerful, at the same time linking together with the world’s qi and fate. After he was oppressed too miserably, he committed su*cide and buried the entire world with him.\r
+\r
+Zeno transmigrated, in the end arriving at “Curse of sh*t motherf*cker”.\r
+\r
+Zeno was adopted by the MC, finally becoming the number one person/wife.\r
+\r
+Zeno: Help, I don’t want to be destined to be raised by this perverse person!\r
+\r
+All living things (wipe away tears): You must rescue this world, ah.\r
+\r
+Xi Wei: Come over here.`,IMG:198,PRIO:3},{BOOK_TITLE:"Professional Body Double",AUTHOR:"Shui Qian Cheng 水千丞",CHAPTERS:121,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://pbd-info.carrd.co/",Eng_TL:"https://rosyspell.wordpress.com/rebirth-the-unique-substitute/",Synopsis:`Zhou Xiang didn’t know if God was giving him a second chance to live because he wanted to give him extra loving care or was it because he hasn’t messed with him enough.\r
+Otherwise, how could it be that both in and out of his entertainment career, whether it was in his past life or his current life, Yan Mingxiu would consider him as the substitute for the same person.\r
+He also didn’t know, between him and Young Master Yan, who was actually more pitiful; the one who could only be treated as a substitute or the one could only find a substitute.\r
+In his past life, Zhou Xiang was the stuntman for the big star Wang Yudong.\r
+But not just as his martial art stuntman…..\r
+Even within his deeply ill-fated relationship with Yan Mingxiu, he was also undeniably a complete substitute.\r
+Disheartened, Zhou Xiang went with a group of documentary film crew into the deep valleys of the treacherous mountains. Unexpectedly, he lost his footing and fell off a cliff.\r
+When he awakened again, it was already two years later. Nevertheless, he awakened in another person’s body.\r
+What is even more tragic is that he still couldn’t escape the fate of being a substitute…`,IMG:199,PRIO:1},{BOOK_TITLE:"PUBG Online Romance of the Century",AUTHOR:"Jiàng Zi Bèi 酱子贝",CHAPTERS:104,EXTRAS:14,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pubg/",Synopsis:`As a new anchor of StarTV, Yu Yan’s ruthless trash-talk, natural rifle-shooting skills, and character of never searching houses earned him a big crowd of fans.\r
+\r
+He felt like he was a good anchor who treated all fans of his stream equally—you can suck at the game, you can get knocked down, but if you want the gun in my hand, sorry, no way man.\r
+\r
+Until he heard the voice of the streaming platform’s Big Boss.\r
+\r
+Yu · ultimate voice-con · Yan: I’m not familiar with this game, swap my Kar98k for your Mini-14.\r
+\r
+Yi · brand new noob · Chen: En.\r
+\r
+Friend: Daddy, I want to snipe too!\r
+\r
+Yu Yan: I think this frying pan suits you very well.\r
+\r
+Not-a-very good gamer but dripping with money and looks Big Boss vs Cute, super good trash-talking sharpshooter voice-con Anchor.\r
+\r
+This story is also known as <My Fan is My Direct Boss>, <You and I weren’t fated to meet, except you spent a ton of money on me>, and <All the fans of the stream in the live room think that we’re dating online>. \r
+\r
+—\r
+\r
+PUBG=Survival In a Hopeless Land (Jue Di Qiu Sheng), PC version`,IMG:200,PRIO:1},{BOOK_TITLE:"Pulling Together a Villain Reformation Strategy",AUTHOR:"醉又何妨",CHAPTERS:96,EXTRAS:10,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://ptavrs.carrd.co/",Eng_TL:"https://cheeriotranslation.wordpress.com/blog-2/",Synopsis:`Jiang Xunyi had transmigrated into a book many years ago, and always tirelessly maintained the requisite accomplishments for a villain.\r
 After finally completing the ultra-difficult task to allow the male protagonist to kill him, an OOC warning appeared out of the blue——\r
 Error in the actor’s lines, the character role has collapsed, the assigned task has not yet been completed, opening the Rebirth System!\r
 So, he gloriously became… a second idiot son about to be sent to his death.\r
 Lazily idling away the days after changing his identity, he noticed a world-changing difference.\r
 His best friend, the male protagonist, Yun Xie was actually secretly in love with him? Are you kidding me?!\r
 —————-\r
-Our MC is Jiang Xunyi, a terminally ill patient who transmigrates into the world of a Wuxia/Xuanhuan novel. The System tells him he can get a second chance at life if he completes his role as a “villain” and is killed by the protagonist. But when he does get killed, the System tells him he failed his mission. Jiang Xunyi wakes up in another person’s body, still in the world of the novel. While investigating why the mission failed, he discovers a wide-reaching conspiracy and begins to clear his own name.`,IMG:201,PRIO:1},{BOOK_TITLE:"Scum villain's Self Saving System",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:81,EXTRAS:20,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://svsssmxtx.carrd.co/",Eng_TL:"locked",Synopsis:`“Can’t I properly read stallion novels anymore!”\r
+Our MC is Jiang Xunyi, a terminally ill patient who transmigrates into the world of a Wuxia/Xuanhuan novel. The System tells him he can get a second chance at life if he completes his role as a “villain” and is killed by the protagonist. But when he does get killed, the System tells him he failed his mission. Jiang Xunyi wakes up in another person’s body, still in the world of the novel. While investigating why the mission failed, he discovers a wide-reaching conspiracy and begins to clear his own name.`,IMG:201,PRIO:1},{BOOK_TITLE:"Quickly Wear the Face of the Devil",AUTHOR:"風流書呆",CHAPTERS:177,EXTRAS:4,GENRE:"World Hopping",TIMELINE:"Modern",Carrd:"https://qwtfotd.carrd.co/",Eng_TL:"https://whiteskytranslations.wordpress.com/quickly-wear-the-face-of-the-devil-extra-3-the-fox-demon-and-the-regent/",Synopsis:`A top hacker was chosen by the Lord God to be reborn into countless worlds, always as an expendable villain.\r
+With no free will, every world became a dead end. Each of his lives ended tragically.\r
+Finally, after wrestling control of the Villain System, this ace hacker decided to enact revenge. Even if his very bones were rotten, he’d choose to occupy the very heights of morality, if only on the surface.\r
+Thus, he would change his fate as an abused slag`,IMG:202,PRIO:2},{BOOK_TITLE:"Rebirth of a Cannon Fodder",AUTHOR:"Yin Er 饮尔",CHAPTERS:126,EXTRAS:3,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://translatingboredom.com/tag/rebirth-of-a-cannon-fodder-from-a-novel/",Synopsis:`As the only girl born in the four generations of the Mo family – a prestigious and powerful family in Hua Xia – Mo Liu Gui has been adored since the day she was born. She is gorgeous, naive and intelligent. Behind her is the noble Mo family and by her side are countless excellent pursuers. Whether in career or relationships, she’s the heaven born life winner.\r
+\r
+It’s a pity that Mo Di is not Mo Liu Gui but a tragic contrast of what one would call life winner.\r
+\r
+He has been disliked by everyone in the Mo family since the day he was born. When he left the incubator, the whole family was competing for his sister but left him in the hospital corridor overnight. He never took a sip of his mother’s milk because it was just enough to feed one child. He has not been held by his father once because his father was extremely disgusted with the culprit who robbed his darling of nutrition in their mother’s womb.\r
+\r
+His five brothers never looked him in the eye. When he was six years old, they even ganged up to beat him till he had a fractured right leg which almost left him permanently disabled, all because he scored first place in his grade while his sister scored third, making Mo Liu Gui sad to the point of crying.\r
+\r
+Countless scolding, neglect, double standard treatment, and even abuse in the name of education have been habitually done to Mo Di. Finally one day, the Mo Di who has been soft and obedient for eighteen years turned black.\r
+\r
+He was no longer a soft and sensible man but had become gloomy and aggressive. He ran away from home, started his own company and made new friends. Everything is booming but when his company was about to go public, he was found by the Mo family. During a struggle with Mo Liu Gui who was asking him to come home, she fell and almost had a miscarriage. This incited everyone’s anger and they forced him into a mental hospital.\r
+\r
+In the end, he died on his 25th birthday…\r
+Afterwards, he was reborn.`,IMG:203,PRIO:2},{BOOK_TITLE:"Rebirth of A Movie Star",AUTHOR:"J112233",CHAPTERS:61,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://roams.carrd.co/",Eng_TL:"https://whiteskytranslations.wordpress.com/rebirth-of-a-movie-star-%e9%87%8d%e7%94%9f%e4%b9%8b%e6%9c%97%e6%9c%97%e6%98%9f%e7%a9%ba/",Synopsis:`In his previous life Bai Lang was a small star. He rejected his boss and s*upidly engaged in a relationship which he thought was true love.\r
+He didn’t expect that he would get betrayed, die of a heart attack and trouble his boss to accompany him on his last journey.\r
+After his rebirth, he decided to give up on true love. As for his boss… since he wants something then just let him have it.\r
+So this little star after his rebirth collected his boss, and then it became a true love story with his boss.\r
+In between there are good friends/love rivals/scum men in the mix. A sweet story with a happy ending.`,IMG:204,PRIO:2},{BOOK_TITLE:"Rebirth of A Supermodel",AUTHOR:"Mo Chen Huan 莫晨欢",CHAPTERS:244,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`In his past life, Ming Yu struggled in the European and United States fashion circles, eventually becoming the well deserved king of the catwalk.\r
+\r
+After dying from a serious illness and being reborn, Ming Yu was surprised to find:\r
+\r
+Huaxia stars shone brightly, there were successful names everywhere!\r
+\r
+In this better world, on a more vigorous and brilliant stage, the first supermodel tries to reproduce the glory of another world!\r
+\r
+Interviewer: May I ask Mr Xi, this year Ming Yu said he would surpass you. As the number one global supermodel, what is your opinion on this?\r
+\r
+Xi Ze: This is a bad question. My family has very strict rules.\r
+\r
+Home Owner Ming Yu: …….\r
+\r
+The pair of black-hearted husbands will sweep the fashion industry, conquering the world.`,IMG:205,PRIO:2},{BOOK_TITLE:"Rebirth of the Supreme Celestial Being",AUTHOR:"Bing Tang Lian Zi Geng 冰糖莲子羹",CHAPTERS:774,EXTRAS:12,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/rscb/",Synopsis:`The genius cultivator Lin Xuanzhi didn’t let down the world in his past life, yet he only betrayed a single Yan Tianhen.\r
+\r
+It was only when he had been backstabbed and killed by his closest friends, teacher, and fellow disciples that he knew what kind of unforgivable crimes he had committed.\r
+\r
+After he gained the huge opportunity for rebirth, the Lin Xuanzhi who had climbed back up from hell swore to cherish the person that he had betrayed in his past life.`,IMG:206,PRIO:2},{BOOK_TITLE:"Reborn into A Slash Game",AUTHOR:"Long Qi 龙柒",CHAPTERS:80,EXTRAS:1,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/rsg/",Synopsis:`Suo Fei: Hey, hey, hey, can you delete these files and let me restart? What the hell did Laozi transmigrate into!\r
+\r
+Statement: The protagonist is a shou. This novel is 1v1, always gong x always shou, ending is HE, the course of events is very wretched, and the author has no moral integrity.`,IMG:207,PRIO:3},{BOOK_TITLE:"Reborn with an Old Enemy on the Day of our Marriage",AUTHOR:"Lin Zhiluo 林知落",CHAPTERS:93,EXTRAS:11,GENRE:"Humour",TIMELINE:"Modern",Carrd:"https://roedm-info.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/roedm/",Synopsis:`Lin Qian and Zheng PingQing, two people who have wanted to kill each other for many years, fell in love. After a lot of ups and downs, they finally married.\r
+But they didn’t expect to get reborn together on the day of their wedding.\r
+Back to the year when their feud was at its most intense.\r
+The friends around them also saw each other as enemies.\r
+Yet the two men in question were…in the eyes of the frightened relatives and friends of both sides; they began to scatter dog food.\r
+Friends and relatives: ???\r
+Ermm…..this is awkward.`,IMG:208,PRIO:1},{BOOK_TITLE:"Record of the Missing Sect Master",AUTHOR:"一世华裳",CHAPTERS:115,EXTRAS:5,GENRE:"Wuxia",TIMELINE:"Modern",Carrd:"https://missingsectmaster.carrd.co/",Eng_TL:"https://shrimpchips.home.blog/record-of-the-missing-sect-master/",Synopsis:`A major event happened recently to the demonic sect – their powerful sect master suddenly went missing.\r
+Everyone comforted each other: “Don’t worry, the sect master must be out pursuing fun, and so on.”\r
+“Well, that makes sense.”\r
+They waited.\r
+Waited and waited.\r
+Waited and waited.\r
+Waited and… Everyone slammed the table: “We’ve waited so long! The sect master must have met with a mishap! Look for him!!” Numerous disciples therefore ran rumbling down the mountain.\r
+On a certain day of the month, a certain sect master opened his eyes and thought in confusion: Hey, who am I?`,IMG:209,PRIO:3},{BOOK_TITLE:"Remnants of Filth",AUTHOR:"Meatbun Doesn't Eat Meat 肉包不吃肉",CHAPTERS:196,EXTRAS:18,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://remnantsoffilth.carrd.co/",Eng_TL:"locked",Synopsis:`The traitorous general Gu Mang was returning to his homeland. Everyone wanted to see him dead, and it was said that the one who hated him most was his former best friend —\r
+the cold and ascetic Young Master Mo.\r
+The rumours said: Young Master Mo prepared three hundred and sixty-five methods of torture to interrogate him with, just waiting to try them out on Gu Mang. They were so varied it was more than enough to toy with him for a year without repetition.\r
+Except these rumours were very quickly forbidden by Young Master Mo. The reason given was that they described him as a lunatic, and were severely inconsistent with reality.\r
+So what was the truth?\r
+The truth was even more unspeakable —\r
+Mo Xi’s identity: the most abstinent commander of the empire.\r
+His relationship with the traitor Gu Mang: they’d slept together before.`,IMG:210,PRIO:1},{BOOK_TITLE:"Restricted Area",AUTHOR:"空菊",CHAPTERS:62,EXTRAS:4,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://jinqu.carrd.co/",Eng_TL:"https://ninetysevenkoi.wordpress.com/ra/",Synopsis:"https://jinqu.carrd.co/",IMG:211,PRIO:1},{BOOK_TITLE:"Runaway Guide",AUTHOR:"Die Zhiling 蝶之灵",CHAPTERS:85,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`After he was reborn in a sci-fi ABO world, Xi Wei became the newly born son of the king of the empire. He thought that as the king’s son he could live a grand, carefree life, but unexpectedly the he, the eldest prince, was actually an omega? What the hell was an omega?\r
+\r
+There was an alpha who was born on the same day as the eldest prince Xi Wei, and the two children grew up together. When Xi Wei looked at the blond child next door, he always felt that the boy wasn’t pleasing to the eye, so Xi Wei bullied him as a child.\r
+\r
+Until many years later…\r
+\r
+Looking at the man standing in front of him who was a head taller than him, Xi Wei was dumbfounded.\r
+\r
+—He tried to escape, but he eventually still fell into the clutches of his childhood sweetheart.`,IMG:212,PRIO:3},{BOOK_TITLE:"Salad Days",AUTHOR:"静水边",CHAPTERS:60,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://jing-jiu.carrd.co/",Eng_TL:"locked",Synopsis:"This is the story between a young innocent ballet boy and a passionate, determined boxing boy. The two met at the children’s palace, and since then, they have grown up together supporting each other. May there be hardships, may there be obstacles, yet they never stopped pursuing their dreams. The beauty of the salad days is the sweat from the hard work and the bonding of friendship. Although they have completely different paths set up for them, what never changes is their beautiful friendship...",IMG:213,PRIO:1},{BOOK_TITLE:"Scum villain's Self Saving System",AUTHOR:"Mò Xiāng Tóngxiù 墨香铜臭",CHAPTERS:81,EXTRAS:20,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://svsssmxtx.carrd.co/",Eng_TL:"locked",Synopsis:`“Can’t I properly read stallion novels anymore!”\r
 Shen Yuan transmigrated into someone who’d abused the young male lead almost to death, the scum villain Shen Qingqiu.\r
 It must be known, the original Shen Qingqiu ended up being carved alive by his disciple, Luo Binghe into a human stick, a human stick!\r
 Ten thousand “fuck your mom”s rampaged through Shen Qingqiu’s heart:\r
 “It’s not that I don’t want to cling to the male lead’s thighs, but who made him so fucking black. The type who seeks thousand-fold retribution!”\r
 Why have all the female lead’s scenes been forcibly given to him.\r
 Why, as a scum villain, does he need to constantly sacrifice himself, blocking knife and gun for the protagonist!\r
-Shen Qingqiu: “…I think I can still save him, one more time.”`,IMG:214,PRIO:1},{BOOK_TITLE:"The Legendary Master's Wife",AUTHOR:"Yin Ya 尹琊",CHAPTERS:713,EXTRAS:19,GENRE:"Xuanhuan",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-legendary-masters-wife/",Synopsis:`After an explosion, You XiaoMo finds that he is now a probationary disciple of the TianXin sect. However, he is one with dubious potential, so just when he starts to adapt to his new circumstances, he receives a piece of bad news. If he is unable to produce the required result after half a year to become an official disciple of the TianXin sect, he would be driven out of the sect.\r
+Shen Qingqiu: “…I think I can still save him, one more time.”`,IMG:214,PRIO:1},{BOOK_TITLE:"Seduction Game",AUTHOR:"Alcohol and Tea Lover 嗜酒吃茶",EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",IMG:215,PRIO:3},{BOOK_TITLE:"Seizing Dreams",AUTHOR:"Fei Tian Ye Xiang 非天夜翔",CHAPTERS:165,GENRE:"Fantasy",TIMELINE:"Modern",Carrd:"https://seizingdreams-info.carrd.co/",Eng_TL:"https://www.chickengege.org/novels/duomeng/",Synopsis:`In the dreamer’s dream, the dreamed one awoke.\r
+— Borges\r
 \r
-While You XiaoMo is going all out to make medicines and earn money, he runs into Ling Xiao. To his horror, he later discovers that Ling Xiao is actually someone cloaked in human skin.`,IMG:245,PRIO:2},{BOOK_TITLE:"The White Cat's Divine Scratching Post",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:131,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://wcdsp.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wcsp/",Synopsis:`Mo Tianliao was a master weaponsmith and a demonic cultivator. When news spread that he was about to complete a divine weapon, cultivators from both the demonic and orthodox sides chased him down and killed him. In a stroke of luck, he managed to possess a new body and was reborn.\r
+“I exist between the heavens and earth, in the sunlight, in the wind, and in dreams.”\r
+\r
+One night, Yu Hao, a college student who was at his wits’ end had an unexpected encounter with a mysterious visitor – “General” – who had dream travelled. He led Yu Hao in solving the countless riddles that abounded in the realm of the conscious, and lit up the fire beacons on the meandering Great Wall.\r
+\r
+Thereafter, the darkness retreated, the sun rose, and when the long night was thoroughly lit up, the him who existed in reality was reborn.\r
+\r
+The black dragon that roared, the lighthouse and demonic eye on the coastline, the rain forest before Chichén Itzá, the fierce beasts that wreaked havoc in the Colosseum…the bizarre projection of reality in one’s consciousness reflected the hidden place that the sunlight in reality couldn’t touch – the innumerable sins of the human heart.\r
+\r
+The journey of seizing dreams continues, and one can only hope that the sun will continue illuminating the human heart.\r
+\r
+——\r
+\r
+Fire beacons on the Great Wall were lit up to signal a border invasion.`,IMG:216,PRIO:1},{BOOK_TITLE:"Sha Po Lang",AUTHOR:"Priest",CHAPTERS:128,EXTRAS:15,GENRE:"Action",TIMELINE:"Historical",Carrd:"https://shapolangpriest.carrd.co/",Eng_TL:"locked",Synopsis:`"The first person to dig ziliujin fuel out of the ground could never have predicted that what they dug out was the beginning of a dog-eat-dog age.\r
+Our entire life was but an ugly confidence game of greed; this is something everyone knows, but that they could not bring to light.\r
+From where did this con begin? Maybe from atop the first clean white canvas sails of a foreign ship that sailed across the ocean, or from beneath the great wing of a Giant Kite as it rose unsteadily into the skies — or from a time even before that: as the spreading ziliujin, like an ink stain upon the earth, turned the great plains of the wild north into a sea of flames.\r
+Or maybe it was when We… when I met Gu Yun in a world all covered in ice and snow."`,IMG:217,PRIO:1},{BOOK_TITLE:"Shh, There’s a Beast in the Imperial Palace",AUTHOR:"Metasequoia 水杉",CHAPTERS:74,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`ust before his death, Chi Jun one-sidedly broke up with Gu Yanzheng. His claws came out as he screamed, “You old tree, get lost! I am fed up with you!”\r
+\r
+Then Chi Jun’s two paws held down the zombie emperor and… they perished together.\r
+\r
+Once he woke up again, Chi Jun discovered that as a person with the beast transformation and metal ability, he became a little lion of the imperial palace. The tree in the courtyard next to the imperial palace was extremely familiar.\r
+\r
+The little lion struggled over the wall and secretly marked beneath the tree. Then the major general, who was away on an expedition, looked at his feet and fell into thought…`,IMG:218,PRIO:3},{BOOK_TITLE:"Silent Reading",AUTHOR:"Priest",CHAPTERS:180,EXTRAS:5,GENRE:"Mystery",TIMELINE:"Modern",Carrd:"https://modustarter.carrd.co/",Eng_TL:"http://edanglarstranslations.com/modu",Synopsis:`Childhood, upbringing, family background, social connections, traumas...\r
+We ceaselessly seek and explore the motives of criminals, pursue every faint trace of emotion among them, not to sympathize with them and even forgive them, not to find a reason to exonerate them of their crimes, not to bow before the so-called complexities of human nature, not to reflect on social conflicts, and certainly not to become monsters ourselves—\r
+It is only to find a just account for ourselves and for those who still have hope for the world.`,IMG:219,PRIO:1},{BOOK_TITLE:"Social Outcast",AUTHOR:"Ka Bi Qiu 卡比丘",CHAPTERS:33,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://socialoutcast.carrd.co/",Eng_TL:"https://blackbox-tl.com/novels/so/",Synopsis:"A cold and homophobic top matched with a person he hated on a dating app, and discovered that the other was even more clingy than he thought!",IMG:220,PRIO:1},{BOOK_TITLE:"Special Case Files of Rebirth",AUTHOR:"KuangXiang Zhi Tu 狂想之途",CHAPTERS:132,GENRE:"Reincarnation",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/special-case-files-of-rebirth/",Synopsis:`Hei Xiao, who was a famous assassin, could never have imagined that one day, he would be shot in the head. This was retribution.\r
+\r
+But he didn’t die.\r
+\r
+When he opened his eyes, two men and a woman were gathered around the bed and kindly told him that he had ‘amnesia’: “You are our good, beloved coworker.”\r
+\r
+Hei Xiao asked, “What’s our job?”\r
+\r
+They replied, “The police~”\r
+\r
+Hei Xiao was speechless.\r
+\r
+Looking at the strangely pale and thin face in the mirror in front of him, Hei Xiao wished he could die again: God, although I’ve sinned a lot, you don’t have to play me like this!`,IMG:221,PRIO:3},{BOOK_TITLE:"Spirit Hotel",AUTHOR:"Su Youbing 酥油饼",CHAPTERS:100,EXTRAS:23,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/spirit-hotel/",Synopsis:`fter being unemployed for a long time, Feisha Shi finally found a new job – the front desk manager at the oldest hotel in the universe.\r
+\r
+This hotel has a fallen angel, vampire, werewolf, faerie, dwarf, titan, invisible person… just no humans.\r
+\r
+This hotel serves customers who are fallen angels, vampires, werewolves, faeries, dwarves, titans, invisible people… still no humans.\r
+\r
+This hotel’s name?\r
+\r
+Noah’s Ark.`,IMG:222,PRIO:2},{BOOK_TITLE:"Spring Trees and Sunset Clouds",AUTHOR:"Wei Liang 未良",CHAPTERS:54,GENRE:"Mystery",TIMELINE:"Historical",Carrd:"https://readstsc.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/spring-trees-and-sunset-clouds/",Synopsis:`An average, normal university student transmigrates into the royal family in another world, where he becomes one of the successors of the throne. Life in the palace is inevitably difficult though, what with all the scheming enemies around him. This man’s only wish in this world is to be able to protect his “younger brother,” and for that, he’ll do anything–whether by hook or by crook–to ensure his brother’s safety and have him succeed the throne.\r
+The man never once expected, though, that the person whom he swears to protect would be the one to stab him in the back. He got locked in a dungeon where he was tortured for three years. And when he was on the brink of death, his body was thrown away into the river.\r
+When he wakes up, he finds himself in an eccentric and peaceful place, where everyone is suspiciously more than what they seem…`,IMG:223,PRIO:1},{BOOK_TITLE:"Stone Age Husband Raising Journal",AUTHOR:"Jué Jué 决绝",CHAPTERS:161,GENRE:"Adventure",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbme/",Synopsis:`What should you do when the person you like is no longer loyal? Find another one!\r
+\r
+This time, in order to avoid trouble, Xiong Ye chose the weakest man in the tribe as his new companion.\r
+\r
+In any case, he can afford him!\r
+\r
+With his strength, he’ll definitely be able to let his own man eat meat every day instead of grass.\r
+\r
+* *\r
+\r
+Zhou Ji, the ‘weakest man’ who had just transmigrated over from the apocalypse and likes to indulge in eating ‘grass’, “…”\r
+\r
+He’s not the same person anymore! He was clearly capable of killing the entire tribe by himself!`,IMG:224,PRIO:2},{BOOK_TITLE:"Stop Bothering Me, Emperor",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:120,EXTRAS:3,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbme/",Synopsis:`When Song Xiao was young, he wanted to become a Virtuous Official for a lifetime, but was forced to marry into the palace by that uncooperative Emperor; when his Virtuous Empress For A Lifetime career had just started, the Emperor died……\r
+\r
+Opening his eyes again, he’d come to the twenty-first century. The once highly-talented and literary Scholar Lang also has to carry his book bag and face the college entrance examinations. Just that, this desk-mate looks a little familiar……\r
+\r
+His Majesty the Emperor: Lend me your homework to copy\r
+\r
+Song Xiao: ……`,IMG:225,PRIO:2},{BOOK_TITLE:"Strategy to Capture That Scum Gong",AUTHOR:"Tức Mặc Dao 即墨遥",CHAPTERS:211,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/scsg/",Synopsis:`As a true over-bearing president scum gong, when Xie He for the Nth time rejected his admirer, he heard a sentence in his head: “Congratulations on achieving the “rejects 100 hosts” accomplishment; as an award you will soon bind to the “Scum Gong and Cheap Shou” system, entering other worlds to complete capture missions.\r
+\r
+As a scum gong, Xie He expresses that it is very easy to hide one’s true colors, but…… “I Heard My Boyfriend’s Brother Secretly Loves Me,” “Teacher Love Me One More Time,” “Raising Rich Youth Manual,” “Your Majesty, This Servant Obeys,” “The Tyrant Lord’s Substitute Lover,” “Captive of the Empire,” “Disciple’s Cultivation Furnace” ……\r
+\r
+Xie He: Wait a minute. These words sound really strange……. and why is my role the ‘cheap shou’?\r
+\r
+System: Fighting poison with poison. Using scum to overcome scum. I’ll be relying on you to abuse the scum gong! Remember to not OOC~\r
+\r
+Xie He: He he.\r
+\r
+Later……\r
+\r
+Xie He: Hm? You say all the scum gong love me? Sorry, I only love myself.`,IMG:226,PRIO:2},{BOOK_TITLE:"Supernatural Movie Actor",AUTHOR:"Xìzi jì jiǔ 戏子祭酒",CHAPTERS:179,EXTRAS:5,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://smaa.carrd.co/",Eng_TL:"https://rainbow-reads.com/app-toc/",Synopsis:`Xie Chi is a patient with multiple personality disorder. On the surface, he is educated and gentle but the secondary personality is cold, ruthless, and powerful, with explosive strength.\r
+Xie Chi can never fall in love with others because the secondary personality is his boyfriend.\r
+Xie Chi’s only dream is to one day embrace his lover.\r
+In order to realize his dream, Xie Chi willingly binded with the Horror Movie Actor App. The app regularly releases horror movie notices such as Spirit in Red Clothes, Zombie Lovers, 1552 Haunted House, etc…\r
+Selected actors will be placed in a real horror environment to survive.\r
+On the first day of filming, the first male lead with a dirty personality blocked Xie Chi in the corner. “Follow me and I’ll help you be the second male lead.”\r
+Xie Chi smiled softly and shook his head. “That isn’t enough.”\r
+The first male lead was dumbfounded.\r
+Xie Chi smiled slightly. “Brother, help me beat him up.”\r
+The secondary personality gave a cold smile to the first male lead.\r
+End of the shoot, the first male lead: Xie Chi.\r
+Others: Struggling to survive.\r
+Xie Chi: Defy the natural order to change fate.\r
+A combination of absolute wisdom and absolute force.\r
+Starting from the 18th tier, Xie Chi will eventually become… the horror movie emperor.`,IMG:227,PRIO:1},{BOOK_TITLE:"Surprise! The Supposed Talent Show Was Actually..!",AUTHOR:"Yan Baibai 晏白白",CHAPTERS:225,EXTRAS:13,GENRE:"Survival Game",TIMELINE:"Modern",Carrd:"https://ststswa.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/surprise/",Synopsis:`Wu Jin, as a trainee from a certain entertainment company, had a peerless, stunning face. He was qualified to debut as a lead performer even if he just sat there and did nothing.\r
+After signing up for a certain talent show, the shining path to stardom beckoned to him––\r
+Wu Jin: Hold on, why is this show different from what we agreed on? Wasn’t it supposed to be about jumping around, dancing, and singing songs? Why do you have to send me out into the wilderness…\r
+Program Producer: You’re a once-in-a-century high appearance value competitor! We’re relying on you to save the program’s ratings!\r
+Wu Jin: … I seem to be on the wrong show. Wait a minute, this isn’t an idol show, it’s a fighting survival reality show ahhh!!\r
+Ten months later, the little cutie who had been thrown into the show––\r
+Turned into a human weapon.\r
+Powering up through various instances, slight entertainment circle elements.\r
+Extremely overpowered gong x little cutie who grows to become an overpowered shou.`,IMG:228,PRIO:1},{BOOK_TITLE:"Tattoo",AUTHOR:"Bu Wen San Jiu",CHAPTERS:48,EXTRAS:4,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://ciqing.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/tattoo/",Synopsis:`On the night of Xiao Ke’s thirtieth birthday, he shared a table while drinking. The person he shared the table with was a cool man who fit all of his aesthetic desires. It was practically love at first sight.\r
+He was thirty; he had reached that age where he was no longer the awkward twenty-something youth. He would pursue the one he liked without hesitation, no questions asked.\r
+“I want you to give me a tattoo. I want to spend the rest of my life with you.”`,IMG:229,PRIO:1},{BOOK_TITLE:"That One Rich Fan of Mine",AUTHOR:"Custard pineapple bun 奶黃菠蘿包",CHAPTERS:33,EXTRAS:2,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/trf/",Synopsis:`He tossed half a million yuan worth of super torpedoes by accident. \r
+\r
+Lin Xizhou, a ‘fresh meat’ celebrity with popularity the size of the sky, is a ‘masterful actor’ born in a performing arts family. He is the ‘Violet Star from the Heaven’ in the present entertainment circle. Not only is he talented and adaptable, he is also modest. One could even describe him as perfect. \r
+\r
+But no one knows that his dream was to become a professional esports player. \r
+\r
+Another thing that no one knows was that although he didn’t become a professional esports player, he unintentionally became the world’s number one ADC player’s boyfriend.`,IMG:230,PRIO:3},{BOOK_TITLE:"The Antelope and Night Wolf",AUTHOR:"Yi Xiu Luo 易修罗",CHAPTERS:87,EXTRAS:2,GENRE:"Video Game",TIMELINE:"Modern",Eng_TL:"https://www.blackbox-tl.com/novels/tanw/",Synopsis:`LingYang spent 500RMB to buy a ladyboy account, and it came with a husband?\r
+\r
+Just after logging into the game he was informed that the account was in debt, and he had no choice but to sell himself and act as a couple with his ‘husband’.\r
+\r
+LingYang: I only bought an account, why must you force a husband on me?\r
+\r
+YeLang: You can also choose not to take the husband but the debt instead.\r
+\r
+LingYang: Dear, can I not have the free gift?\r
+\r
+YeLang: Sorry, it’s a bundle, no returns allowed.\r
+\r
+At first glance, it’s a story about how a little antelope accidentally entered the embrace of a big-tailed wolf after escaping from a tiger’s den.\r
+\r
+But it’s actually an inspirational story about how an innocent straight man was actively turned gay by a little bottom with a boots fetish, then went through a series of complex mentality changes, finally becoming a cold-blooded, black-bellied S top!`,IMG:231,PRIO:1},{BOOK_TITLE:"The Blind Concubine",AUTHOR:"Xi Ni 洗泥",CHAPTERS:29,GENRE:"Psychological",TIMELINE:"Historical",Carrd:"https://xianiangniang.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/xia-niangniang/",Synopsis:"A blind concubine lives in the cold palace. The blind concubine has a snow white cat. Day after day, year after year, he lives quietly in the courtyard of the cold palace. It is as if he has already been forgotten by the entire imperial palace. Until one day, the young emperor accidentally chances upon him… ️️️️️️️️",IMG:232,PRIO:2},{BOOK_TITLE:"The Daily Life of Being the Campus Idol’s Fake Boyfriend",AUTHOR:"Xi He Qing Ling",CHAPTERS:65,EXTRAS:9,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://fakeboyfriend.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/cifb/",Synopsis:`The year he was fifteen, Ling Ke realized he was gay, and that he fell in love with a hot guy the same gender he was! Ling Ke spied on the other’s online friend group, paid attention to that person’s every move, and privately, started his fanatical fan-boying actions. Unfortunately, the hot guy he liked was someone who changed girlfriends like he changed clothes, a pretentious and straight male.\r
+A few years later, Ling Ke and the hot guy he was secretly in love with got into the same university and became good friends. In order to prevent his beloved from hating him, Ling Ke repressed his true feelings and forced himself to pretend to be a 24k, pure gold straight guy.\r
+……\r
+Having high-spec looks, Qi Feng was a networking expert, but in order to preserve his all-around shining and popular heartthrob image, he always hid his true sexuality, that he was gay. He got himself (fake) girlfriends all throughout school, literally playing himself into being branded as a skirt-chaser.\r
+Until one day, he met his true love. The other looked delicate and gentle, cold and out-of-reach, as if the ideal lover he’d dreamed of in his heart.\r
+Except, there was just one thing. That guy also looked completely straight……\r
+In short, this is the love story of two scared, in-the-closet gay guys pretending to be straight while mutually trying to feel the other out.`,IMG:233,PRIO:1},{BOOK_TITLE:"The Daily Task of Preventing My Disciple from Turning to the Dark Side",AUTHOR:"Hēi Māo Nì Nì 黑猫睨睨",CHAPTERS:112,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://secondlifetranslations.com/novel/dtpdtds/",Synopsis:`As the number one pill alchemist of the immortal world, Mu Chen had always believed that it was because he had single-mindedly focused on concocting pills that led to him to neglect disciplining his disciple. Which in turn, caused his disciple to be led astray by the seduction of devil cultivation, leading to the three realms to fall to disaster.\r
+\r
+After his rebirth, Mu Chen resolved to properly teach his disciple, give him the very best resources, earnestly love him, carry him close to his heart, teach him by way of example, and didn’t let him grow corrupt.\r
+\r
+Sure enough, his disciple became more and more “intimate”. Every day his disciple even crawled into his bed, rubbing against his chest and clinging to his thigh. It was just that his expression isn’t exactly quite right……`,IMG:234,PRIO:3},{BOOK_TITLE:"The Defective",AUTHOR:"Priest",CHAPTERS:197,EXTRAS:6,GENRE:"Mecha",TIMELINE:"Modern",Carrd:"https://cancipin.carrd.co/",Eng_TL:"https://www.wattpad.com/story/157456305-can-ci-pin-imperfections-%e6%ae%8b%e6%ac%a1%e5%93%81-bl-by-priest",Synopsis:`"Who will be the one to bury mankind, Orwell or Huxley? No need to give your answer so quick. Let's read a story first.\r
+When Lu Bixing, a hipster from the Eighth Galaxy, fell in love with a gangster called B4, he didn't know that his darling muffin was Commodore Lin Jingheng, the commander of Silver Fortress. As they knew each other further, the world changed dramatically: Interstellar pirates invaded the Interstellar Union. The nasty secrets about Eden emerged in front of them. Lu's pedigree was found to be unbelievably mysterious.\r
+But all they wanted was each other, no matter how peculiar the world was around them.\r
+In a sentence, it's a story about conspiracies and murders, gentlemen and villains, love and hatred.\r
+Coming back to the question, the answer is: "Humans are born from belief, die of belief, and reborn from the ashes of belief." "`,IMG:235,PRIO:1},{BOOK_TITLE:"The Disabled Tyrant's Pet Palm Fish",AUTHOR:"Xuěshān féi hú 雪山肥狐",CHAPTERS:156,GENRE:"Transmigration",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/dtppf/",Synopsis:`One day, Li Yu transmigrated into a fish. Furthermore, this fish even had a master. This master was the sinister and terrifying, mute tyrant from a novel. The system gave Li Yu a task. If he wanted to change back into a human, he had to obtain the tyrant’s heart.\r
+\r
+Li Yu full of tears: System, please wake up. I’m only a fish. He can’t even speak. How can we interact?\r
+\r
+System: Stop jabbering. To take down the tyrant, you must attack his heart.\r
+\r
+Li Yu: Can I ask, does the tyrant have a heart–\r
+\r
+Li Yu did his best to blow bubbles at the tyrant, but ended up being captured by the tyrant and raised carefully in a huge, ginormous…… fish tank. The life of a fish was filled with all sorts of blessings.\r
+\r
+Everyday, Mu Tianchi watched the little carp swim around happily, pondering when this fish would finally transform into a human.\r
+\r
+The little carp didn’t know. It’s not that the tyrant had no heart, it’s just that he already gave it away to the little carp that accidentally saved his life.`,IMG:236,PRIO:1},{BOOK_TITLE:"The E-Sports Circle’s Toxic Assembly Camp",AUTHOR:"Qīngméi jiàng 青梅酱",CHAPTERS:194,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://camp-esports.carrd.co/",Eng_TL:"locked",Synopsis:`Chief tactician Lin Yan entered an e-sports novel. At this time, there was still a whole year to go before the original plot started.\r
+The big devil who would frighten people in the future was still a thin-skinned little anchor; the disaster who once disturbed the e-sports circle was playing as an accompanying player; the best healer was sitting on the cold bench of a third-rate team; the strongest king at shooting his mouth off offended the media and his black materials were flying all over the place…\r
+They would shine as the plot progressed but unfortunately, their teams weren’t strong enough. In the end, they couldn’t escape the fate of a cannon fodder.\r
+Lin Yan couldn’t bear to see these talents being wasted. The e-sports professional reality show started and he spent money to set up the GH Club, moving from east to west to select his team.\r
+The variety fans: ??? Is this ‘Go Home’ team picking up the junk?\r
+This lasted until all the opponents were coughing up blood at GH’s tactics and could only watch GH get a ticket to the professional league.\r
+The entire e-sports circle knew that apart from their captain Jing Yuanzhou, the entire GH team was a group of barely qualified variety show players not worth paying attention to. As a result, this toxic team swept through the field and reached the top in their first year of the league.\r
+When the media interviewed GH: Captain Jing, why did you agree to Coach Lin and joined GH?\r
+Jing Yuanzhou: He pestered me every day saying ‘I want you’. It was really difficult to turn down such great kindness.\r
+Lin Yan: “???”\r
+Check the salary deduction warning.\r
+The entire Internet went crazy: Parental love is real!!!`,IMG:237,PRIO:1},{BOOK_TITLE:"The Earth Is Online",AUTHOR:"Mo Chen Huan 莫晨欢",CHAPTERS:240,EXTRAS:5,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://earthisonline.carrd.co/",Eng_TL:"locked",Synopsis:`Six months ago, tens of thousands of black phantom towers appeared all over the world, floating above the cities. Chemists, physicists, religious people… all of them could do nothing.\r
+Six months later, people became used to the towers and no longer paid them attention.\r
+One day, Tang Mo saw a flying insect crash into it instead of going through it. The next day, a sharp and clear child-like voice issued an announcement to all humans.\r
+“Ding dong! November 15th, 2017. The earth is online.”\r
+The black tower’s three iron-clad rules:\r
+1. Everything is explained by the black tower.\r
+2. 6 o’clock to 18 o’clock is the game time.\r
+3. All players, please strive to attack the tower.`,IMG:238,PRIO:1},{BOOK_TITLE:"The Film Emperor’s Daily Live Cooking Broadcast",AUTHOR:"Drunken Light Song 砚楚",CHAPTERS:123,EXTRAS:2,GENRE:"Showbiz",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/fedlcb/",Synopsis:`On the Star Network there is a gourmet food broadcast, where all you can see are a pair of hands. However each dish that this broadcast comes out with is earthshakingly delicious. What’s more, the broadcast anchor’s voice is simply perfect!\r
+\r
+With the broadcast’s rising popularity, several food programs extended him an olive branch. When the anchor appeared on screen, as they suspected, he is handsome enough to incur the wrath of both men and gods! The fans licked their screens with increasing frenzy, but after licking a while, they discovered…\r
+\r
+Fans:…Wait a minute, isn’t this our fatally-ill idol who hasn’t long to live?\r
+\r
+Small Gong: Take these damned nutrient solutions and throw them away! And get me that broadcast anchor!`,IMG:239,PRIO:3},{BOOK_TITLE:"The Fourteenth Year of Chenghua",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:151,EXTRAS:18,GENRE:"Mystery",TIMELINE:"Historical",Eng_TL:"https://chichilations.home.blog/fourteenth-year-of-chenghua/",Synopsis:`VSGH is a multiplayer online tactical competitive shooting game.\r
+\r
+When Wen Xi first came into contact with the game, like most people, he used a gun as his main weapon.\r
+\r
+But his shooting skills were too poor, often having teammates vent about whether he was the master of outlining the human body.\r
+\r
+Until one day, he picked up a bow.\r
+\r
+Since then, SGH has had another archer assassin named “Wency”.\r
+\r
+It’s said that his arrows never miss their shot, a hundred shots and a hundred hits, killing with one blow.\r
+\r
+It’s said that only the first ranked sharpshooter “Mac” succeeded in killing him.\r
+\r
+It’s said that he likes “Mac”.\r
+\r
+Wen Xi: …where did this rumor come from? Mac, come out and clarify!\r
+\r
+Mo Chen: En, it’s a rumor. Actually, I like you.\r
+\r
+A shou who wholeheartedly wants to make money through livestreaming vs. A gong who wholeheartedly wants to trick the shou into joining his team.`,IMG:240,PRIO:3},{BOOK_TITLE:"The General Loves to Collect Little Red Flowers",AUTHOR:"Kun Cheng Xiong Mao 困成熊猫",CHAPTERS:105,EXTRAS:6,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/glclf/",Synopsis:`The most domineering, arrogant and beautiful Omega in the Tarot Empire, Le Yao was arranged to marry General Xu Yao, who was known as the ruthless King of Hell.\r
+However, the “Le Yao” now was a crossed-over soul from the earth!\r
+\r
+After X days of marriage he gave Xu Yao a note…\r
+\r
+It was written:\r
+– Little Red Flower Agreement!-\r
+Don’t swear a day, get 1 little red flower.\r
+Keep reading every night, get 2 little red flowers.\r
+Do good deeds, get 3 little red flowers.\r
+Get 300 little red flowers, you can pa pa pa!\r
+\r
+Xu Yao: Hmph! Was Lao Zi like a dog in heat and want to do it with you?\r
+\r
+But after a month…\r
+\r
+Xu Yao: Hurry! I still need three more flowers, whose family is bankrupt this time? I’ll send a charity money, hurry!!!\r
+\r
+Cheerful, kind and virtuous wife vs Black belly and pampering husband, 1 vs 1, HE`,IMG:241,PRIO:2},{BOOK_TITLE:"The General’s Vampire Omega",AUTHOR:"Little Baldy 秃子小贰",CHAPTERS:88,EXTRAS:1,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-generals-vampire-omega/",Synopsis:`As a newborn vampire, Luo ZhouZhou’s instincts are ingrained in his genes making him embark on a constant lifelong quest for a matching mate. His mate’s blood must be warm and sweet, with the scent of red caltrop fruit. However, after almost twenty years of searching without any luck, Luo ZhouZhou felt himself withering away until he traveled to an unknown time and space.\r
+\r
+Getting accustomed to his new human life (not human, vam-pi-re!) is far from easy, but when he ends up at the office of the Bayard district’s police station, he finally finds the smell he has been searching for all this time.\r
+\r
+Only a whiff and I know he’s the mate I’ve been looking for!\r
+\r
+In a strange place with pheromones and secondary genders, the naive Luo ZhouZhou, who knows nothing about the workings of this ABO world, has to find the owner of that scent. And there’s also an omega killer on the loose!\r
+\r
+What are omegas and alphas? Some kind of personal s*aves? If only this General Chu Feng would leave this vampire in peace so he can fulfill his lifelong quest, dammit!`,IMG:242,PRIO:3},{BOOK_TITLE:"The Governor Is Sick",AUTHOR:"Yáng sù",CHAPTERS:134,EXTRAS:4,GENRE:"Martial Arts",TIMELINE:"Historical",Carrd:"https://governorissick.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/the-governor-is-sick-chapter-1/",Synopsis:`The world did not expect that the Yama of a mountain of corpses and leader of loafers, Xiahou Lian, would be reduced to the lowest rank of underling in the Eastern Depot. He had a monthly salary of two taels, which wasn’t even enough for rent.\r
+As a rebel in the martial arts world and the Eastern Depot’s most wanted criminal, Xiahou Lian did not expect that the delicate little young master he had met in his childhood would actually become the powerful and arrogant governor of the Eastern Depot.\r
+As for that governor, there was a beam of white moonlight in his heart, a memory of someone he had coveted for a long time yet was out of reach.\r
+“I’ll become a ghost for you, and you’ll become a Buddha for me.”`,IMG:243,PRIO:1},{BOOK_TITLE:"The Heart of a Smith",AUTHOR:"Máo Hòu 毛厚",CHAPTERS:57,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://heart-of-a-smith.carrd.co/",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-heart-of-a-smith/?amp&__twitter_impression=true",Synopsis:`Lu Shang picked up a dirty teenager while discussing work at a bar. It was merely happenstance, but memories from ten years ago resurfaced when he saw the gunshot scars on the teenager’s back.\r
+Lu Shang asked him, “What is your name?”\r
+“Xiao Li… My surname is Li, so they all called me Xiao Li.”\r
+“You don’t have a name?”\r
+“I don’t remember.”\r
+Lu Shang said, “Then I will call you Li Sui. From now on, you will be with me.”\r
+From that day onward, a young “lover” was always by Lu Shang’s side.\r
+Years later, Dr. Leung teased Lu Shang, “You didn’t get his heart, instead your heart caved in; boss Lu, that doesn’t seem like a bargain.”`,IMG:244,PRIO:1},{BOOK_TITLE:"The Legendary Master's Wife",AUTHOR:"Yin Ya 尹琊",CHAPTERS:713,EXTRAS:19,GENRE:"Xuanhuan",TIMELINE:"Historical",Eng_TL:"https://exiledrebelsscanlations.com/novels/the-legendary-masters-wife/",Synopsis:`After an explosion, You XiaoMo finds that he is now a probationary disciple of the TianXin sect. However, he is one with dubious potential, so just when he starts to adapt to his new circumstances, he receives a piece of bad news. If he is unable to produce the required result after half a year to become an official disciple of the TianXin sect, he would be driven out of the sect.\r
+\r
+While You XiaoMo is going all out to make medicines and earn money, he runs into Ling Xiao. To his horror, he later discovers that Ling Xiao is actually someone cloaked in human skin.`,IMG:245,PRIO:2},{BOOK_TITLE:"The Moon is Coming To Me",AUTHOR:"Bó Àn Biān 泊岸边",CHAPTERS:65,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://ylbwel.carrd.co/",Eng_TL:"https://knoxt.space/the-moon-comes-to-me/",Synopsis:`Tao Xi knew the fate of being deliberately exchanged at birth by his “mother” in the third year of middle school. He lived in daze, until he saw Lin Qinhe of Wenhua No.1 High School, a prestigious school thousands of kilometers away, on the remote live broadcast screen of a high school in a poverty-stricken county.\r
+\r
+It was him who lived in the bottom of the well, and for the first time, he caught a glimpse of the moon in the sky.\r
+\r
+But when he exhausted all his energy to climb out of the well and waded towards the moon, he found that the star beside the moon should have been his position.\r
+\r
+Tao Xi wanted Lin Qinhe, along with the love he lost.`,IMG:246,PRIO:1},{BOOK_TITLE:"The National Sweetheart Livestreamer Is A Pro",AUTHOR:"Mo Shang Wang",CHAPTERS:224,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://m.webnovel.com/book/the-national-sweetheart-livestreamer-is-a-pro!_11782909605526205/untitled_34405840110805696?from=catalog",Synopsis:`The handsome, skilled newbie livestreamer, Ji Zhiyao, has a dream.\r
+\r
+“One day, I want to become the most famous crosstalk actor amongst the livestreamers.”\r
+\r
+Later on, this dream is forgotten by him and secretly becomes another.\r
+\r
+“I want to overthrow Fi-god! I want to become Mix’s new team dictator!”\r
+\r
+The rich and aloof idol of the eSports scene, Mo Huaifeng, also has a dream.\r
+\r
+“Two years later, Mix will definitely make it into the International League.”\r
+\r
+Soon after, subtle changes happens to this dream.\r
+\r
+“I want to make it into the International League with Ji Zhiyao and after winning, I will f**k him on livestream.”\r
+\r
+Livestreamer to eSports pro, Captain to boyfriend, will their dreams come true?`,IMG:247,PRIO:3},{BOOK_TITLE:"The Path of the Cannon Fodder’s Counterattack",AUTHOR:"Mao Niao 毛鸟",CHAPTERS:71,EXTRAS:1,GENRE:"Reincarnation",TIMELINE:"Historical",Eng_TL:"https://snowycodex.com/translations/novels/tpcfc/",Synopsis:`Ling Xiao was secretly in love with a girl named Mo Qi; because of an accident, they both crossed into the ancient times.\r
+\r
+Mo Qi who was preinstalled with the Mary Sue halo, in these ancient times, walked to the summit with a golden finger.\r
+\r
+However, Ling Xiao continued to be exploited by Mo Qi.\r
+\r
+After he no longer had any values to exploit, he soon became a pitiful cannon fodder.\r
+\r
+The heavens decided to take pity on Ling Xiao.\r
+\r
+And gave Ling Xiao an opportunity for rebirth.\r
+\r
+After rebirth, he vowed that all his enemies would repay him with a debt of blood!\r
+\r
+However, why have all these enemies of his, fallen into the mode of cutting their heads open?\r
+\r
+“Hey, are you really that unremarkable person who used to follow behind Mo Qi?”\r
+\r
+“So this dance was originally danced by you, sigh……”\r
+\r
+“You are obviously a man, yet you move me so much.”\r
+\r
+“Enough! Since you have taken the initiative to provoke me, then you must concentrate on me!”\r
+\r
+Ling Xiao expressed: If you want to counterattack, then counterattack. As long as your golden finger is bigger than Mo Qi’s.\r
+\r
+But how did Mo Qi’s Mary Sue halo end up in his body! He is still a straight man who likes beauties! He definitely, definitely doesn’t want to turn bent!`,IMG:248,PRIO:2},{BOOK_TITLE:"The People Who’re Supposed To Kill Me Fell For Me Instead",AUTHOR:"Jiuyi 酒矣",CHAPTERS:123,GENRE:"World Hopping",Eng_TL:"https://dummynovels.com/novel/the-people-whore-suppose-to-kill-me-all-fell-for-me-instead/",Synopsis:`What does it feel like to be a cannon fodder in your own novel?\r
+\r
+After ruining countless of his novels with sh*t endings,\r
+\r
+Gu Yan who finally received his retribution understood.\r
+\r
+Heaven spared no one.\r
+\r
+In order to protect his small life, Gu Yan has been sent to diligently clean up his own mess.\r
+\r
+However, never did he expect that his ‘clean up’ would be too thorough.\r
+\r
+Seeing that the man who was suppose to have killed him kneel down on one knee and take out a ring while saying to him, “Marry me.”\r
+\r
+Gu Yan: “…”`,IMG:249,PRIO:3},{BOOK_TITLE:"The Perfect Destiny",AUTHOR:"Xī Zǐxù 西子绪",CHAPTERS:157,GENRE:"World Hopping",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/pd/",Synopsis:`When he first crossed over, Chen Liguo did not want to accept it.\r
+\r
+But he quickly discovered, after he crossed, he found that all the men he met had perfect figures and eight-packs. Furthermore, these men liked him.\r
+\r
+As a gay man, Chen Liguo was so excited he shed tears of joy.\r
+\r
+However, the world obviously wouldn’t have such good things.\r
+\r
+Because, just as he was drooling and about to pounce, a system appeared and told him: Buddy, sorry to let you down, but you can’t be with these people.\r
+\r
+Chen Liguo: What if I insist?\r
+\r
+System: Hehe\r
+\r
+……\r
+\r
+Chen Liguo: You trash system! Destroying my youth! Ruining my sex life!`,IMG:250,PRIO:3},{BOOK_TITLE:"The Short Story of Shaowang",AUTHOR:"Little Ice Cube 冰块儿",CHAPTERS:58,EXTRAS:12,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://readshaowang.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/the-short-story-of-shaowang/",Synopsis:"The omega school tyrant, legendarily known as “Yan Ge”, Jiang ShaoYan’s heat is approaching. He thought he had no other choice but to seek out an alpha stronger than himself to get him through it, but suddenly an underclassman appeared saying he liked him? Wait, wait, wait, having such weak pheromones yet daring to hit on this Ge? This Wang isn’t that foolish, right?",IMG:251,PRIO:1},{BOOK_TITLE:"The Slag Gong Wants to Kill me",AUTHOR:"跑酷天才",CHAPTERS:38,GENRE:"Psychological",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/novel/tsgwtkm/",Synopsis:`I think my husband wants to kill me.\r
+\r
+Whether it’s forgetting to turn off the gas or finding the bathroom door locked after I just finished bathing, it all makes me feel that he wants to kill me.\r
+\r
+I know that I shouldn’t be considering this because we are a gay couple and we have been together for seven years.\r
+\r
+Our relationship is also stable, and he is very good to me.\r
+\r
+But I really think he wants to kill me.`,IMG:252,PRIO:3},{BOOK_TITLE:"The Star Around The Sun",AUTHOR:"Jin Gang Quan 金刚圈",CHAPTERS:135,EXTRAS:15,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://mingrixingcheng.carrd.co/",Eng_TL:"https://gooseberrytl.wordpress.com/tsats/",Synopsis:`By chance, Xia Xingcheng, a mediocre actor of average popularity, received an offer from famous director He Zheng to act in a gay movie titled 'Gradual Distance' with numerous award-winning actor Yang Youming.\r
+In the movie, they had a sweet love; out of it, there was polite indifference. In the movie, they had a sad ending; outside of it, there were ambiguous feelings. The contrast between the two often made Xia Xingcheng unable to return to himself. Because of Yang Youming’s guidance, he stepped into the ranks of actors, but it was also because of Yang Youming that he couldn’t distinguish reality from an act.\r
+Xia Xingcheng never expected that the movie would eventually push him into the abyss of pain and happiness.`,IMG:253,PRIO:1},{BOOK_TITLE:"The Submissive Emperor",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:102,GENRE:"Royalty",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/subemp/",Synopsis:`Lou Jing, a high-ranking military officer and heir to a military peerage, was forced to marry the Crown Prince as his male Consort. Doing so meant that he would no longer be the heir to the peerage.\r
+\r
+The only option left to Lou Jing now is to help the Crown Prince to protect the Empire against the evil people scheming against him!\r
+\r
+“My Empress, please note that I’m technically the husband here,” says the Emperor.\r
+\r
+Lou Jing smirked and picked up the Emperor in his arms. “Of course, your Majesty. This loyal subject will make sure he doesn’t tire his husband out in bed!”`,IMG:254,PRIO:2},{BOOK_TITLE:"The Two-Tailed Little Fox Demon and His Taoist Priest",AUTHOR:"榴莲巧克力",CHAPTERS:56,EXTRAS:3,GENRE:"Xianxia",TIMELINE:"Historical",IMG:255,PRIO:3},{BOOK_TITLE:"The Ultimate Blue Seal",AUTHOR:"Priest",CHAPTERS:103,EXTRAS:3,GENRE:"Action",TIMELINE:"Modern",Carrd:"https://zhongjilanyin.carrd.co/",Eng_TL:"http://edanglarstranslations.com/zjly",Synopsis:`With the ever changing and fast-pace development of science and technology, technological terrorism seems to have risen along with the current. In this world, a mysterious and non-governmental organization called Utopia hides among civilization like a monster silently hunting on its prey. Taking 'energy' as the core purpose, they conduct experiments on human bodies without their consent, with the goal of extracting human emotions and converting them into 'technology fuel'.\r
+The story started with Su Qing, who ran away to a gay bar in an attempted to get wasted after being dump by his boyfriend. As a consequence of his one-night stand encounter with Hu Bugui - the team caption of the "RZ Unit", whom Utopia suspected Su Qing has deep association with, they kidnapped him. Su Qing was reformed and turned into Grey Seal at an Utopia Base where there are many others who were kept prisoners like him. There, Su Qing had to learn how to stay sane and survive in a world where his humanity is constantly being tested and deviated from the norms.\r
+Zhongji Lanyin is the story of a little weakling of a loser who can't do anything but eat, drink, and have fun, who's been dumped on top of it, grows up into a crafty and conniving genuine man.`,IMG:256,PRIO:1},{BOOK_TITLE:"The villain Just Wants To Be A Salted Fish",AUTHOR:"夕朝南歌",CHAPTERS:134,EXTRAS:3,GENRE:"Transmigration",TIMELINE:"Modern",Synopsis:`Ye Zexi transmigrated as the big villain in a danmei novel, who shares the same name as him. Then, he found out that everyone regards him as an imaginary enemy.\r
+\r
+In this regard, he adheres to only one principle: Don’t want to fight, take everything you want.\r
+\r
+In the boy group’s audition show:\r
+The team member wanted to take the C [Center] position from Ye Zexi.\r
+Ye Zexi took the initiative to withdraw for the sake of being lazy.\r
+The team member was complacent and thought that Ye Zexi had stage fright and the team member was determined to win.\r
+After the performance, Ye Zexi took first place.\r
+Team member: ?\r
+\r
+The instructor asked everyone about their purpose to join the competition.\r
+Other contestants: Dreams, because we love the stage!\r
+Ye Zexi: In order to go home and inherit the family property.\r
+Other contestants: ???\r
+\r
+Unexpectedly, not only did Ye Zexi fail to be lazy, he also became more popular.`,IMG:257,PRIO:3},{BOOK_TITLE:"The White Cat's Divine Scratching Post",AUTHOR:"Lu Ye Qian He 绿野千鹤",CHAPTERS:131,GENRE:"Xuanhuan",TIMELINE:"Historical",Carrd:"https://wcdsp.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wcsp/",Synopsis:`Mo Tianliao was a master weaponsmith and a demonic cultivator. When news spread that he was about to complete a divine weapon, cultivators from both the demonic and orthodox sides chased him down and killed him. In a stroke of luck, he managed to possess a new body and was reborn.\r
 So what was the first thing on his mind after his rebirth? Avenging his death? Taking over the world?\r
 Mo Tianliao: I have to find my cat!\r
 —\r
 Mo Tianliao: Why won’t you let me hug you? You used to be my cat!\r
 Master: (unsheathes claws)\r
 Mo Tianliao: Ahaha, this disciple has too much respect for Master, this disciple can’t bear to let Master walk on the ground!\r
-Master: (lifts paw, sends disciple flying)`,IMG:258,PRIO:1},{BOOK_TITLE:"Worship Me, I Can Make You Rich",AUTHOR:"Fly Far 向远飞",CHAPTERS:63,EXTRAS:4,GENRE:"Xuanhuan",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wmicmyr/",Synopsis:`On the first day of work for the little intern God of Wealth, Zhuang Zhou was filled with confidence and complacency.\r
+Master: (lifts paw, sends disciple flying)`,IMG:258,PRIO:1},{BOOK_TITLE:"The Wife Is First",AUTHOR:"绿野千鹤",GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://qi-weishang.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/twf/",Synopsis:`A life dedicated to protecting his country and with a stellar record in his efforts in war, but was abandoned after he gave his all. He favoured his concubines and wronged his good wife, but in the end, the person who stayed at his side without giving up on him, is the male wife he has neglected for more than a decade.\r
+He gets one chance at a do-over, and Jing Shao decides to turn over a new leaf but...\r
+As he hugs his pillow and stands outside the door to his room, he looks up at the sky with his fists clenched — This prince must assert his position as husband!\r
+And so he knocks on the door and says, "Jun Qing, I have realized my mistake, please let me in!"`,IMG:259,PRIO:1},{BOOK_TITLE:"The Wrong Way to a Demon Sect Leader",AUTHOR:"Yi Zhī Dàyàn 一只大雁",CHAPTERS:82,EXTRAS:47,GENRE:"Wuxia",TIMELINE:"Historical",Eng_TL:"https://chichilations.home.blog/2021/06/12/sc-1-10/",Synopsis:"The number one swordsman Zhao Jiangui is the martial world’s best hope for peace: All he has to do is seduce the Demon Sect Leader.",IMG:260,PRIO:1},{BOOK_TITLE:"They All Say I've Met A Ghost",AUTHOR:"Cyan Wings 青色羽翼",CHAPTERS:42,EXTRAS:5,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://met-a-ghost.carrd.co/",Eng_TL:"https://theysayivemetaghost.dreamwidth.org/",Synopsis:`Hello, everyone! My name is Shen Jianguo. I am a night school instructor teaching ideological development and Marxist philosophy, occasionally analyzing recent policies and measures for my students.\r
+All my classes are held in the middle of the night; I’ve never seen my coworkers or students during the day. The training institute’s classrooms are all in abandoned schools, hospitals, or residences. The license plate number of the bus that picks me up is 444; it always arrives at my house at precisely midnight and disappears at five in the morning.\r
+What? You’re saying I’ve met a ghost? Impossible! As a staunch scientific materialist, I absolutely don’t believe there’s any such thing as ghosts!\r
+I’ve only had one problem recently: couldn’t the training institute hold its classes a little earlier? Wouldn’t around 8 PM do? I fear neither heaven nor hell, but I do fear going bald.`,IMG:261,PRIO:1},{BOOK_TITLE:"This Omega Is Immune To All Abilities",AUTHOR:"Qīngméi jiàng 青梅酱",CHAPTERS:100,EXTRAS:3,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://oiaa.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/this-omega-is-immune-to-all-abilities/",Synopsis:"V",IMG:262,PRIO:1},{BOOK_TITLE:"This Omega is Sweet and Wild",AUTHOR:"Mò Lǐ 莫里_",CHAPTERS:107,EXTRAS:15,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/tosw/",Synopsis:`Li Cheng is an omega, but he is thoroughly like an alpha.\r
+\r
+He regards teachers like friends, is unrivalled in the swimming pool and also has 80 betas as his lil’ brothers.\r
+\r
+One day, Li Cheng loudly declares ⸺ He’s determined to win the campus male god alpha Xiao Yiheng over. He must become his!\r
+\r
+“Xiao Yiheng is smart, handsome, and tall! Moreover, he has long legs and a perky butt. His strong x capability can be seen with just a glance! Only this kind of alpha is worthy of me!”\r
+\r
+\r
+\r
+Long-legged, perky-butt, and has strong x capability Xiao Yiheng: “……”\r
+\r
+\r
+\r
+To show his determination, Li Cheng proclaims that he would give him a love bento every morning.\r
+\r
+The next day, Li Cheng stayed up all night playing games and can’t get up.\r
+\r
+The third day, Li Cheng danced the night away with others and can’t get up.\r
+\r
+The fourth day, Li Cheng fought with the gang from the neighbouring school and can’t get up.\r
+\r
+Then came the fifth day… The sixth day… The seventh day…\r
+\r
+\r
+\r
+Just when Li Cheng is just about to forget his plan of courting the male god, Xiao Yiheng obstructs him inside one of the locker room’s cubicles before his swimming training.\r
+\r
+“Xiao Yiheng, w-what do y-you want with Laozi?”\r
+\r
+“Because I was waiting for your bento, I haven’t eaten breakfast for a whole week.” Xiao Yiheng had a cold expression. With a smile-that-wasn’t-a-smile, he continued, “But… Your pheromone smells quite delicious.”`,IMG:263,PRIO:1},{BOOK_TITLE:"This World Has Gone Crazy",AUTHOR:"A Lifetime Of Beautiful Clothes 一世华裳",CHAPTERS:73,GENRE:"Humour",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wgc/",Synopsis:`Qi Le – gender: male, sexual interest: women – suffered from congenital heart disease and died early. However, God played a small trick on him and placed his soul inside the body of a trashy shou.\r
+\r
+From then on, the gates of a new world were opened.\r
+\r
+When Qi Le opened his eyes, he found himself still lying in the hospital, but there was a small problem.\r
+\r
+Everyone helped clear up his confusion: “You’re gay.”\r
+\r
+Qi Le: “……”\r
+\r
+Everyone: “You’re a zero, which means you’re the one on the bottom.”\r
+\r
+Qi Le: “Bullshit! Laozi is a straight man!”\r
+\r
+Everyone stepped forward to pat him on the shoulder: “Forget it, all the men in the world can turn straight, but not you.”\r
+\r
+Qi Le shook with anger: “We’ll see about that!”\r
+\r
+Everyone reminded him: “Everyone knows about your confession, everyone knows that you’re gay. Which girl would be willing to date you ah?”\r
+\r
+Qi Le: “=口=”`,IMG:264,PRIO:3},{BOOK_TITLE:"Those Years in Quest of Honor Mine",AUTHOR:"Man Man He Qi Duo 漫漫何其多",CHAPTERS:103,EXTRAS:2,GENRE:"Enemies to Lovers",TIMELINE:"Historical",Carrd:"https://tyqhm.carrd.co/",Eng_TL:"https://perpetualdaydreams.com/novel/tyqhm/tyqhm-tl/",Synopsis:`Yu Ziyou* and Zhong Wan served different masters.\r
+They had once been the closest of souls, and were the bitterest of enemies.\r
+After losing the fight for the throne, Zhong Wan brought his two young masters with him far toward the borders for the sake of survival. He relied on the little friendship that existed between him and Yu Ziyou when they were young. He borrowed some of his personal belongings while also dropping various hints around which made everyone think that there was something intimate going on between them.\r
+Given the Yu Clan’s powerful authoritative presence in the imperial court, this appearance of a close tie allowed Zhong Wan to live a much better life than before. As such, the stories he cooked up began to carry more and more weight.\r
+As rumors of their lovely romance spread a thousand miles into the horizon, Yu Ziyou, who was located in the distant capital city, eventually caught wind of his deeply moving and epic love affair. In a trance, Yu Ziyou, who had been completely brainwashed for seven years, believed in them. He guessed something special really did happen between them back in those years…`,IMG:265,PRIO:1},{BOOK_TITLE:"Thousand Autumns",AUTHOR:"Meng Xi Shi 梦溪石",CHAPTERS:128,EXTRAS:3,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://qianqiu.carrd.co/",Eng_TL:"locked",Synopsis:`"Yan Wushi had walked a path full of blood and corpses.\r
+He did not believe in the good nature of humanity. Even more so, he did not believe that there could be someone with great kindness and sense of justice, who would be so considerate of others without asking anything in return.\r
+One day, Shen Qiao, who was the sect leader of Mount Xuandu, the number one Daoist sect under the heavens, was challenged to a duel but somehow fell off the cliff.\r
+Yan Wushi happened to pass by down there.\r
+Seeing Shen Qiao who was seriously injured to the point of dying, he suddenly came up with a perfect idea…\r
+After thousands of autumns, who could stay eternal?"`,IMG:266,PRIO:1},{BOOK_TITLE:"Thrive in Catastrophe",AUTHOR:"Jiao Tang Dong Gua 焦糖冬瓜",CHAPTERS:98,EXTRAS:2,GENRE:"Apocalypse",TIMELINE:"Modern",Carrd:"https://thriveincatastrophe.carrd.co/",Eng_TL:"https://www.wattpad.com/story/141770773-thrive-in-catastrophe-by-%E7%84%A6%E7%B3%96%E5%86%AC%E7%93%9C",Synopsis:`This story is about a rookie researcher, who was forcefully dragged away from his restful life, compelled into facing various killers and zombies, always having to risk his life at the brink of death, and finally becoming an advanced researcher that is acclaimed by all. And throughout his adventure, he met an alluring(?) killing machine, who he started to have fantasies on after they had an accidental kiss…\r
+Xiao Yan: Did I fall for him? But he’s a man!\r
+Maya: Who knows…. maybe it’s the other way round?`,IMG:267,PRIO:2},{BOOK_TITLE:"Through The Strait Gates",AUTHOR:"Priest",CHAPTERS:69,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://info-guomen.carrd.co/",Eng_TL:"https://docs.google.com/document/u/0/d/11fjv9Gn21tbQDh7YZ1jYSLznIJht4qCkWr0HWtcBQSE/mobilebasic",Synopsis:`Guomen follows the story of Xu Xilin and Dou Xun starting from the adolescence to adulthood. If it had to be summarized with a sentence without going into spoiler territory, this would probably be the ideal one.\r
+However Guomen, for me, is about the life itself; with all the ups and downs, joys and sorrows, success and failure and the mix of all. It's about the deskmate you had in highschool, the neighbour next door, the passersby you brushed shoulders with on the street and it's about you.\r
+Priest's writing brings out the emotions so raw and sincere and lays them out for you not to read but feel. The issues covered are handled with care and realistically. It tells about the mundane life, family disputes, the battles people fight with their environment and inner selves, sometimes losing and sometimes conquering these battles in a way that makes it relatable and touches a spot deep within your heart. What made me personally connect with Guomen was how it's able to make readers feel heard in how it represents the topics mentioned before. There might be times where you might find yourself facing and reflecting on your own life and your environment because you see yourself in the characters.`,IMG:268,PRIO:1},{BOOK_TITLE:"To Be A Hearthrob in A Horror Movie",AUTHOR:"Jiang Zhi Yu 姜之鱼",CHAPTERS:156,GENRE:"Supernatural",TIMELINE:"Modern",Carrd:"https://tbahiahm.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2019/11/23/to-be-a-heartthrob-in-a-horror-movie-by-%e5%a7%9c%e4%b9%8b%e9%b1%bc/",Synopsis:`Holographic viewing technology allowed audience members to enter a movie and personally experience it for themselves. Naturally, romance movies were the most popular and well-received, while nobody was interested in horror movies.\r
+Su Min was the first of the viewers to experience a horror movie.\r
+Later–\r
+Malicious Spirit: I dare not scare nor frighten my sweetheart…\r
+Su Min: Actually, horror movies aren’t scary at all.\r
+Audience: No, no, no, you are playing in a romance movie! (Loudly)\r
+The audience suddenly discovered that the recent rerelease of the horror movie was much better than the original. Furthermore, to everyone’s surprise, the ghost was very sweet…`,IMG:269,PRIO:1},{BOOK_TITLE:"Top Tier Seduction Formula",AUTHOR:": 松子茶",CHAPTERS:55,GENRE:"ABO",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ttsf/",Synopsis:`Lin You had been a beta for seventeen years, but one day he suddenly presented as an omega, one with a rare seductive-type pheromone, which was fatally attractive to alphas.\r
+\r
+While the alphas claimed that they don’t like this type of violent maniac, their faces couldn’t help but blush and their hearts couldn’t help but race as they looked at him, thinking to themselves how fair his skin was and how pretty his face looked.\r
+\r
+Facing the group of alphas closely observing him, Lin You looked around and felt that his beta best friend, Lu Qingyan, was the most reliable. He wasn’t affected by the pheromones at all. Lin You leaned comfortably against Lu Qingyan, sticking even closer than before.\r
+\r
+And when Lu Qingyan faced the trusting gaze of Lin You, he silently swallowed the words hidden in his heart — deep down, he also found Lin You’s pheromones to smell very pleasant, like an overwhelming net that captured him within.\r
+\r
+Two months later, Lu Qingyan also presented.\r
+\r
+An alpha, with top-tier pheromones.\r
+\r
+Several months later, he marked Lin You.\r
+\r
+Lin You (scratching his claws): “…You liar!”`,IMG:270,PRIO:1},{BOOK_TITLE:"Transmigrated as the Big Boss Mobile System",AUTHOR:"Tây Tây Fer",CHAPTERS:61,EXTRAS:3,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://www.foxaholic.com/team/translator-ch1yo/?m_orderby=alphabet&__cf_chl_rt_tk=VjeD4nxhUjB1IKZwA04RSRs5ClijWLPNZZH3XuFzGQI-1704261103-0-gaNycGzNE_s",Synopsis:`Software engineer Wen Fan accidentally found himself transmigrated as the floating ball system in a mobile phone. He is as tall as the height of a thumb with a ram capacity of hundreds of billion gigabyte.\r
+\r
+He slept while hugging ‘QQ Penguin’, rode on the kangaroo of “Meituan Takeaway”, poked the voice bubble of “WeChat” and lived in the mansion of “The Sims”. He could also see through all network data, decipher all account passwords, and even dig out all lottery accounts.\r
+\r
+Aside from the fact that he could only live on the phone screen, Wen Fan had indeed reached the peak of his life.\r
+\r
+The only bad thing about this was that owner of the mobile phone likes to touch him visually. And he even likes to dress him up.\r
+\r
+‘Little Dragonman’, vampires, European-style nobles, ancient Hanfu; he changed his appearance every day.\r
+\r
+Wen Fan: “…Big brother, spare me.”\r
+\r
+Lou Wei who was deeply addicted to the game of raising a sim said, “Call me hubby.”\r
+\r
+————\r
+\r
+Lou Wei, the founder of LouV Technology, the number one gaming company in Z country, has recently begun to research software every day to come up with a new game.\r
+\r
+As soon as the news came out, people all over the country wanted to squeeze into the research and development room in order to be the first to experience the game.\r
+\r
+After all, Lou Wei is the number one holographic game designer in the world. He can simply design any game and it would be popular around the world.\r
+\r
+Countless LouV fans waited anxiously for the new game to be released. They waited and waited and finally, the big boss started the live broadcast——\r
+\r
+The big boss sat in front of the camera with a serious face: “We are currently looking for good looking erot*c fashion designs for my sim.”\r
+\r
+Wen Fan: “???”\r
+\r
+Fan: “Wow!!”`,IMG:271,PRIO:1},{BOOK_TITLE:"Transmigrated Into A Beast Tribe",AUTHOR:"Purple Thorns 紫色荆棘",CHAPTERS:102,GENRE:"Fantasy",TIMELINE:"Historical",Eng_TL:"https://thisisbananatl.com/bl-%E7%A9%BF%E8%B6%8A%E4%B9%8B%E6%B8%B8%E5%85%BD%E9%83%A8%E8%90%BD-transmigrated-into-a-beast-tribe/",Synopsis:`Lin Mu was pushed down the cliff, but he did not die and arrived in a magical world instead.\r
+\r
+A huge python with wings and the ability to fly. Alright, just think of it as the legendary Mayan Snake God;\r
+\r
+A gigantic centipede that can fly in the sky, alright, he’s kinda seen it before in “Journey to the West”;\r
+\r
+A mighty big wolf with a body as humongous as an elephant, en, just think of it as a mutant;\r
+\r
+..\r
+\r
+Although the animals in front of him were a little strange, they were still animals. Why did all of you suddenly turn into humans? Coming across wild beasts, Lin Mu could still accept it, but coming across ‘*yāojing’, Lin Mu became…. excited instead. What? You guys are the infamous drifter beastmen. I don’t know anything about that. Did you guys commit a lot of heinous crimes? I don’t see that either.\r
+\r
+And so, Lin Mu began a hard but satisfying life of building a home in another world.\r
+\r
+*Yāojing/妖精 doesn’t have a proper English equivalent word. The nearest meaning would be “supernatural being” or “Yokai” (Japanese).`,IMG:272,PRIO:3},{BOOK_TITLE:"Transmigrated Into a Big Boss to Snatch Away the Cannon Fodder",AUTHOR:"Xī wǒ yǒu mèng 昔我有梦",CHAPTERS:155,EXTRAS:19,GENRE:"Transmigration",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Rong Qing transmigrated into the role of a big boss inside a book. Passionate, rich, and extremely good looking.\r
+\r
+Yet this kind of big boss character, there were a total of six in the original book. All were embraced and hugged left and right by the original book’s main character Xiao Ziqi.\r
+\r
+How can this be in accordance with the values of an upright modern society?\r
+\r
+Rong Qing immediately sharpened his (metaphoric) sword and prepared to battle against the other big bosses. He will let them learn that although love was precious, making money was even sweeter!\r
+\r
+During this process, he also accidentally picked up a little wolf pup cannon fodder from the original book and started his sweet, yet hilarious new life…`,IMG:273,PRIO:2},{BOOK_TITLE:"Transmigrated into a School Idol and Forced to Do Business",AUTHOR:"Yu Wu Xiao Tian Bing 雨雾小甜饼",CHAPTERS:61,EXTRAS:1,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://cwastranslations.wordpress.com/transmigrated-into-a-school-idol-and-forced-to-do-business/",Synopsis:`Yu Bai Zhou transmigrated into a book.\r
+\r
+The talented protagonist was the top student in school. Due to his excellence in every subject, many people were dissatisfied with him, so they devised various schemes to mess with him, to the extent that they left a dark shadow on his high school years.\r
+\r
+However, the villains did not know that the seemingly poor protagonist was actually the eldest son of the richest man in City A.\r
+\r
+And in six years, the protagonist would replace his father’s position as the new richest man in City A with his own capabilities. Ten years later, he would become the youngest and richest man in the country! When that happens, the villains would be tortured to death by the protagonist!\r
+\r
+… As bad luck would have it, Yu Bai Zhou transmigrated into the villain that bullied the protagonist the most.\r
+\r
+In order to live for a few more years, Yu Bai Zhou, the villain, begins to formulate a character correction plan.\r
+\r
+However, just as he is struggling to save his image in the eyes of the protagonist, out of the blue, the protagonist anxiously pushes him against the wall, and traps him within the circle of his arms. Those refined brown eyes watch him attentively. “Yu Bai Zhou, if you make trouble again, I will kiss you.”\r
+\r
+Yu Bai Zhou, who was just kabedon’ed, panics. “Can someone tell me, exactly where did I go wrong?!”`,IMG:274,PRIO:3},{BOOK_TITLE:"Transmigrating into a Mob Character to Rehabilitate the Villain Plan",AUTHOR:"Sha Xiao Wan 杀小丸",CHAPTERS:92,EXTRAS:14,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://tmcrvp.carrd.co/",Eng_TL:"https://wintertranslates.wordpress.com/villain-rehab-plan/",Synopsis:`In short, this is the tragic tale of a saint-like man who transmigrated into a web novel as a mob character and wanted to rehabilitate the villain, only to realize in the end, he became more and more villainous.\r
+The ludicrous story:\r
+Unable to bear hurting the villain he helped raise, but when it came to compensating with his own body, the unfortunate, straight male reader figured he’d better escape… …\r
+Many years later, the same unfortunate saint rubbed his neck, asking, “This is a dog collar you put on me, isn’t it?”\r
+The handsome villainous boss gave a glance with his elegant, almond-shaped eyes, and then replied with a devious, charming smile, “That’s to prevent you from running away again.”\r
+“If I stay put, will you refrain from destroying the world?”`,IMG:275,PRIO:3},{BOOK_TITLE:"Transmigration of Mian [Reluctantly] Becomes His Man [Wife]",AUTHOR:"怜惜凝眸",CHAPTERS:222,GENRE:"Transmigration",TIMELINE:"Historical",Carrd:"https://tmrbhmw.carrd.co/",Eng_TL:"https://www.foxaholic.com/novel/transmigration-of-mian-reluctantly-becomes-his-man-wife/",Synopsis:`Qin Mian opened his eyes and found himself lying in a leaky thatched room. The problem was that he was still in his family’s villa beforehand! What’s more, another man was lying next to his leg in the quilt!\r
+\r
+“You, you, who are you?”\r
+\r
+The man sat up quietly, his upper body exposed as looked at Qin Mian for a moment before he carried a worn-out bowl with a cracked corner from the low table at the head of the bed. The man said in a muffled voice, “Wife, drink water.”\r
+\r
+Qin Mian’s eyes rolled backward and he passed out.`,IMG:277,PRIO:3},{BOOK_TITLE:"Two Alpha's 101'st Blind Date",AUTHOR:"Tao Zhi Yao 桃之幺",CHAPTERS:31,EXTRAS:2,GENRE:"A/B/O",TIMELINE:"Modern",Carrd:"https://ta101bd.carrd.co/",Eng_TL:"https://intangial.wordpress.com/projects/two-alphas-101st-blind-date/",Synopsis:"The story of two alphas failing at blind dates together. that is, except for their last one.",IMG:278,PRIO:1},{BOOK_TITLE:"Tyrant Pampering Wife Diary",AUTHOR:"Yī rì zhī qiān 一日知千",CHAPTERS:79,EXTRAS:1,GENRE:"Supernatural",TIMELINE:"Historical",Carrd:"https://tpwd.carrd.co/",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/tpwd/",Synopsis:`In his previous life, Song Song was a pitiful man. Someone killed him, took his identity and his child, and became the first male empress in history.\r
+Li Xiao in his previous life was even more pitiful. Driven insane by poison, he lost control and killed countless people and just happened to miss the only person who could have cured him in that lifetime.\r
+After rebirth, Song Song knew that he could be Li Xiao’s remedy. He also knew that Li Xiao could be his strongest supporter. In order to regain their baby who also died in their past life, he decided to take the initiative this time– Only to find that Li Xiao was even more enthusiastic!`,IMG:279,PRIO:1},{BOOK_TITLE:"Vanguard of the Eternal Night",AUTHOR:"Zhǐ jiān de yǒngtàndiào 指尖的咏叹调",CHAPTERS:157,GENRE:"Science-Fiction",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/ven/",Synopsis:`A master assassin transmigrates into an interstellar era.\r
+\r
+Other players were responsible for competing in the e-sports arena, while he was responsible for stringing up and beating up the other players.\r
+\r
+His sword was hidden during the peak of day, and he was a gentleman who arrived in a flash of light;\r
+\r
+As a vanguard of the eternal night, he was the variable between life and death in the world.\r
+\r
+“As you know, the Star League’s difficulty levels are arranged in this way:\r
+Paradise < Simple < Normal < Difficult < Nightmare < Hell < [Tyron Odin]”`,IMG:280,PRIO:1},{BOOK_TITLE:"Very Happy",AUTHOR:"Yue Xia Die Ying 月下蝶影",CHAPTERS:114,EXTRAS:2,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://veryhappy.carrd.co/",Eng_TL:"locked",Synopsis:`Li Zhao is a poor, 20-year-old actor who only thinks of where his next meal is coming from. After growing up in a child only facility, Li Zhao has taken on a very optimistic personality even while raising money for those he sees as family.\r
+On the other hand, 28-year-old rich businessman Yan Ting is super pessimistic.\r
+Yan Ting: Life is no fun. What is the difference between life and death?\r
+Li Zhao: Life is very happy.\r
+The world in Yan Ting’s heart was very grey until he met Li Zhao. He thought, this must be the liveliest person in the world. Otherwise, how could Li Zhao be so lively in his heart every day?`,IMG:281,PRIO:3},{BOOK_TITLE:"Wait For Me After School",AUTHOR:"Jiang Zi Bei",CHAPTERS:92,EXTRAS:3,GENRE:"School Life",TIMELINE:"Modern",Carrd:"https://wfmas.carrd.co/",Eng_TL:"https://kktranslates.home.blog/2022/11/28/wait-for-me-after-school-by-%e9%85%b1%e5%ad%90%e8%b4%9d/",Synopsis:`Yu Fan didn’t like the sight of the new transfer student in his class.\r
+The other party glanced at him.\r
+Yu Fan: He’s looking for a fight.\r
+The second glance.\r
+Yu Fan: He’s asking if I’m scared.\r
+Third glance.\r
+\r
+The transfer student with his usual expressionless, iceberg-like face handed him a letter, “Classmate Yu.”\r
+Yu Fan internally felt that this top student is annoyingly fastidious, even handing out a letter of challenge to request for a fight. He proceeded to roll up his sleeves and stand up.\r
+“Please accept my love letter.”\r
+Classmate Yu immediately sat back down.`,IMG:282,PRIO:1},{BOOK_TITLE:"Waiting For You Online",AUTHOR:"Xi He Qing Ling 羲和清零",CHAPTERS:155,EXTRAS:6,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://wfyo.carrd.co/",Eng_TL:"https://www.novelupdates.com/series/waiting-for-you-online/?pg=1#myTable",Synopsis:`At the age of 15, He Jin found himself a “husband” in an online game, their love was filled with loving affection and sweetness. However, because his study was being interfered with, his parent cut off the internet, he didn’t even have a chance to say goodbye and had to disappear from the game.\r
+8 years later, the online game in the past was about to come out with a revised edition and turned into a virtual reality game. He Jin decided to login again and unexpectedly discovered that his “husband” had become a powerful player and ranked number one in the whole server, moreover, he had not divorced him!\r
+However, the husband that was abandoned by He Jin for eight years, his initial impression of him was that of a pure boy, but now he seemed to somehow have become…….a little evil?`,IMG:283,PRIO:1},{BOOK_TITLE:"Welcome to The Nightmare Game",AUTHOR:"Bó Mù Bīng Lún 薄暮冰轮",CHAPTERS:135,EXTRAS:3,GENRE:"Horror",TIMELINE:"Modern",Carrd:"https://wtng.carrd.co/",Eng_TL:"https://quazartranslates.tumblr.com/toc",Synopsis:"Qi Leren had just cleared the bad ending of «The Nightmare Games» when his laptop died well before its time. His luck seemed to follow him as he was transported, along with the other passengers, to a hospital following an accident between his bus and a truck. Upon waking in a transfusion hall rather than a ward, QiLeren felt a familiar sense of dread as he took in the hospital that held no trace of other people…",IMG:284,PRIO:1},{BOOK_TITLE:"What Should I Do if the School Bully is Interested in Me",AUTHOR:"Shí xián 时闲",CHAPTERS:90,EXTRAS:36,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/sbim/",Synopsis:`i Liao was particularly distressed lately. He had been “sexually harassed” for no reason. Moreover, the other party was a man! Never mind that it was a man but it was well-known class grass and school bully——He Cheng Ming!\r
+\r
+– He Cheng Ming in front of others: “You wanna fucking die?” “Better shut your mouth!” “Get lost! As far as you can!” He Cheng Ming in front of Ji Liao: “Baby, you smell so nice~” “My dear, you’re so sexy!” “I’ll always listen to you. Kiss me okay?”\r
+\r
+– Experienced Overbearing Perverted Seme VS Novice Shy Cowardly Uke`,IMG:285,PRIO:1},{BOOK_TITLE:"When an Alpha is Marked by One of His Own Kind",AUTHOR:"Zǎo gēng niǎo 早更鸟",CHAPTERS:100,EXTRAS:3,GENRE:"A/B/O",TIMELINE:"Modern",Eng_TL:"locked",Synopsis:`Within the industry, everyone knew Team DG’s captain Lu Zhe and Team BLX’s top laner Shen Qiao didn’t get along. They said it was due to hormones. They said it was a basic AA incompatibility.\r
+\r
+Lu Zhe once said of Shen Qiao: “Obsessed with kills. Lone wolf.”\r
+\r
+With a cold smile, Shen Qiao said of Lu Zhe: “Command’s mediocre. Shitty jungler.”\r
+\r
+But then…\r
+\r
+When Team DG, champions of the last tournament season, stumbled during the Spring Tournament and fell during the semifinals, someone cut through the furious cursing and swearing that had consumed the internet and leaked the news—\r
+\r
+Shen Qiao was going to be traded. He was joining Team DG.\r
+\r
+When that news came out, the internet roared.\r
+\r
+Did Shen Qiao and Lu Zhe fight today?\r
+\r
+On esports forums, trolls and haters placed their bets. It was endless, until Team DG won its second world championship crown.\r
+\r
+Half a month after the tournament.\r
+\r
+The players of Team DG hosted a livestream: “The lodgings were awful. Captain and Qiaoqiao had to share a room. Aren’t we pitiful?”\r
+\r
+Shen Qiao, sitting next to the monitor, glanced over through hooded eyes. He caught a glimpse of a bullet comment and echoed it out loud: “Did we fight?”\r
+\r
+He lifted a hand to his neck. “We fought.”\r
+\r
+Lu Zhe approached with a cup of black tea. Just in time to see Shen Qiao touch the bite mark on his throat. He added:\r
+\r
+“We even broke the bed.”`,IMG:286,PRIO:2},{BOOK_TITLE:"Where is Our Agreement to be Each Other’s Arch-Rivals?",AUTHOR:"Poplar Breeze 輕風白楊",CHAPTERS:120,EXTRAS:2,GENRE:"Wuxia",TIMELINE:"Historical",Carrd:"https://archrivals.carrd.co/",Eng_TL:"https://peachblossomcodex.com/novel/wioatbeosar/",Synopsis:`The web celebrity, Chen Suyang, transmigrated into a film adaptation he’d just finished rolling the death scene. Now he has to play the villain—the Evil Sect’s young master, Su Yang.\r
+\r
+To return to his own world, he faithfully acted according to the script and solemnly recited his lines—waiting for the day he’d die under the protagonist’s sword.\r
+\r
+But… why were the scenes getting farther and farther from the script?`,IMG:287,PRIO:3},{BOOK_TITLE:"Who Touched My Tail!",AUTHOR:"Xiao Xuan 筱玄",CHAPTERS:206,EXTRAS:5,GENRE:"Xianxia",TIMELINE:"Historical",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wtmt/",Synopsis:`Xue Ling is a nine tailed fox who has been cultivating for thousands of years but lost all his tails in a moment of capriciousness.\r
+\r
+Tails are easy to self destruct, but not easy to recover. In order to restore his human figure, he must struggle to destroy the plot, forcibly change the protagonist’s fate, and be the cannon fodder in the first line of attack.\r
+\r
+But why are these plots more and more irrational? The setup is getting more and more weird, and what is with this person that is showing up in every single world?\r
+\r
+It seems that before going through all these worlds, he has forgotten some very important affairs?\r
+\r
+Su Xuanyan: Yes, you’ve forgotten me.\r
+\r
+Xue Ling: Get lost! (▼皿▼#) Clearly every time you are the one that doesn’t remember anything!\r
+\r
+Su Xuanyan: Oh, this is purely an accident.`,IMG:288,PRIO:2},{BOOK_TITLE:"Why are the Protagonist Gong and Shou Fighting Because of Me",AUTHOR:"Tian Huafang",CHAPTERS:134,EXTRAS:13,GENRE:"Sci-Fi",TIMELINE:"Modern",Eng_TL:"https://www.teanovel.com/novel/why-are-the-protagonist-gong-and-shou-fighting-because-of-me",Synopsis:`Tang Bai was born into a wealthy family. His body was soft and slender, and he loved to act spoiled. His family searched far and wide to find him a handsome and rich prospective fiancé. However, the prospective fiancé liked independent and strong omegas and was very resistant to this business marriage.\r
+\r
+One day, Tang Bai’s brain short circuited, causing him to believe that he lived in a book. He was the cannon fodder shou, and his prospective fiancé was the protagonist gong. The protagonist shou, Xie Ruheng, was a strong, independent omega of the new era who pretended to be an alpha. In the future, he would become a marshal and the light of the omegas.\r
+\r
+No wonder the love-filled bento that he worked super hard to make was rejected by his prospective fiancé who didn’t even look at it. Tang Bai’s eyes reddened as he turned around. He saw that Xie Ruheng was eating the horrible tasting training meal. How could the future light of the omegas eat this kind of devil’s cruise that was fed to the pigs?\r
+\r
+Tang Bai shyly said: “This was personally made by me. Us omegas need to pay attention to our diet and take care of our bodies~”\r
+\r
+Xie Ruheng: ……?\r
+\r
+The first time Xie Ruheng saw Tang Bai, he thought that even when this omega cried, he was still like the omega of his dreams. Although Tang Bai was virtuous, delicate, beautiful, and cute, he already had a prospective fiancé!\r
+\r
+Xie Ruheng expressed with grief: “I won’t be the third party.”\r
+\r
+Tang Bai was extremely moved, thinking that Xie Ruheng had already become good sisters with him and wouldn’t come to steal his man. There was a saying that Alphas were like clothes and good sisters were like one’s hands and feet. Don’t worry, I will definitely take good care of you!\r
+\r
+Xie Ruheng: ……\r
+\r
+Very soon, Xie Ruheng heard a rumor. Tang Bai’s prospective fiancé hated Tang Bai, but he couldn’t defy the orders of his family, so he could only create trouble for Tang Bai everywhere.\r
+\r
+Xie Ruheng: This is the omega of my dreams that I want to hold in the palm of my hands, and you actually don’t cherish him? tr*sh!\r
+\r
+Xie Ruheng: Isn’t it just stealing a man? So sweet.\r
+\r
+Tang Bai found out in horror: Why are the protagonist gong and shou fighting because of me?!\r
+\r
+Tang Bai: Oh! They must have a love and hate relationship!`,IMG:289,PRIO:3},{BOOK_TITLE:"Wildfire",AUTHOR:"Bu Wen San Jiu",CHAPTERS:75,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://t.co/zTMSaRfEbe",Eng_TL:"https://ninetysevenkoi.wordpress.com/2022/09/30/w-1/",Synopsis:`Tao Xiaodong had a blind brother. Tang Suoyan, gentle and calm, was his brother’s favourite doctor, and Tao Xiaodong couldn’t help but like him for that.\r
+\r
+Oftentimes, people lose sight of that which was easily gained.\r
+\r
+Over the years, Tong Ning was so coddled by Tang Suoyan that he failed to appreciate how fetching this rare specimen was—dumping him without pause, and picking him up again when he had a change of heart.\r
+\r
+Except, this time, he was a step too late. Tao Xiaodong had long made his move.\r
+\r
+Tao Xiaodong looked at Tong Ning, telling him with a smile, “It doesn’t matter who Tang Suoyan used to be with. He’s mine now. As long as I don’t let go, you’ll never be able to take away what I hold onto.”`,IMG:290,PRIO:1},{BOOK_TITLE:"Withdrawal",AUTHOR:"十一月十四",CHAPTERS:40,EXTRAS:7,GENRE:"Slice of Life",TIMELINE:"Modern",Eng_TL:"https://www.scribblehub.com/series/673987/withdrawal/",Synopsis:`A spoiled brat is here to seduce his man! Childhood friends to lovers.\r
+\r
+When Fu Shizhou was seven years old, he gained a little tail named Qiao Luo. If he were to get it removed, severe withdrawal symptoms would ensue.\r
+\r
+Qiao Luo was born with the innate ability to tease and be spoiled.\r
+\r
+Zhouzhou wasn’t born awkward; that developed later in life. His maturity is a lasting aftereffect of his chuuni years. He’s actually a top-tier cinnamon roll.`,IMG:291,PRIO:1},{BOOK_TITLE:"Worship Me, I Can Make You Rich",AUTHOR:"Fly Far 向远飞",CHAPTERS:63,EXTRAS:4,GENRE:"Xuanhuan",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/wmicmyr/",Synopsis:`On the first day of work for the little intern God of Wealth, Zhuang Zhou was filled with confidence and complacency.\r
 \r
 He looked at the man collecting junk from a pile of garbage and said: “Worship me, I can make you rich.”\r
 \r
@@ -3289,18 +3172,135 @@ At this time, however, the little God of Wealth was silently hugging himself.\r
 \r
 Oh no! Something unexpected seemed to have happened when he descended to Earth!\r
 \r
-He has somehow arrived in the intergalactic era!`,IMG:291,PRIO:3},{BOOK_TITLE:"He Doesn't Know I'm Dead",AUTHOR:"时崽",CHAPTERS:21,EXTRAS:4,Eng_TL:"locked",Synopsis:"The first month I left, Lu Jiangming was still happy. The second month, Lu Jiangming occasionally suffered from insomnia. The third month, Lu Jiangming started looking for me. Unfortunately, I died, but he didn’t know that. —No matter how bad you are, I’ll still smile at the thought of you, but you’re the night breeze that I can’t hold back. You are also my obsession. Goodbye, Mr. Lu",IMG:97,PRIO:3},{BOOK_TITLE:"I Don’t Dare to Oppose a Protagonist Anymore",AUTHOR:"Jiu Pin",CHAPTERS:87,Eng_TL:"https://www.novelupdates.com/extnu/2931153/",Synopsis:`Lin Xiao was addicted to reading Qidian novels. He always fantasized that he would have a day when he could transmigrate and then embrace beautiful women all over the whole world, becoming the strongest person in the mainland.\r
+He has somehow arrived in the intergalactic era!`,IMG:292,PRIO:3},{BOOK_TITLE:"Wu Chang Jie",AUTHOR:"Shui Qiancheng",CHAPTERS:280,EXTRAS:6,GENRE:"Xianxia",TIMELINE:"Historical",Carrd:"https://t.co/yOJl8PpV6i",Eng_TL:"https://reddit.com/r/u_Corgi__booty/comments/12j0l4r/preparing_to_open_up_wu_chang_jie_jia_mo_and/",Synopsis:`An immortal story based based on black and white impermanence. The story has two timelines: one in the past, one in the present. The present life is narrated with flashbacks of the past life of the two main male leads, their love-hate entanglement, and the intrigues around them.\r
+Unofficial summary:\r
+Xie Bian, Wuchang, General of the Netherworld, and disciple of the legendary Zhong Tianshi, is elegant, gentle, and easygoing. Although he enjoys his mission to collect souls and bring them back to the netherworld, he has always wished for a shidi.\r
+When Zhong Kui brings the young and talented Fan Wushe to the netherworld on a drunken whim, Xie Bian finally gets the shidi he wished for.\r
+But why does this new shidi look at Xie Bian with complicated eyes? Why does he know secret techniques that he should not?\r
+With the grudges from their past life that only he remembers, Fan Wushe can’t help but stay close to his shixiong.\r
+“You are mine. You will be mine after all.”`,IMG:293,PRIO:3},{BOOK_TITLE:"Yes, I’m Straight. But What Have I Done Wrong?",AUTHOR:"Ale 鎏白",CHAPTERS:57,GENRE:"School Life",TIMELINE:"Modern",Eng_TL:"https://novelsite.net/novel/yes-im-straight-but-what-have-i-done-wrong-novel/",Synopsis:`A weak little straight boy goes to the same college and lives in the same dorm with his two roommates from high school. Seeing his two brothers getting more intimate every day, this little straight boy tries to blend in, offering many times to help. And, guess what? His two roommates were in love with each other since the very beginning!\r
 \r
-After he really transmigrated, Lin Xiao stubbornly always believed that he was a protagonist until he met Ling Luo.\r
+“Gosh! How s*upid am I to not even notice that?”\r
 \r
-Only after being killed by Ling Luo did he know that he was only a cannon fodder villain in a novel.\r
+“How many times have I made fool of myself by trying to be a kind roommate?”\r
 \r
-When he restarted his life and hatefully wanted to oppose his fate at least once, he was ruthlessly crushed again.\r
+“Alas! Being a great and straight roommate is indeed difficult.”\r
 \r
-Okay then… since a protagonist was determined to be like this, he wouldn’t oppose a protagonist anymore…\r
+“But, what have I done wrong?”\r
 \r
-The two of them were similarly straight guys…\r
+“Oh! Great! I’m a gay now.”`,IMG:294,PRIO:1},{BOOK_TITLE:"You Boys Play Games Very Well",AUTHOR:"Yi Xiu Luo 易修罗",CHAPTERS:83,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://t.co/BdBsIzk19L",Synopsis:`When he defeats them, he leaves hospice care: A father’s love is like a mountain! Are your shoulders heavy?\r
+When he is defeated, he leaves backhanded compliments: You boys play games very well~\r
+Ling Meng is a high-ranked casual gamer playing “The Legend of the Galaxy”. Infamous for his poison tongue, he’s known in the forums as Lemon Dad and he carefully cultivates a following of black powder fans over time. The trajectory of his fate completely changes the day he plays a match against the popular god-tier live stream anchor, Mangosteen. A meme created out of his dying words makes him a countrywide laughingstock and he begins to stalk Mangosteen to determine his rival’s weaknesses…to beat him in a match for revenge!\r
+They fight with each other, stream with each other, and even exchange a naked photo with each other.\r
+This is the love story of a lemon and mangosteen.`,IMG:295,PRIO:2},{BOOK_TITLE:"You Use a Gun, I Use A Bow",AUTHOR:"Hú Shēng Yǒu Mèng 狐生有梦",CHAPTERS:100,GENRE:"Gaming",TIMELINE:"Modern",Eng_TL:"https://chrysanthemumgarden.com/novel-tl/bow/",Synopsis:`VSGH is a multiplayer online tactical competitive shooting game.\r
 \r
-When he restarted his life again, Ling Luo unexpectedly suffered a Love Herb’s poison…\r
+When Wen Xi first came into contact with the game, like most people, he used a gun as his main weapon.\r
 \r
-Lin Xiao internally cried as he looked at a certain person who tied him onto an obelisk in the back and thought, who could tell him what this was all about?`,IMG:116,PRIO:3}];function Vz(){const{isOpen:e,onOpen:t,onClose:n}=$F(),[r,o]=b.useState(1),[a,i]=b.useState(""),[s,l]=b.useState("Select Genre"),[h,u]=b.useState("Select Timeline");Ke.sort((T,p)=>T.PRIO-p.PRIO);const d=c();function c(){const T=[];return Ke.map(p=>{p.GENRE!==void 0&&T.push(p.GENRE)}),[...new Set(T)]}const f=g();function g(){const T=[];return Ke.map(p=>{p.TIMELINE!==void 0&&T.push(p.TIMELINE)}),[...new Set(T)]}function y(T){return T.GENRE===void 0||s==="Select Genre"||T.TIMELINE===void 0||h==="Select Timeline"?T.BOOK_TITLE.toLowerCase().includes(a.toLowerCase()):T.BOOK_TITLE.toLowerCase().includes(a.toLowerCase())&&T.GENRE.includes(s)&&T.TIMELINE.includes(h)}return k.jsxs(qm,{minH:"100vh",minW:"90vw",px:"2.5em",bg:"gray.300",py:"2.5em",children:[k.jsxs(Uc,{bg:"white",borderRadius:"lg",shadow:"lg",children:[k.jsxs(IE,{children:[k.jsx(Vm,{pointerEvents:"none",children:k.jsx(Uz,{color:"gray.200"})}),k.jsx(Km,{placeholder:"Search Title",onChange:T=>{i(T.target.value)}})]}),k.jsx(Zc,{maxW:"15vw",placeholder:"Select Genre",onChange:T=>{l(T.target.value)},children:d.map(T=>k.jsx("option",{value:T,children:T}))}),k.jsx(Zc,{maxW:"15vw",mr:"2.5vw",placeholder:"Select Timeline",onChange:T=>{u(T.target.value)},children:f.map(T=>k.jsx("option",{value:T,children:T}))})]}),k.jsx(PE,{my:".5em"}),k.jsx(CE,{columns:{base:1,lg:5},gap:"1.5em",children:Ke.map((T,p)=>{if(y(T))return k.jsxs(Dv,{onClick:()=>{t(),o(p)},id:"Card"+p,bg:"white",cursor:"pointer",shadow:"lg",_hover:{borderStyle:"solid",borderWidth:"5px",borderColor:"gray.400"},children:[k.jsx(m3,{minH:"5em",children:k.jsx(Fc,{src:`${T.IMG}.png`})}),k.jsx(Fv,{py:-1,children:k.jsx(Yn,{children:T.BOOK_TITLE})}),k.jsx(zv,{})]})})}),k.jsxs(BE,{isOpen:e,onClose:n,children:[k.jsx(UE,{}),k.jsxs(WE,{minW:"90vw",maxW:"90vw",children:[k.jsx(XE,{}),k.jsx(KE,{}),k.jsx(VE,{children:k.jsxs(Dv,{direction:{base:"column",lg:"row"},variant:"outline",children:[k.jsx(Fc,{objectFit:"cover",boxSize:"xs",src:`${Ke[r].IMG}.png`}),k.jsxs(Qm,{w:"100%",children:[k.jsxs(Fv,{children:[k.jsx(OE,{size:"md",children:Ke[r].BOOK_TITLE}),k.jsx(Yn,{py:"2",children:Ke[r].Synopsis}),k.jsxs(Yn,{py:"1",children:["Author : ",Ke[r].AUTHOR]}),k.jsxs(Yn,{py:"1",children:["Chapters : ",Ke[r].CHAPTERS]}),k.jsxs(Yn,{py:"1",children:["Extras : ",Ke[r].EXTRAS]}),k.jsxs(Yn,{py:"1",children:["Genre : ",Ke[r].GENRE]}),k.jsxs(Yn,{py:"1",children:["Timeline : ",Ke[r].TIMELINE]}),k.jsx(Uc,{})]}),k.jsxs(zv,{children:[k.jsx(AE,{}),k.jsx(jc,{isDisabled:!Ke[r].Carrd,mr:"0.5em",variant:"solid",colorScheme:"blue",onClick:()=>{window.open(Ke[r].Carrd,"_blank")},children:"Open Cardd"}),k.jsx(jc,{isDisabled:Ke[r].Eng_TL===null,variant:"solid",colorScheme:"blue",onClick:()=>{window.open(Ke[r].Eng_TL,"_blank")},children:"Go To Eng TL"})]})]})]})}),k.jsx(YE,{})]})]})]})}const Kz=document.getElementById("root");qE(Kz).render(k.jsx(b.StrictMode,{children:k.jsx(JG,{children:k.jsx(Vz,{})})}));
+But his shooting skills were too poor, often having teammates vent about whether he was the master of outlining the human body.\r
+\r
+Until one day, he picked up a bow.\r
+\r
+Since then, SGH has had another archer assassin named “Wency”.\r
+\r
+It’s said that his arrows never miss their shot, a hundred shots and a hundred hits, killing with one blow.\r
+\r
+It’s said that only the first ranked sharpshooter “Mac” succeeded in killing him.\r
+\r
+It’s said that he likes “Mac”.\r
+\r
+Wen Xi: …where did this rumor come from? Mac, come out and clarify!\r
+\r
+Mo Chen: En, it’s a rumor. Actually, I like you.\r
+\r
+A shou who wholeheartedly wants to make money through livestreaming vs. A gong who wholeheartedly wants to trick the shou into joining his team.`,IMG:296,PRIO:1},{BOOK_TITLE:"You're Causing Chaos Again",AUTHOR:"Shīmián Diàndēng",CHAPTERS:91,EXTRAS:7,GENRE:"Fantasy",TIMELINE:"Modern",Eng_TL:"https://knoxt.space/youre-causing-chaos-again-e-sports-chapter-1/",Synopsis:`Shen Yanming was a hardworking and talented but unlucky esports player in his previous life.\r
+\r
+He was deceived into joining a second-rate team, narrowly missing the chance to win the World Championship trophy time and time again. Eventually, he encountered an accident that ended his professional career.\r
+\r
+One day, he was reborn.\r
+\r
+Since it’s useless to work hard, Shen Yanming decided to let himself go and stop putting in effort.\r
+\r
+He registered an ID called “I’m Messing Around Again” and opened a livestream channel for random play. His fans thought he was just a comedian with no skills.\r
+\r
+Until one day, he encountered a professional player’s alternate account, and the fans were ready to watch clueless Shen Yanming get beaten. However, by a stroke of luck, Shen Yanming unexpectedly turned the tables and defeated the opponent.\r
+\r
+Shen Yanming was asked by his fans about his most admired professional player.\r
+\r
+Shen Yanming: It’s Kong Shen. My greatest wish is to be nursed by Kong Shen.\r
+\r
+Fans: Well, you don’t have a chance in this lifetime. Everyone knows that Kong Shen rarely heals anyone besides his regular teammates. Even in solo games, he switches to a DPS role.\r
+\r
+Just as they were talking, the legendary and aloof Kong Shen entered the livestream, showering Shen Yanming with generous donations and leaving a message: Join my team, I’ll be your exclusive healer.\r
+\r
+Shen Yanming & Fans: …\r
+\r
+Later, Shen Yanming discovered that one by one, his previously unattainable dreams were coming true. He became the most popular rookie king and won championship trophies effortlessly.\r
+\r
+…And he was even kissed by his Kong Shen until his legs turned weak.\r
+\r
+1v1, male-male pairing, double rebirth, sweet romance. The Number One Healer in the Chinese Server, Gong × The King of tr*sh Talk Assassin Shou.\r
+\r
+The Shou is always messing around, flirting every day, while the Gong is serious, getting teased until he loses his temper.\r
+\r
+The game is completely fictional, and not playing the game won’t affect understanding the story.`,IMG:297,PRIO:2},{BOOK_TITLE:"Your Distance",AUTHOR:"Gong Zi You 公子优",CHAPTERS:90,EXTRAS:3,GENRE:"Slice of Life",TIMELINE:"Modern",Carrd:"https://yourdistance.carrd.co/",Eng_TL:"https://foxaholic.com/novel/your-distance/",Synopsis:`Distance is a social platform that (just like other social platforms) can display the distance between parties. Ting Shuang had chosen someone that was 287 kilometres away from him, thinking that it was very safe. After all, when there’s more than two hundred kilometres between them, they wouldn’t awkwardly chance upon each other in real life, right!\r
+Unexpectedly… The next night, 287 kilometres suddenly became 4.8 kilometres???\r
+And even more unexpectedly… In the afternoon of the third day, 4.8 kilometres suddenly became 3 metres???\r
+3 metres?????\r
+Metres?????\r
+I’m having a fucking lesson right now, doesn’t 3 meters mean that the person I was flirting with is in the classroom right now?\r
+Strict, course failure rate above 90%, kind and gentle(?) professor x mediocre results, bad tempered student`,IMG:298,PRIO:1},{BOOK_TITLE:"Your Memes Are Better Looking Than You",AUTHOR:"Mao Qiu Qiu 毛球球",CHAPTERS:90,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://ymablty.carrd.co/",Eng_TL:"https://knoxt.space/your-memes-are-better-looking-than-you/",Synopsis:`Gu Wei, the popular yet controversial lead dancer of boy band T.ATW.\r
+Jiang Xun, a god-tier professional esports player.\r
+One day, after a certain variety show aired, these complete strangers became a trending topic together.\r
+Gu Wei’s Anti-Fans: Do these two have anything to do with each other? Gu Wei is absolutely shameless. He’ll try to leech fame off anything that moves, even esports legends. Ignore him, ignore him!\r
+Fans of Jiang Xun’s Technique: If our God Xun wanted to, he could buy this whole country. If he’s playing around with some nameless celeb, he’ll just play until he gets bored and moves on.\r
+But before long, an unexpectedly heated controversy sparked around the two:\r
+Jiang Xun slacks off during a livestream to promote a celebrity!\r
+Jiang Xun’s little brother Jiang Ying says he’s being forced to defend his nemesis Gu Wei against anti-fans!\r
+Gu Wei, Jiang Xun… a shocking affair?!\r
+Netizens: ???\r
+The two do have talks of an engagement brewing between them, but it wasn’t Jiang Xun who Gu Wei fell for first… it was Jiang Xun’s reaction memes.\r
+When Jiang Xun first met Gu Wei, he came away with the impression that Gu Wei was his diehard fan. He never would have imagined Gu Wei was only a fan of his memes.\r
+Gu Wei: Ge… I think your reaction memes are better looking than you.\r
+Jiang Xun: Little Gu, you’re a little rebel, aren’t you?\r
+Then, affection gradually began to grow between the two. Gu Wei finally mustered up the courage to confess his feelings to Jiang Xun.\r
+Gu Wei: Jiang Xun, I think I’ve started to ship us.\r
+Jiang Xun, fiercely: You’re late. I’ve already become your stan.`,IMG:299,PRIO:1},{BOOK_TITLE:"Your Scandals Are Way Cuter Than You",AUTHOR:"Mao Qiu Qiu 毛球球",CHAPTERS:74,EXTRAS:6,GENRE:"Showbiz",TIMELINE:"Modern",Carrd:"https://t.co/fY3sOFf0mU",Eng_TL:"https://www.scribblehub.com/series/673993/your-scandals-are-way-cuter-than-you/",Synopsis:`Jiang Ying, a controversial second-generation celebrity. Loves nothing more than collecting dirt on other stars.\r
+\r
+Qi Zhu, a controversial actor. His hobby? Counterattacking trolls, tabloids, and anti-fans.\r
+\r
+Classmates from elementary school to high school, they fit the mold of childhood sweethearts. And yet they were more like fire and ice: utterly incompatible.\r
+\r
+Back in high school, they fought while reviewing test answers. On set, they fought over their scripts. For better or worse, the two were in contact every single day. Their QQ streak has never been broken.\r
+\r
+By chance, Qi Zhu discovered his own dirt in Jiang Ying’s possession.\r
+\r
+Qi Zhu: ?\r
+\r
+Jiang Ying: Don’t you know? Your scandals are way cuter than you.\r
+\r
+Jiang Ying thought they would bicker for the rest of their lives.\r
+\r
+Until, one day, he came across a new ship on Weibo: ZhuiFengZhuYing.\r
+\r
+And a supertopic to match: ZhuYingYaoHong.\r
+\r
+Soon after Jiang Ying was born, his parents held his zhuazhou ceremony. Among the items they set out before him, Jiang Ying crawled to the keyboard.\r
+\r
+Ever since his youth, Jiang Ying had never lost an argument.\r
+\r
+In a popular squabbling app that randomly matched users with differing opinions, prompting them to fight, Jiang Ying could handily defeat any opponent.\r
+\r
+After spending three years on the app ‘Fight!’, Jiang Ying reigned as king of the leaderboard.\r
+\r
+Out of the goodness of his heart, to benefit society, Jiang Ying took an apprentice who clearly didn’t know the first thing about dissing people. He worked hard to train up his little apprentice until the kid could diss and roast as fiercely as the king.\r
+\r
+It was only later, when he was pushed down in bed and [redacted] by the typically cold and taciturn Qi Zhu, that Jiang Ying realized Qi Zhu had somehow learned every trick in his book.`,IMG:300,PRIO:1},{BOOK_TITLE:"Your Teacher I, am Hella Rich",AUTHOR:"Mo Chen Huan",CHAPTERS:36,EXTRAS:4,GENRE:"Gaming",TIMELINE:"Modern",Carrd:"https://t.co/Yx2bchiv26",Eng_TL:"https://foxaholic.com/novel/your-teacher-i-am-hella-rich/",Synopsis:`On a certain day, Ji Xiao Li led his newly-acquired disciple into a dungeon, feeding him all sorts of priceless red and blue potions.\r
+Teammate: Fck, tyrant, do you have an ore mine at home?\r
+Ji Xiao Li: How did you know my family owns an ore mine?\r
+【Teacher Orders a Salute：disciple, enter the sect, accept my guidance. Tell this teacher, what is the sect’s ancestral creed?】\r
+【Milk Tea Small Crisp：Master, there are only you and I in this sect, what ancestral creed?】\r
+【Teacher Orders a Salute：Evil, evil disciple! I said to say it so say it!】\r
+【Milk Tea Small Crisp：……】\r
+【Milk Tea Small Crisp：Beat to death YueJian Chunhe that son of a btch!】\r
+YueJian ChunHe = Milk Tea Small Crisp = Ruan Fenghe\r
+Teacher Orders a Salute = Ji Xiao Li`,IMG:301,PRIO:1}];function Vz(){const{isOpen:e,onOpen:t,onClose:n}=$F(),[r,o]=b.useState(1),[a,i]=b.useState(""),[s,l]=b.useState("Select Genre"),[h,u]=b.useState("Select Timeline");Ke.sort((T,p)=>T.PRIO-p.PRIO);const d=c();function c(){const T=[];return Ke.map(p=>{p.GENRE!==void 0&&T.push(p.GENRE)}),[...new Set(T)]}const f=g();function g(){const T=[];return Ke.map(p=>{p.TIMELINE!==void 0&&T.push(p.TIMELINE)}),[...new Set(T)]}function y(T){return T.GENRE===void 0||s==="Select Genre"||T.TIMELINE===void 0||h==="Select Timeline"?T.BOOK_TITLE.toLowerCase().includes(a.toLowerCase()):T.BOOK_TITLE.toLowerCase().includes(a.toLowerCase())&&T.GENRE.includes(s)&&T.TIMELINE.includes(h)}return k.jsxs(qm,{minH:"100vh",minW:"90vw",px:"2.5em",bg:"gray.300",py:"2.5em",children:[k.jsxs(Uc,{bg:"white",borderRadius:"lg",shadow:"lg",children:[k.jsxs(IE,{children:[k.jsx(Vm,{pointerEvents:"none",children:k.jsx(Uz,{color:"gray.200"})}),k.jsx(Km,{placeholder:"Search Title",onChange:T=>{i(T.target.value)}})]}),k.jsx(Zc,{maxW:"15vw",placeholder:"Select Genre",onChange:T=>{l(T.target.value)},children:d.map(T=>k.jsx("option",{value:T,children:T}))}),k.jsx(Zc,{maxW:"15vw",mr:"2.5vw",placeholder:"Select Timeline",onChange:T=>{u(T.target.value)},children:f.map(T=>k.jsx("option",{value:T,children:T}))})]}),k.jsx(PE,{my:".5em"}),k.jsx(CE,{columns:{base:1,lg:5},gap:"1.5em",children:Ke.map((T,p)=>{if(y(T))return k.jsxs(Dv,{onClick:()=>{t(),o(p)},id:"Card"+p,bg:"white",cursor:"pointer",shadow:"lg",_hover:{borderStyle:"solid",borderWidth:"5px",borderColor:"gray.400"},children:[k.jsx(m3,{minH:"5em",children:k.jsx(Fc,{src:`${T.IMG}.png`})}),k.jsx(Fv,{py:-1,children:k.jsx(Yn,{children:T.BOOK_TITLE})}),k.jsx(zv,{})]})})}),k.jsxs(BE,{isOpen:e,onClose:n,children:[k.jsx(UE,{}),k.jsxs(WE,{minW:"90vw",maxW:"90vw",children:[k.jsx(XE,{}),k.jsx(KE,{}),k.jsx(VE,{children:k.jsxs(Dv,{direction:{base:"column",lg:"row"},variant:"outline",children:[k.jsx(Fc,{objectFit:"cover",boxSize:"xs",src:`${Ke[r].IMG}.png`}),k.jsxs(Qm,{w:"100%",children:[k.jsxs(Fv,{children:[k.jsx(OE,{size:"md",children:Ke[r].BOOK_TITLE}),k.jsx(Yn,{py:"2",children:Ke[r].Synopsis}),k.jsxs(Yn,{py:"1",children:["Author : ",Ke[r].AUTHOR]}),k.jsxs(Yn,{py:"1",children:["Chapters : ",Ke[r].CHAPTERS]}),k.jsxs(Yn,{py:"1",children:["Extras : ",Ke[r].EXTRAS]}),k.jsxs(Yn,{py:"1",children:["Genre : ",Ke[r].GENRE]}),k.jsxs(Yn,{py:"1",children:["Timeline : ",Ke[r].TIMELINE]}),k.jsx(Uc,{})]}),k.jsxs(zv,{children:[k.jsx(AE,{}),k.jsx(jc,{isDisabled:!Ke[r].Carrd,mr:"0.5em",variant:"solid",colorScheme:"blue",onClick:()=>{window.open(Ke[r].Carrd,"_blank")},children:"Open Cardd"}),k.jsx(jc,{isDisabled:Ke[r].Eng_TL===null,variant:"solid",colorScheme:"blue",onClick:()=>{window.open(Ke[r].Eng_TL,"_blank")},children:"Go To Eng TL"})]})]})]})}),k.jsx(YE,{})]})]})]})}const Kz=document.getElementById("root");qE(Kz).render(k.jsx(b.StrictMode,{children:k.jsx(JG,{children:k.jsx(Vz,{})})}));
